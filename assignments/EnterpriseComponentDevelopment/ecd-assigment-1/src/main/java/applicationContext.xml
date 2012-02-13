@@ -12,12 +12,36 @@
 
 <!-- =============================================================== -->
 
-  	<context:annotation-config/>
-
-  	<bean id="security" class="doconnor.aop.Validation" />
-  
-    <aop:aspectj-autoproxy />
+  <context:annotation-config/>
+<bean id="validation" class="doconnor.aop.Validation" />
+  <bean id="security" class="doconnor.aop.Security" >
+       </bean>
+     
+     <aop:aspectj-autoproxy />
  		
-  	<context:component-scan base-package="doconnor.aop" />
+  <context:component-scan base-package="doconnor.aop" />
   
+ <!-- ========================== Presentation tier ============================ -->
+  
+    <bean id="scanner" class="java.util.Scanner">
+   		  	<constructor-arg>
+				<util:constant static-field="java.lang.System.in"/>
+			</constructor-arg>
+  	</bean>
+   
+  <!-- ============================= Data Access =========================== -->
+
+   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
+           destroy-method="close">
+		<property name="driverClassName"><value>org.hsqldb.jdbcDriver</value> </property>
+		<property name="url"><value>jdbc:hsqldb:data/test</value></property>
+ 		<property name="username" value="sa"/>
+		<property name="password" value="sa"/> 
+    </bean> 
+  
+   <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource"><ref local="dataSource"/></property>
+		<property name="configLocation"  value="classpath:hibernate.cfg.xml"/>
+    </bean>
+
 </beans>

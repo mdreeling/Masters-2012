@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping  package="doconnor.aop.domain" >
+
+    <class name="Player" table="PLAYERS">
+          <id name="id" column="pid" type="long">
+                 <generator class="increment"/>
+           </id>
+           <property name="name" length="23"/>  
+          	<many-to-one name="club"  class="Club" column="playsFor"/>		   
+    </class>
+</hibernate-mapping>

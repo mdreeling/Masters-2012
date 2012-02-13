@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping  package="doconnor.aop.domain" >
+
+    <class name="Company" table="COMPANY">
+          <id name="id" column="coid" type="long">
+                 <generator class="increment"/>
+           </id>
+           <property name="name" length="23"/>
+
+           <set name="support" table="CLUBSPONSORS"
+            	inverse="true" cascade="save-update">
+               	<key column="coid"/>
+               	<many-to-many class="Club" column="clid"/>
+            </set>
+    </class>
+</hibernate-mapping>

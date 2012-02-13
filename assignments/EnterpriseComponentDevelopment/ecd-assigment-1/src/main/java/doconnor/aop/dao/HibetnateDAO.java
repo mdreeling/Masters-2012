@@ -1,9 +1,14 @@
 package doconnor.aop.dao;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class HibetnateDAO {
- 
-	public HibetnateDAO() {
-		super();
+    @Autowired
+	protected SessionFactory sessionFactory;
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
 }
