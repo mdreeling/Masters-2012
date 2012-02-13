@@ -1,4 +1,4 @@
-package doconnor.aop;
+package doconnor.aop.aspects;
 
 import java.io.FileInputStream;
 import java.util.Properties;

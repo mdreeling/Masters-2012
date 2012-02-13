@@ -8,9 +8,10 @@ import org.springframework.validation.Validator;
 import doconnor.aop.domain.Club;
 @Component
 public class ClubValidator implements Validator {
-	
+
 	public void validate(Object obj, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "errorCode");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
+				"rejectIfEmptyOrWhitespace");
 	}
 
 	@SuppressWarnings("unchecked")
