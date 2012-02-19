@@ -61,7 +61,7 @@ bb.init = function() {
 
 	bb.model.Items = Backbone.Collection.extend(_.extend({
 		model : bb.model.Item,
-		localStorage : new Store("items"),
+		url : '/api/rest/todo',
 
 		initialize : function() {
 			var self = this
@@ -72,10 +72,11 @@ bb.init = function() {
 				self.count = self.length
 			})
 		},
-		additem : function() {
+		additem : function(textIn) {
+
 			var self = this
 			var item = new bb.model.Item({
-				text : 'item ' + self.count
+				text : textIn //'item ' + self.count
 			})
 			self.add(item)
 			self.count++
@@ -87,7 +88,74 @@ bb.init = function() {
 		events : {
 			'tap #add' : function() {
 				var self = this
-				self.items.additem()
+
+				_.bindAll(self)
+
+				// mdreeling - Find the main div and start playing with it
+				// We can find everything if we start from here instead of the header div
+				self.setElement("div[id='main']")
+
+				self.elem = {
+					add : self.$el.find('#add'),
+					cancel : self.$el.find('#cancel'),
+					newitem : self.$el.find('#newitem'),
+					todotext : self.$el.find('#text'),
+					save : self.$el.find('#save')
+				}
+
+				self.elem.add.hide()
+				self.elem.cancel.show()
+				self.elem.newitem.slideDown()
+
+				// mdreeling - Disable the save button until they type something
+				// Pass the text and also the save element itslef so it can be disabled
+				saveon = false
+				app.activatesave(self.elem.todotext.val(),self.elem.save)
+			},
+			'tap #cancel' : function() {// mdreeling - Add the CANCEL button event
+				var self = this
+
+				_.bindAll(self)
+
+				// mdreeling - Find the main div and start playing with it
+				// We can find everything if we start from here instead of the header div
+				self.setElement("div[id='main']")
+
+				self.elem = {
+					add : self.$el.find('#add'),
+					cancel : self.$el.find('#cancel'),
+					newitem : self.$el.find('#newitem')
+				}
+
+				// mdreeling - Just reverse the previous actions
+				self.elem.add.show()
+				self.elem.cancel.hide()
+				self.elem.newitem.slideUp()
+			},
+			'tap #save' : function() {// mdreeling - Add the SAVE button event
+				var self = this
+
+				_.bindAll(self)
+
+				// mdreeling - Find the main div and start playing with it
+				// We can find everything if we start from here instead of the header div
+				self.setElement("div[id='main']")
+
+				self.elem = {
+					todotext : self.$el.find('#text'),
+				}
+
+				// mdreeling - Pull the item text out of the input box
+
+				var text = self.elem.todotext.val()
+
+				if(0 == text.length) {
+					return
+				}
+
+				elem.text.val('').blur()
+
+				self.items.additem(text)
 			}
 		},
 
@@ -190,6 +258,19 @@ app.init_browser = function() {
 	}
 }
 
+app.activatesave = function(currentTextIn, save) {
+
+	var textlen = currentTextIn.length
+	
+	if(!saveon && 0 < textlen) {
+		save.css('opacity', 1)
+		saveon = true
+	} else if(0 == textlen) {
+		save.css('opacity', 0.3)
+		saveon = false
+	}
+}
+
 app.init = function() {
 	console.log('start init')
 
@@ -206,13 +287,10 @@ app.init = function() {
 
 	app.model.items.fetch({
 		success : function() {
-			// simulate network delay
-			setTimeout(function() {
-				app.model.state.set({
-					items : 'loaded'
-				})
-				app.view.list.render()
-			}, 2000)
+			app.model.state.set({
+				items : 'loaded'
+			})
+			app.view.list.render()
 		}
 	})
 
