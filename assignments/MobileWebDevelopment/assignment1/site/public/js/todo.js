@@ -86,6 +86,20 @@ bb.init = function() {
 
 	bb.view.Head = Backbone.View.extend(_.extend({
 		events : {
+			"click #text" : function() {
+				var self = this
+
+				_.bindAll(self)
+
+				// mdreeling - Find the main div and start playing with it
+				// We can find everything if we start from here instead of the header div
+				self.setElement("div[id='main']")
+
+				self.elem = {
+					todotext : self.$el.find('#text')
+				}
+				self.elem.todotext.focus()
+			},
 			'tap #add' : function() {
 				var self = this
 
@@ -110,7 +124,7 @@ bb.init = function() {
 				// mdreeling - Disable the save button until they type something
 				// Pass the text and also the save element itslef so it can be disabled
 				saveon = false
-				app.activatesave(self.elem.todotext.val(),self.elem.save)
+				app.activatesave(self.elem.todotext.val(), self.elem.save)
 			},
 			'tap #cancel' : function() {// mdreeling - Add the CANCEL button event
 				var self = this
@@ -156,9 +170,25 @@ bb.init = function() {
 				elem.text.val('').blur()
 
 				self.items.additem(text)
+			},
+			'keyup #text' : function() {// mdreeling - Add the KEYUP handler to enable and disbale the save button
+				var self = this
+
+				_.bindAll(self)
+
+				// mdreeling - Find the main div and start playing with it
+				// We can find everything if we start from here instead of the header div
+				self.setElement("div[id='main']")
+
+				self.elem = {
+					save : self.$el.find('#save'),
+					todotext : self.$el.find('#text')
+				}
+
+				// mdreeling - Toggle a save check on each keyup
+				app.activatesave(self.elem.todotext.val(), self.elem.save)
 			}
 		},
-
 		initialize : function(items) {
 			var self = this
 			_.bindAll(self)
@@ -261,7 +291,7 @@ app.init_browser = function() {
 app.activatesave = function(currentTextIn, save) {
 
 	var textlen = currentTextIn.length
-	
+
 	if(!saveon && 0 < textlen) {
 		save.css('opacity', 1)
 		saveon = true
