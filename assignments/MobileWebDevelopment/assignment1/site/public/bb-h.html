@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Title</title>
+		<meta name="viewport"
+		content="user-scalable=no,initial-scale=1.0,maximum-scale=1.0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<link rel="stylesheet" href="js/jquery.mobile.css" />
+		<link rel="stylesheet" href="js/bb.css" />
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery.mobile.js"></script>
+		<script src="js/underscore.js"></script>
+		<script src="js/backbone.js"></script>
+		<!-- Add Local Storage Support -->
+		<script src="js/backbone.localStorage.js"></script>
+		<!-- Add scrolling -->
+		<script src="js/iscroll.js"></script>
+		<script src="js/bb-h.js"></script>
+	</head>
+	<body>
+		<div id="main" data-role="page">
+			<div data-role="header" data-position="fixed">
+				<h1>{{-title}}</h1>
+				<a id="add" data-icon="plus" class="ui-btn-right">Add</a>
+			</div>
+			<div data-role="content">
+				<ul id="list" data-role="listview">
+					<li class="tm">
+						<span class="text">{{-text}}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="http://192.168.1.6:8080/target/target-script-min.js#anonymous"></script>
