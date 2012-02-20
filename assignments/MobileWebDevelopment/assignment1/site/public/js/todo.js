@@ -150,6 +150,7 @@ bb.init = function() {
 				self.elem.newitem.slideUp()
 			},
 			'tap #save' : function() {// mdreeling - Add the SAVE button event
+				console.log('tap #save - saving...')
 				var self = this
 
 				_.bindAll(self)
@@ -174,14 +175,16 @@ bb.init = function() {
 
 				// mdreeling - scrub the textfield and relinquish focus
 				self.elem.todotext.val('').blur()
-
+				
+				console.log('tap #save - adding item...')
 				// mdreeling - Add the item to the master list
 				self.items.additem(text)
-				
+				console.log('tap #save - Reversing buttons and sliding up...')
 				// mdreeling - Just reverse the previous actions
 				self.elem.cancel.hide()
 				self.elem.add.show()
 				self.elem.newitem.slideUp()
+				console.log('tap #save - done!')
 			},
 			'keyup #text' : function() {// mdreeling - Add the KEYUP handler to enable and disbale the save button
 				var self = this
@@ -210,7 +213,7 @@ bb.init = function() {
 
 			self.elem = {
 				add : self.$el.find('#add'),
-				title : self.$el.find('h1')
+				title : self.$el.find('#titlebar')
 			}
 
 			self.tm = {
@@ -226,11 +229,16 @@ bb.init = function() {
 		render : function() {
             console.log('bb.view.Head - render')
 			var self = this
-			self.setElement("div[data-role='header']")
+			// mdreeling - CHange this guy to operate on main instead of just the header div 
+			// as methods which use self later - need newitem, todotext and others to actually to be there!
+			self.setElement("div[id='main']")
 
 			self.elem = {
 				add : self.$el.find('#add'),
-				title : self.$el.find('h1')
+				title : self.$el.find('#titlebar'),
+                todotext : self.$el.find('#text'),
+                cancel : self.$el.find('#cancel'),
+                newitem : self.$el.find('#newitem')
 			}
 			
 			var loaded = 'loaded' == app.model.state.get('items')
