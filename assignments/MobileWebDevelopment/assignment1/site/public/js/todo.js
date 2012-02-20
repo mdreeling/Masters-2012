@@ -45,7 +45,7 @@ bb.init = function() {
 	bb.model.State = Backbone.Model.extend(_.extend({
 		defaults : {
 			items : 'loading'
-		},
+		}
 	}))
 
 	bb.model.Item = Backbone.Model.extend(_.extend({
@@ -54,6 +54,7 @@ bb.init = function() {
 		},
 
 		initialize : function() {
+            console.log('bb.model.Item - initialize')
 			var self = this
 			_.bindAll(self)
 		}
@@ -64,16 +65,18 @@ bb.init = function() {
 		url : '/api/rest/todo',
 
 		initialize : function() {
+            console.log('bb.model.Items - initialize')
 			var self = this
 			_.bindAll(self)
 			self.count = 0
 
 			self.on('reset', function() {
+                console.log('bb.model.Items - reset')
 				self.count = self.length
 			})
 		},
 		additem : function(textIn) {
-
+            console.log('bb.model.Items - additem')
 			var self = this
 			var item = new bb.model.Item({
 				text : textIn //'item ' + self.count
@@ -157,19 +160,28 @@ bb.init = function() {
 
 				self.elem = {
 					todotext : self.$el.find('#text'),
+					add : self.$el.find('#add'),
+					cancel : self.$el.find('#cancel'),
+					newitem : self.$el.find('#newitem')
 				}
 
 				// mdreeling - Pull the item text out of the input box
-
 				var text = self.elem.todotext.val()
 
 				if(0 == text.length) {
 					return
 				}
 
-				elem.text.val('').blur()
+				// mdreeling - scrub the textfield and relinquish focus
+				self.elem.todotext.val('').blur()
 
+				// mdreeling - Add the item to the master list
 				self.items.additem(text)
+				
+				// mdreeling - Just reverse the previous actions
+				self.elem.cancel.hide()
+				self.elem.add.show()
+				self.elem.newitem.slideUp()
 			},
 			'keyup #text' : function() {// mdreeling - Add the KEYUP handler to enable and disbale the save button
 				var self = this
@@ -190,6 +202,7 @@ bb.init = function() {
 			}
 		},
 		initialize : function(items) {
+            console.log('bb.view.Head - initialize')
 			var self = this
 			_.bindAll(self)
 			self.items = items
@@ -211,8 +224,15 @@ bb.init = function() {
 
 		},
 		render : function() {
+            console.log('bb.view.Head - render')
 			var self = this
+			self.setElement("div[data-role='header']")
 
+			self.elem = {
+				add : self.$el.find('#add'),
+				title : self.$el.find('h1')
+			}
+			
 			var loaded = 'loaded' == app.model.state.get('items')
 
 			self.elem.title.html(self.tm.title({
@@ -228,6 +248,7 @@ bb.init = function() {
 	bb.view.List = Backbone.View.extend(_.extend({
 
 		initialize : function(items) {
+            console.log('bb.view.List - initialize')
 			var self = this
 			_.bindAll(self)
 
@@ -238,6 +259,7 @@ bb.init = function() {
 
 		},
 		render : function() {
+            console.log('bb.view.List - render')
 			var self = this
 
 			self.$el.empty()
@@ -248,7 +270,7 @@ bb.init = function() {
 			})
 		},
 		appenditem : function(item) {
-
+            console.log('bb.view.List - appenditem')
 			var self = this
 
 			var itemview = new bb.view.Item({
@@ -263,11 +285,13 @@ bb.init = function() {
 
 	bb.view.Item = Backbone.View.extend(_.extend({
 		initialize : function() {
+            console.log('bb.view.Item - initialize')
 			var self = this
 			_.bindAll(self)
 			self.render()
 		},
 		render : function() {
+            console.log('bb.view.Item - render')
 			var self = this
 			var html = self.tm.item(self.model.toJSON())
 			self.$el.append(html)
@@ -289,7 +313,7 @@ app.init_browser = function() {
 }
 
 app.activatesave = function(currentTextIn, save) {
-
+    console.log('app.activatesave')
 	var textlen = currentTextIn.length
 
 	if(!saveon && 0 < textlen) {

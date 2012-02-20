@@ -40,7 +40,7 @@ function init() {
 		app.del('/api/rest/todo/:id', api.rest.del)
 
 	})
-	server.use(router)
+	server.use(router, null)
 
 	server.use(connect.static(__dirname + '/../../site/public'))
 
