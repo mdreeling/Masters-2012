@@ -1,5 +1,7 @@
 package doconnor.aop;
 
+import junit.framework.TestCase;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -10,26 +12,20 @@ import doconnor.aop.domain.Division;
 import doconnor.aop.domain.Player;
 import doconnor.aop.service.LeagueManager;
 
-public class MainApp {
+public class MainApp extends TestCase {
 	LeagueManager leagueManager;
 
 	public static void main(String[] args) {
-		new MainApp();
+		// new MainApp();
 	}
 
 	public MainApp() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				"applicationContext.xml");
 		leagueManager = (LeagueManager) context.getBean("leagueManagerImpl");
-		test1();
-		test2();
-		test3();
-		test4();
-		test5();
-		// etc
 	}
 
-	private void test1() {
+	public void test1() {
 		Club club = new Club("testclub1");
 		leagueManager.addClub(club, 1);
 		club = new Club();
@@ -37,7 +33,7 @@ public class MainApp {
 		leagueManager.addClub(club, 1);
 	}
 
-	private void test2() {
+	public void test2() {
 		Club club = new Club("testclub1");
 		club.setMainSponser(new Company("testCompany1"));
 		leagueManager.addClub(club, 1);
@@ -46,7 +42,7 @@ public class MainApp {
 		leagueManager.addClub(club, 1);
 	}
 
-	private void test3() {
+	public void test3() {
 		Player player = new Player("testplayer1");
 		leagueManager.signPlayer(1, player);
 		player = new Player("");
@@ -58,7 +54,7 @@ public class MainApp {
 		leagueManager.signPlayer(1, player);
 	}
 
-	private void test4() {
+	public void test4() {
 		Club club = new Club("club1");
 		club.getPlayers().add(new Player("testplayer1"));
 		club.getPlayers().add(new Player("testplayer2"));
@@ -70,7 +66,7 @@ public class MainApp {
 		leagueManager.addClub(club, 1);
 	}
 
-	private void test5() {
+	public void test5() {
 		Division division = new Division("Division 1");
 		Club club = new Club("club1");
 		club.getPlayers().add(new Player("testplayer1"));

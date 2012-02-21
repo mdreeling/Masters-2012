@@ -1,4 +1,4 @@
-package doconnor.aop;
+package doconnor.aop.domain.validation;
 
 import java.util.List;
 

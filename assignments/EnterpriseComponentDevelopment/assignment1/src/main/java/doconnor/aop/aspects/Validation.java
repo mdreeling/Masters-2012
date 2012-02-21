@@ -1,12 +1,16 @@
 package doconnor.aop.aspects;
 
+import java.beans.PropertyDescriptor;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -17,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
+import doconnor.aop.domain.validation.ValidationException;
 
 /**
  *
@@ -44,6 +50,7 @@ public class Validation {
 	@Pointcut("execution(* doconnor.aop.service.LeagueManagerImpl.add*(..)) || "
 			+ "execution(* doconnor.aop.service.LeagueManagerImpl.remove*(..)) || "
 			+ "execution(* doconnor.aop.service.LeagueManagerImpl.sign*(..)) || "
+			+ "execution(* doconnor.aop.service.LeagueManagerImpl.setup*(..)) ||"
 			+ "execution(* doconnor.aop.service.LeagueManagerImpl.tran*(..))")
 	public void modify() {
 	}
@@ -57,9 +64,16 @@ public class Validation {
 			validate(errors, arg);
 		}
 
+		if (errors.size() > 0) {
+			logger.warn("Validation error(s). See below.");
+			logger.warn(errors.toString());
+			logger.debug("Method validation complete");
+			throw new ValidationException(errors);
+		}
+
 		joinPoint.proceed();
 
-		logger.debug("Method validation complete");
+		logger.debug("Validation succeeded.");
 	}
 
 	private Errors validateWithErrorTagging(final Object arg,
@@ -80,8 +94,73 @@ public class Validation {
 				logger.debug(validator.getClass() + " can validate "
 						+ arg.getClass());
 				validateWithErrorTagging(arg, validator, errors);
+				checkArgumentForOtherObjects(arg, errors);
 			}
 		}
+	}
+
+	/**
+	 * An Object inspector using AC BeanUtils.
+	 *
+	 * @param arg
+	 * @param errors
+	 * @throws Exception
+	 */
+	private void checkArgumentForOtherObjects(final Object arg,
+			final List<Errors> errors) throws Exception {
+
+		final PropertyDescriptor[] propertyDescriptors = PropertyUtils
+				.getPropertyDescriptors(arg.getClass());
+		for (final PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+			final Object propertyValue = propertyDescriptor.getReadMethod()
+					.invoke(arg);
+			if ((propertyValue != null)
+					&& (isClassCollection(propertyValue.getClass()))) {
+
+				for (final Object propertyElementValue : ((Collection) propertyValue)) {
+					for (final Validator validator : getValidators()) {
+						if (validator.supports(propertyElementValue.getClass())) {
+							logger.debug("** " + validator.getClass()
+									+ " can validate the Collection "
+									+ propertyElementValue.getClass());
+							validateWithErrorTagging(propertyElementValue,
+									validator, errors);
+							checkArgumentForOtherObjects(propertyElementValue,
+									errors);
+						} else {
+							logger.debug("$$ "
+									+ propertyValue.getClass()
+									+ " is not validatable as a Collection class right now");
+						}
+					}
+				}
+			} else if (propertyValue != null) {
+				for (final Validator validator : getValidators()) {
+					if (validator.supports(propertyValue.getClass())) {
+						logger.debug(validator.getClass() + " can validate "
+								+ propertyValue.getClass());
+						validateWithErrorTagging(propertyValue, validator,
+								errors);
+						checkArgumentForOtherObjects(propertyValue, errors);
+					} else {
+						logger.debug("%% "
+								+ propertyValue.getClass()
+								+ " is not a Collection or a known domain Object and as such is not currently validatable");
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Ripped from stackOverFlow.
+	 *
+	 * @param c
+	 * @return
+	 */
+	public static boolean isClassCollection(Class c) {
+		return Collection.class.isAssignableFrom(c)
+				|| Map.class.isAssignableFrom(c);
 	}
 
 	/**
