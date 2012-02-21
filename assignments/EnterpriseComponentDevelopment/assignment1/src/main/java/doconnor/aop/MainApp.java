@@ -77,4 +77,15 @@ public class MainApp extends TestCase {
 		leagueManager.setupDivision(division);
 	}
 
+	/**
+	 * Test that we can validate primitives per:
+	 * "2. Non-domain object arguments, e.g. primitives only."
+	 */
+	public void test6() {
+		Club club = new Club("testclub1");
+		leagueManager.addClub(club, 1);
+		club = new Club("testclub2");
+		// Should fail
+		leagueManager.addClub(club, -1);
+	}
 }

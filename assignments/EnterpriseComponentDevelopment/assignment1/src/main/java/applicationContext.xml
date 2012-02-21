@@ -16,7 +16,15 @@
 	
   	<bean id="validation" class="doconnor.aop.aspects.Validation" />
 	<!-- <bean id="security" class="doconnor.aop.aspects.Security"/> -->
-  
+  	
+  	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	    <property name="basenames">
+	        <list>
+	            <value>errors</value>
+	        </list>
+	    </property>
+	</bean>
+
     <aop:aspectj-autoproxy />
  		
   	<context:component-scan base-package="doconnor.aop" />
