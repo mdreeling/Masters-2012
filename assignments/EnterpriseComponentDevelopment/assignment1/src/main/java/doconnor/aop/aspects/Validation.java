@@ -39,6 +39,16 @@ public class Validation {
 	private final Log logger = LogFactory.getLog(getClass());
 
 	/**
+	 * Indicates a Standard (Scalar) non-Collection Argument.
+	 */
+	private final static String STANDARD_ARGUMENT = "[STANDARD ARGUMENT] ";
+
+	/**
+	 * Indicates a Collection Argument.
+	 */
+	private final static String COLLECTION_ARGUMENT = "[COLLECTION ARGUMENT] ";
+
+	/**
 	 * Load errors from properties file.
 	 */
 	@PostConstruct
@@ -84,7 +94,7 @@ public class Validation {
 			/**
 			 * Validate the argument.
 			 */
-			validateArgument(errors, arg);
+			validateArgumentUsingSupportedClass(errors, arg);
 		}
 
 		if (errors.size() > 0) {
@@ -120,26 +130,40 @@ public class Validation {
 	}
 
 	/**
-	 * Takes a single argument and validates it. Also introspect's the object
-	 * and digs deeper if necessary.
+	 * Takes a single argument or a Collection and validates it. Also
+	 * introspect's the object and digs deeper if necessary.
 	 *
 	 * @param errors
 	 * @param arg
 	 * @throws Exception
 	 */
-	private void validateArgument(final List<Errors> errors, final Object arg)
+	private void validateArgumentUsingSupportedClass(final List<Errors> errors,
+			final Object arg) throws Exception {
+
+		if (isClassCollection(arg.getClass())) {
+			for (final Object propertyElementValue : ((Collection<?>) arg)) {
+				findAndValidate(errors, propertyElementValue);
+			}
+		} else {
+			findAndValidate(errors, arg);
+		}
+	}
+
+	/**
+	 * Finds a validator and Validates hte class when found.
+	 *
+	 * @param errors
+	 * @param arg
+	 * @param argTypeForLogging
+	 * @throws Exception
+	 */
+	private void findAndValidate(final List<Errors> errors, final Object arg)
 			throws Exception {
 		for (final Validator validator : getValidators()) {
 			if (validator.supports(arg.getClass())) {
-				logger.debug("[DOMAIN] " + validator.getClass()
-						+ " can validate "
+				logger.debug(validator.getClass() + " can validate "
 						+ arg.getClass());
-				validateClass(errors, arg, validator);
-			} else {
-				// logger.debug("%% "
-				// + arg.getClass()
-				// +
-				// " is not a known domain Object and as such is not currently validatable");
+				validateSingleClass(errors, arg, validator);
 			}
 		}
 	}
@@ -154,8 +178,8 @@ public class Validation {
 	 * @param validator
 	 * @throws Exception
 	 */
-	private void validateClass(final List<Errors> errors, final Object arg,
-			final Validator validator) throws Exception {
+	private void validateSingleClass(final List<Errors> errors,
+			final Object arg, final Validator validator) throws Exception {
 		/**
 		 * 1. Validate the class using the found validator.
 		 */
@@ -174,45 +198,16 @@ public class Validation {
 	 * @param errors
 	 * @throws Exception
 	 */
-	private void introspectArgument(final Object arg,
-			final List<Errors> errors) throws Exception {
+	private void introspectArgument(final Object arg, final List<Errors> errors)
+			throws Exception {
 
 		final PropertyDescriptor[] propertyDescriptors = PropertyUtils
 				.getPropertyDescriptors(arg.getClass());
 		for (final PropertyDescriptor propertyDescriptor : propertyDescriptors) {
 			final Object propertyValue = propertyDescriptor.getReadMethod()
 					.invoke(arg);
-			if ((propertyValue != null)
-					&& (isClassCollection(propertyValue.getClass()))) {
-				validateCollectionArgument(errors, propertyValue);
-			} else if (propertyValue != null) {
-				validateArgument(errors, propertyValue);
-			}
-		}
-	}
-
-	/**
-	 * Validates a Collection argument which requires an additional outer loop
-	 * not present in validateArgument.
-	 *
-	 * @param errors
-	 * @param propertyValue
-	 * @throws Exception
-	 */
-	private void validateCollectionArgument(final List<Errors> errors,
-			final Object propertyValue) throws Exception {
-		for (final Object propertyElementValue : ((Collection<?>) propertyValue)) {
-			for (final Validator validator : getValidators()) {
-				if (validator.supports(propertyElementValue.getClass())) {
-					logger.debug("[COLLECTION] " + validator.getClass()
-							+ " can validate the Collection "
-							+ propertyElementValue.getClass());
-					validateClass(errors, propertyElementValue, validator);
-				} else {
-					// logger.debug("$$ "
-					// + propertyValue.getClass()
-					// + " is not validatable as a Collection class right now");
-				}
+			if (propertyValue != null) {
+				validateArgumentUsingSupportedClass(errors, propertyValue);
 			}
 		}
 	}
