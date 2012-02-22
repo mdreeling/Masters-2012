@@ -39,16 +39,6 @@ public class Validation {
 	private final Log logger = LogFactory.getLog(getClass());
 
 	/**
-	 * Indicates a Standard (Scalar) non-Collection Argument.
-	 */
-	private final static String STANDARD_ARGUMENT = "[STANDARD ARGUMENT] ";
-
-	/**
-	 * Indicates a Collection Argument.
-	 */
-	private final static String COLLECTION_ARGUMENT = "[COLLECTION ARGUMENT] ";
-
-	/**
 	 * Load errors from properties file.
 	 */
 	@PostConstruct
