@@ -54,7 +54,7 @@ bb.init = function() {
 		},
 
 		initialize : function() {
-            console.log('bb.model.Item - initialize')
+			console.log('bb.model.Item - initialize')
 			var self = this
 			_.bindAll(self)
 		}
@@ -65,18 +65,18 @@ bb.init = function() {
 		url : '/api/rest/todo',
 
 		initialize : function() {
-            console.log('bb.model.Items - initialize')
+			console.log('bb.model.Items - initialize')
 			var self = this
 			_.bindAll(self)
 			self.count = 0
 
 			self.on('reset', function() {
-                console.log('bb.model.Items - reset')
+				console.log('bb.model.Items - reset')
 				self.count = self.length
 			})
 		},
 		additem : function(textIn) {
-            console.log('bb.model.Items - additem')
+			console.log('bb.model.Items - additem')
 			var self = this
 			var item = new bb.model.Item({
 				text : textIn //'item ' + self.count
@@ -149,6 +149,15 @@ bb.init = function() {
 				self.elem.cancel.hide()
 				self.elem.newitem.slideUp()
 			},
+			'click .check' : function() {// mdreeling - Add the SAVE button event
+				console.log('tap #check - marking...')
+				var self = this
+
+				_.bindAll(self)
+				
+				app.markitem(self.$el,true)
+				console.log('tap #check - done!')
+			},
 			'tap #save' : function() {// mdreeling - Add the SAVE button event
 				console.log('tap #save - saving...')
 				var self = this
@@ -175,7 +184,7 @@ bb.init = function() {
 
 				// mdreeling - scrub the textfield and relinquish focus
 				self.elem.todotext.val('').blur()
-				
+
 				console.log('tap #save - adding item...')
 				// mdreeling - Add the item to the master list
 				self.items.additem(text)
@@ -205,7 +214,7 @@ bb.init = function() {
 			}
 		},
 		initialize : function(items) {
-            console.log('bb.view.Head - initialize')
+			console.log('bb.view.Head - initialize')
 			var self = this
 			_.bindAll(self)
 			self.items = items
@@ -227,20 +236,20 @@ bb.init = function() {
 
 		},
 		render : function() {
-            console.log('bb.view.Head - render')
+			console.log('bb.view.Head - render')
 			var self = this
-			// mdreeling - CHange this guy to operate on main instead of just the header div 
+			// mdreeling - CHange this guy to operate on main instead of just the header div
 			// as methods which use self later - need newitem, todotext and others to actually to be there!
 			self.setElement("div[id='main']")
 
 			self.elem = {
 				add : self.$el.find('#add'),
 				title : self.$el.find('#titlebar'),
-                todotext : self.$el.find('#text'),
-                cancel : self.$el.find('#cancel'),
-                newitem : self.$el.find('#newitem')
+				todotext : self.$el.find('#text'),
+				cancel : self.$el.find('#cancel'),
+				newitem : self.$el.find('#newitem')
 			}
-			
+
 			var loaded = 'loaded' == app.model.state.get('items')
 
 			self.elem.title.html(self.tm.title({
@@ -256,7 +265,7 @@ bb.init = function() {
 	bb.view.List = Backbone.View.extend(_.extend({
 
 		initialize : function(items) {
-            console.log('bb.view.List - initialize')
+			console.log('bb.view.List - initialize')
 			var self = this
 			_.bindAll(self)
 
@@ -267,7 +276,7 @@ bb.init = function() {
 
 		},
 		render : function() {
-            console.log('bb.view.List - render')
+			console.log('bb.view.List - render')
 			var self = this
 
 			self.$el.empty()
@@ -278,7 +287,7 @@ bb.init = function() {
 			})
 		},
 		appenditem : function(item) {
-            console.log('bb.view.List - appenditem')
+			console.log('bb.view.List - appenditem')
 			var self = this
 
 			var itemview = new bb.view.Item({
@@ -293,13 +302,13 @@ bb.init = function() {
 
 	bb.view.Item = Backbone.View.extend(_.extend({
 		initialize : function() {
-            console.log('bb.view.Item - initialize')
+			console.log('bb.view.Item - initialize')
 			var self = this
 			_.bindAll(self)
 			self.render()
 		},
 		render : function() {
-            console.log('bb.view.Item - render')
+			console.log('bb.view.Item - render')
 			var self = this
 			var html = self.tm.item(self.model.toJSON())
 			self.$el.append(html)
@@ -320,8 +329,18 @@ app.init_browser = function() {
 	}
 }
 
+/**
+ * Marks item with a strikethrough
+ */
+app.markitem = function(item, done) {
+	item.find('span.check').html( done ? '&#10003;' : '&nbsp;')
+	item.find('span.text').css({
+		'text-decoration' : done ? 'line-through' : 'none'
+	})
+}
+
 app.activatesave = function(currentTextIn, save) {
-    console.log('app.activatesave')
+	console.log('app.activatesave')
 	var textlen = currentTextIn.length
 
 	if(!saveon && 0 < textlen) {
