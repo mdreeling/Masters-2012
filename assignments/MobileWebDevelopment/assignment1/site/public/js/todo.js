@@ -96,120 +96,11 @@ bb.init = function() {
 
 	bb.view.Head = Backbone.View.extend(_.extend({
 		events : {
-			'click #text' : function() {
-				var self = this
-
-				_.bindAll(self)
-
-				// mdreeling - Find the main div and start playing with it
-				// We can find everything if we start from here instead of the header div
-				self.setElement("div[id='main']")
-
-				self.elem = {
-					todotext : self.$el.find('#text')
-				}
-				self.elem.todotext.focus()
-			},
-			'tap #add' : function() {
-				var self = this
-
-				_.bindAll(self)
-
-				// mdreeling - Find the main div and start playing with it
-				// We can find everything if we start from here instead of the header div
-				self.setElement("div[id='main']")
-
-				self.elem = {
-					add : self.$el.find('#add'),
-					cancel : self.$el.find('#cancel'),
-					newitem : self.$el.find('#newitem'),
-					todotext : self.$el.find('#text'),
-					save : self.$el.find('#save')
-				}
-
-				self.elem.add.hide()
-				self.elem.cancel.show()
-				self.elem.newitem.slideDown()
-
-				// mdreeling - Disable the save button until they type something
-				// Pass the text and also the save element itslef so it can be disabled
-				saveon = false
-				app.activatesave(self.elem.todotext.val(), self.elem.save)
-			},
-			'tap #cancel' : function() {// mdreeling - Add the CANCEL button event
-				var self = this
-
-				_.bindAll(self)
-
-				// mdreeling - Find the main div and start playing with it
-				// We can find everything if we start from here instead of the header div
-				self.setElement("div[id='main']")
-
-				self.elem = {
-					add : self.$el.find('#add'),
-					cancel : self.$el.find('#cancel'),
-					newitem : self.$el.find('#newitem')
-				}
-
-				// mdreeling - Just reverse the previous actions
-				self.elem.add.show()
-				self.elem.cancel.hide()
-				self.elem.newitem.slideUp()
-			},
-			'tap #save' : function() {// mdreeling - Add the SAVE button event
-				console.log('tap #save - saving...')
-				var self = this
-
-				_.bindAll(self)
-
-				// mdreeling - Find the main div and start playing with it
-				// We can find everything if we start from here instead of the header div
-				self.setElement("div[id='main']")
-
-				self.elem = {
-					todotext : self.$el.find('#text'),
-					add : self.$el.find('#add'),
-					cancel : self.$el.find('#cancel'),
-					newitem : self.$el.find('#newitem')
-				}
-
-				// mdreeling - Pull the item text out of the input box
-				var text = self.elem.todotext.val()
-
-				if(0 == text.length) {
-					return
-				}
-
-				// mdreeling - scrub the textfield and relinquish focus
-				self.elem.todotext.val('').blur()
-
-				console.log('tap #save - adding item...')
-				// mdreeling - Add the item to the master list
-				self.items.additem(text)
-				console.log('tap #save - Reversing buttons and sliding up...')
-				// mdreeling - Just reverse the previous actions
-				self.elem.cancel.hide()
-				self.elem.add.show()
-				self.elem.newitem.slideUp()
-				console.log('tap #save - done!')
-			},
-			'keyup #text' : function() {// mdreeling - Add the KEYUP handler to enable and disbale the save button
-				var self = this
-
-				_.bindAll(self)
-
-				// mdreeling - Find the main div and start playing with it
-				// We can find everything if we start from here instead of the header div
-				self.setElement("div[id='main']")
-
-				self.elem = {
-					save : self.$el.find('#save'),
-					todotext : self.$el.find('#text')
-				}
-
-				// mdreeling - Toggle a save check on each keyup
-				app.activatesave(self.elem.todotext.val(), self.elem.save)
-			}
+			'click #text' : 'enterText',
+			'tap #add' : 'tapAdd',
+			'tap #cancel' : 'cancelTodoEntry',
+			'tap #save' : 'saveTodoEntry',
+			'keyup #text' : 'keyupTodoText'
 		},
 		initialize : function(items) {
 			console.log('bb.view.Head - initialize')
@@ -257,6 +148,116 @@ bb.init = function() {
 			if(loaded) {
 				self.elem.add.show()
 			}
+		},
+		cancelTodoEntry : function() {
+			var self = this
+			_.bindAll(self)
+			// mdreeling - Find the main div and start playing with it
+			// We can find everything if we start from here instead of the header div
+			self.setElement("div[id='main']")
+			self.elem = {
+				add : self.$el.find('#add'),
+				cancel : self.$el.find('#cancel'),
+				newitem : self.$el.find('#newitem')
+			}
+			// mdreeling - Just reverse the previous actions
+			self.elem.add.show()
+			self.elem.cancel.hide()
+			self.elem.newitem.slideUp()
+		},
+		saveTodoEntry : function() {// mdreeling - Add the SAVE button event
+			console.log('tap #save - saving...')
+			var self = this
+
+			_.bindAll(self)
+
+			// mdreeling - Find the main div and start playing with it
+			// We can find everything if we start from here instead of the header div
+			self.setElement("div[id='main']")
+
+			self.elem = {
+				todotext : self.$el.find('#text'),
+				add : self.$el.find('#add'),
+				cancel : self.$el.find('#cancel'),
+				newitem : self.$el.find('#newitem')
+			}
+
+			// mdreeling - Pull the item text out of the input box
+			var text = self.elem.todotext.val()
+
+			if(0 == text.length) {
+				return
+			}
+
+			// mdreeling - scrub the textfield and relinquish focus
+			self.elem.todotext.val('').blur()
+
+			console.log('tap #save - adding item...')
+			// mdreeling - Add the item to the master list
+			self.items.additem(text)
+			console.log('tap #save - Reversing buttons and sliding up...')
+			// mdreeling - Just reverse the previous actions
+			self.elem.cancel.hide()
+			self.elem.add.show()
+			self.elem.newitem.slideUp()
+			console.log('tap #save - done!')
+		},
+		keyupTodoText : function() {// mdreeling - Add the KEYUP handler to enable and disbale the save button
+			var self = this
+
+			_.bindAll(self)
+
+			// mdreeling - Find the main div and start playing with it
+			// We can find everything if we start from here instead of the header div
+			self.setElement("div[id='main']")
+
+			self.elem = {
+				save : self.$el.find('#save'),
+				todotext : self.$el.find('#text')
+			}
+
+			// mdreeling - Toggle a save check on each keyup
+			app.activatesave(self.elem.todotext.val(), self.elem.save)
+		},
+		tapAdd : function() {
+			var self = this
+
+			_.bindAll(self)
+
+			// mdreeling - Find the main div and start playing with it
+			// We can find everything if we start from here instead of the header div
+			self.setElement("div[id='main']")
+
+			self.elem = {
+				add : self.$el.find('#add'),
+				cancel : self.$el.find('#cancel'),
+				newitem : self.$el.find('#newitem'),
+				todotext : self.$el.find('#text'),
+				save : self.$el.find('#save')
+			}
+
+			self.elem.add.hide()
+			self.elem.cancel.show()
+			self.elem.newitem.slideDown()
+
+			// mdreeling - Disable the save button until they type something
+			// Pass the text and also the save element itslef so it can be disabled
+			saveon = false
+			app.activatesave(self.elem.todotext.val(), self.elem.save)
+		},
+		enterText : function() {
+			var self = this
+
+			_.bindAll(self)
+
+			// mdreeling - Find the main div and start playing with it
+			// We can find everything if we start from here instead of the header div
+			self.setElement("div[id='main']")
+
+			self.elem = {
+				todotext : self.$el.find('#text')
+			}
+			self.elem.todotext.focus()
 		}
 	}))
 
@@ -290,7 +291,7 @@ bb.init = function() {
 			var itemview = new bb.view.Item({
 				model : item
 			})
-			
+
 			// mdreeling - MAJOR BUG HERE that took hours to fix.
 			// self.$el.append(itemview.el$.html())
 			// Events are lost and never fire for an item if you use above code.
@@ -307,10 +308,8 @@ bb.init = function() {
 				var self = this
 
 				_.bindAll(self)
-				
-				//var itemdata = self.el$.data('itemdata')
 				self.model.toggle()
-				app.markitem(self.$el,self.model.attributes.done )
+				app.markitem(self.$el, self.model.attributes.done)
 				console.log('tap #check - done!')
 			}
 		},

@@ -56,7 +56,7 @@ exports.rest = {
 			created : new Date().getTime(),
 		}
 
-		todocoll.insert(todo, res.err$(res, function(docs) {
+		todocoll.insert(todo, res.err$(function(docs) {
 			var output = util.fixid(docs[0])
 			res.sendjson$(output)
 		}))
