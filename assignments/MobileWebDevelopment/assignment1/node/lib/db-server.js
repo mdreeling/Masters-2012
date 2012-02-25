@@ -46,7 +46,7 @@ function init() {
 
 	api.connect({
 		name : 'lab04',
-		server : '127.0.0.1',
+		server : 'ec2-107-21-79-149.compute-1.amazonaws.com',
 		port : 27017,
 	}, function(err) {
 		if(err)
