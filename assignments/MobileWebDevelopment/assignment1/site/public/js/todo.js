@@ -309,8 +309,8 @@ bb.init = function() {
 				_.bindAll(self)
 				
 				//var itemdata = self.el$.data('itemdata')
-				
-				app.markitem(self.el$, self.model.toggle())
+				self.model.toggle()
+				app.markitem(self.$el,self.model.attributes.done )
 				console.log('tap #check - done!')
 			}
 		},
