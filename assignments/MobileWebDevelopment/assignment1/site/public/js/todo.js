@@ -303,15 +303,8 @@ bb.init = function() {
 
 	bb.view.Item = Backbone.View.extend(_.extend({
 		events : {
-			"tap .check" : function() {// mdreeling - Add the CHECKBOX button event
-				console.log('tap #check - marking...')
-				var self = this
-
-				_.bindAll(self)
-				self.model.toggle()
-				app.markitem(self.$el, self.model.attributes.done)
-				console.log('tap #check - done!')
-			}
+			"tap .check" : "markItem",
+			"swipe .tm" : "swipeItem"
 		},
 		initialize : function() {
 			console.log('bb.view.Item - initialize')
@@ -324,6 +317,20 @@ bb.init = function() {
 			var self = this
 			var html = self.tm.item(self.model.toJSON())
 			self.$el.append(html)
+		},
+		markItem : function() {// mdreeling - Add the CHECKBOX button event
+			console.log('tap #check - marking...')
+			var self = this
+
+			_.bindAll(self)
+			self.model.toggle()
+			app.markitem(self.$el, self.model.attributes.done)
+			console.log('tap #check - done!')
+		},
+		swipeItem : function() {// mdreeling - Add the CHECKBOX button event
+			console.log('swipe #item - marking...')
+			var self = this
+			_.bindAll(self)
 		}
 	}, {
 		tm : {
