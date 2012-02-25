@@ -50,13 +50,20 @@ bb.init = function() {
 
 	bb.model.Item = Backbone.Model.extend(_.extend({
 		defaults : {
-			text : ''
+			text : '',
+			done : false
 		},
 
 		initialize : function() {
 			console.log('bb.model.Item - initialize')
 			var self = this
 			_.bindAll(self)
+		},
+		// Toggle the `done` state of this todo item.
+		toggle : function() {
+			this.save({
+				done : !this.get("done")
+			});
 		}
 	}))
 
@@ -89,7 +96,7 @@ bb.init = function() {
 
 	bb.view.Head = Backbone.View.extend(_.extend({
 		events : {
-			"click #text" : function() {
+			'click #text' : function() {
 				var self = this
 
 				_.bindAll(self)
@@ -148,15 +155,6 @@ bb.init = function() {
 				self.elem.add.show()
 				self.elem.cancel.hide()
 				self.elem.newitem.slideUp()
-			},
-			'click .check' : function() {// mdreeling - Add the SAVE button event
-				console.log('tap #check - marking...')
-				var self = this
-
-				_.bindAll(self)
-				
-				app.markitem(self.$el,true)
-				console.log('tap #check - done!')
 			},
 			'tap #save' : function() {// mdreeling - Add the SAVE button event
 				console.log('tap #save - saving...')
@@ -263,7 +261,6 @@ bb.init = function() {
 	}))
 
 	bb.view.List = Backbone.View.extend(_.extend({
-
 		initialize : function(items) {
 			console.log('bb.view.List - initialize')
 			var self = this
@@ -293,14 +290,30 @@ bb.init = function() {
 			var itemview = new bb.view.Item({
 				model : item
 			})
-
-			self.$el.append(itemview.$el.html())
+			
+			// mdreeling - MAJOR BUG HERE that took hours to fix.
+			// self.$el.append(itemview.el$.html())
+			// Events are lost and never fire for an item if you use above code.
+			self.$el.append(itemview.el)
 			self.scroll()
 
 		}
 	}, scrollContent))
 
 	bb.view.Item = Backbone.View.extend(_.extend({
+		events : {
+			"tap .check" : function() {// mdreeling - Add the CHECKBOX button event
+				console.log('tap #check - marking...')
+				var self = this
+
+				_.bindAll(self)
+				
+				//var itemdata = self.el$.data('itemdata')
+				
+				app.markitem(self.el$, self.model.toggle())
+				console.log('tap #check - done!')
+			}
+		},
 		initialize : function() {
 			console.log('bb.view.Item - initialize')
 			var self = this
@@ -328,7 +341,6 @@ app.init_browser = function() {
 		})
 	}
 }
-
 /**
  * Marks item with a strikethrough
  */
