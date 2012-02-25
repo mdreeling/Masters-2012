@@ -29,7 +29,9 @@ var bb = {
 
 bb.init = function() {
 
-	var scrollContent = {
+    var swipeon = false
+
+    var scrollContent = {
 		scroll : function() {
 			var self = this
 			setTimeout(function() {
@@ -328,9 +330,31 @@ bb.init = function() {
 			console.log('tap #check - done!')
 		},
 		swipeItem : function() {// mdreeling - Add the CHECKBOX button event
-			console.log('swipe #item - marking...')
+			console.log('swipe #item - iniating delete...')
 			var self = this
 			_.bindAll(self)
+			
+			var itemdata = self.model.attributes
+			
+			self.setElement("div[data-role='header']")
+
+			self.elem = {
+				add : self.$el.find('#add'),
+				cancel : self.$el.find('#cancel'),
+			}
+			
+			if(!swipeon) {
+				console.log('swipe #item - showing delete button '+ itemdata.id)
+				$('#delete_' + itemdata.id).show()
+				self.elem.add.hide()
+				self.elem.cancel.show()
+				swipeon = true
+			} else {
+				self.elem.add.show()
+				self.elem.cancel.hide()
+				$('div.delete').hide()
+				swipeon = false
+			}
 		}
 	}, {
 		tm : {
