@@ -53,7 +53,7 @@ exports.rest = {
 
 		var todo = {
 			text : input.text,
-			created : new Date().getTime(),
+			created : new Date().getTime()
 		}
         console.log('inserting...')
 		todocoll.insert(todo, res.err$(function(docs) {
@@ -112,9 +112,23 @@ exports.rest = {
 		var query = util.fixid({
 			id : id
 		})
+
+        console.log('Updating '+query+' with '+input.text)
+
+        todocoll.update(query, {$set : {
+                text : input.text,
+                done : input.done,
+                created : new Date().getTime()
+            }}, function(err) {
+                if (err) console.warn(err.message);
+                else console.log('successfully updated');
+            });
+    /**
 		todocoll.update(query, {
 			$set : {
-				text : input.text
+				text : input.text,
+                done : input.done,
+                created : new Date().getTime()
 			}
 		}, res.err$(function(count) {
 			if(0 < count) {
@@ -124,7 +138,7 @@ exports.rest = {
 				console.log('404')
 				res.send$(404, 'not found')
 			}
-		}))
+		}))**/
 	},
 	del : function(req, res) {
 		var input = req.params

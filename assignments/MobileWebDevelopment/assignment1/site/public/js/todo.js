@@ -322,8 +322,10 @@ bb.init = function() {
 			console.log('bb.view.Item - render')
 			var self = this
             console.log('bb.view.Item - appending id -> '+self.model.attributes.id)
+
 			var html = self.tm.item(self.model.toJSON())
 			self.$el.append(html)
+            app.markitem(self.$el, self.model.attributes.done)
 		},
 		markItem : function() {// mdreeling - Add the CHECKBOX button event
 			console.log('tap #check - marking...')
