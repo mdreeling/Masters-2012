@@ -94,7 +94,8 @@ bb.init = function() {
 			self.add(item)
             console.log('bb.model.Items - item added.')
 			self.count++
-			item.save()
+			//item.save()
+            item.save({success: function(){ addNewRow(); }});
             console.log('bb.model.Items - done save.')
 		}
 	}))
@@ -126,7 +127,7 @@ bb.init = function() {
 			self.elem.add.hide()
 
 			app.model.state.on('change:items', self.render)
-			self.items.on('save', self.render)
+			self.items.on('sync', self.render)
 
 		},
 		render : function() {
@@ -275,7 +276,7 @@ bb.init = function() {
 			self.setElement('#list')
 
 			self.items = items
-			self.items.on('save', self.appenditem)
+			self.items.on('sync', self.appenditem)
 
 		},
 		render : function() {
