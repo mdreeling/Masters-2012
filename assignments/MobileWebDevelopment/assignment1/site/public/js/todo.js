@@ -276,7 +276,8 @@ bb.init = function() {
 			self.setElement('#list')
 
 			self.items = items
-			self.items.on('sync', self.appenditem)
+			self.items.on('sync', self.appenditem) // TODO - Tries to append on every sync - BAD
+            app.model.state.on('change:items', self.render)
 
 		},
 		render : function() {
@@ -310,13 +311,16 @@ bb.init = function() {
 	bb.view.Item = Backbone.View.extend(_.extend({
 		events : {
 			"tap .check" : "markItem",
-			"swipe .tm" : "swipeItem"
+			"swipe .tm" : "swipeItem",
+            "tap .delete" : "deleteItem"
 		},
 		initialize : function() {
 			console.log('bb.view.Item - initialize')
 			var self = this
 			_.bindAll(self)
 			self.render()
+            //app.model.state.on('remove:items', self.deleteItem2)
+            //self.items.on('remove', self.deleteItem2)
 		},
 		render : function() {
 			console.log('bb.view.Item - render')
@@ -327,6 +331,33 @@ bb.init = function() {
 			self.$el.append(html)
             app.markitem(self.$el, self.model.attributes.done)
 		},
+        deleteItem2 : function() {// mdreeling - Add the CHECKBOX button event
+            console.log('tap #delete - deleting 22222222222...')
+        },
+        deleteItem : function() {// mdreeling - Add the CHECKBOX button event
+            console.log('tap #delete - deleting...')
+            var self = this
+
+
+            _.bindAll(self)
+            self.setElement("li[id='"+self.model.attributes.id+"']")
+
+            self.remove()
+            self.model.destroy();
+            self.unbind();
+
+
+            self.setElement("div[data-role='header']")
+
+            self.elem = {
+                add : self.$el.find('#add'),
+                cancel : self.$el.find('#cancel')
+            }
+
+            self.elem.add.show()
+            self.elem.cancel.hide()
+            console.log('tap #delete - done!')
+        },
 		markItem : function() {// mdreeling - Add the CHECKBOX button event
 			console.log('tap #check - marking...')
 			var self = this
@@ -347,7 +378,7 @@ bb.init = function() {
 
 			self.elem = {
 				add : self.$el.find('#add'),
-				cancel : self.$el.find('#cancel'),
+				cancel : self.$el.find('#cancel')
 			}
 			
 			if(!swipeon) {
