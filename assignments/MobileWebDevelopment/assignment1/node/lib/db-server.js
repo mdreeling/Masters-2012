@@ -45,9 +45,9 @@ function init() {
 	server.use(connect.static(__dirname + '/../../site/public'))
 
 	api.connect({
-		name : 'lab04',
-		server : 'ec2-107-21-79-149.compute-1.amazonaws.com',
-		port : 27017,
+		name : 'todolist',
+		server : 'services.dreeling.com',
+		port : 27017
 	}, function(err) {
 		if(err)
 			return console.log(err);

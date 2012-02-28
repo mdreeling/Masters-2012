@@ -55,11 +55,12 @@ exports.rest = {
 			text : input.text,
 			created : new Date().getTime(),
 		}
-
+        console.log('inserting...')
 		todocoll.insert(todo, res.err$(function(docs) {
 			var output = util.fixid(docs[0])
 			res.sendjson$(output)
 		}))
+        console.log('done inserting!')
 	},
 	read : function(req, res) {
 		var input = req.params
@@ -79,6 +80,9 @@ exports.rest = {
 		}))
 	},
 	list : function(req, res) {
+
+        console.log('listing')
+
 		var input = req.query
 		var output = []
 

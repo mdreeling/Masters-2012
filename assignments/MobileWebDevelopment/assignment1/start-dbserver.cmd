@@ -1,1 +1,1 @@
-node node/lib/db-server.js
+node --debug node/lib/db-server.js

@@ -90,9 +90,12 @@ bb.init = function() {
 			var item = new bb.model.Item({
 				text : textIn //'item ' + self.count
 			})
+            console.log('bb.model.Items - adding item.')
 			self.add(item)
+            console.log('bb.model.Items - item added.')
 			self.count++
 			item.save()
+            console.log('bb.model.Items - done save.')
 		}
 	}))
 
@@ -123,7 +126,7 @@ bb.init = function() {
 			self.elem.add.hide()
 
 			app.model.state.on('change:items', self.render)
-			self.items.on('add', self.render)
+			self.items.on('save', self.render)
 
 		},
 		render : function() {
@@ -272,7 +275,7 @@ bb.init = function() {
 			self.setElement('#list')
 
 			self.items = items
-			self.items.on('add', self.appenditem)
+			self.items.on('save', self.appenditem)
 
 		},
 		render : function() {
@@ -317,6 +320,7 @@ bb.init = function() {
 		render : function() {
 			console.log('bb.view.Item - render')
 			var self = this
+            console.log('bb.view.Item - appending id -> '+self.model.attributes.id)
 			var html = self.tm.item(self.model.toJSON())
 			self.$el.append(html)
 		},
