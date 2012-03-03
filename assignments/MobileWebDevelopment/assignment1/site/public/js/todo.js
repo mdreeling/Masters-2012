@@ -340,6 +340,93 @@ bb.init = function() {
 	}))
 
 	/**
+	 * mdreeling - Created a special view just to work with the settings div.
+	 */
+	bb.view.Settings = Backbone.View.extend(_.extend({
+		events : {
+			'tap #first-content a' : 'tapTheme',
+			'tap #back' : 'goBack'
+		},
+		initialize : function() {
+			console.log('bb.view.Settings - initialize')
+			var self = this
+			_.bindAll(self)
+			self.setElement("div[id='settings']")
+			self.on('refresh', function() {
+				console.log('Refreshing view...')
+
+				console.log('Rebinding theme...')
+				/* Default to the "a" theme. */
+				var oldTheme = self.$el.attr('data-theme') || 'a';
+				var newTheme = 'b';
+
+				app.elemthemerefresh(self.el, oldTheme, newTheme);
+
+				self.$el.find('*').each(function() {
+					app.elemthemerefresh($(this), oldTheme, newTheme);
+				});
+			})
+		},
+		render : function() {
+			console.log('bb.view.Settings - render')
+			var self = this
+			_.bindAll(self)
+		},
+		locateSlider : function() {
+			var self = this
+			_.bindAll(self)
+		},
+		tapTheme : function() {
+			console.log('In tap Theme...')
+			var newTheme = $(this).attr('theme');
+
+			//$('#current-theme').text('Current Theme: ' + newTheme);
+			var self = this
+			_.bindAll(self)
+			self.trigger('refresh', newTheme);
+			console.log('Switchng theme...')
+
+			self.setElement("div[id='main']")
+			self.trigger('refresh', newTheme);
+			console.log('Switchng main theme...')
+		},
+		goBack : function() {
+			window.history.back()
+		}
+	}))
+
+	/**
+	 * mdreeling - Created a special view just to work with the main div.
+	 */
+	bb.view.Main = Backbone.View.extend(_.extend({
+
+		initialize : function() {
+			console.log('bb.view.Main - initialize')
+			var self = this
+			_.bindAll(self)
+			self.setElement("div[id='main']")
+			self.on('refresh', function() {
+				console.log('Refreshing main view...')
+
+				console.log('Rebinding main theme...')
+				/* Default to the "a" theme. */
+				var oldTheme = self.$el.attr('data-theme') || 'a';
+				var newTheme = 'b';
+
+				app.elemthemerefresh(self.el, oldTheme, newTheme);
+
+				self.$el.find('*').each(function() {
+					app.elemthemerefresh($(this), oldTheme, newTheme);
+				});
+			})
+		},
+		render : function() {
+			console.log('bb.view.Main - render')
+			var self = this
+			_.bindAll(self)
+		}
+	}))
+	/**
 	 * mdreeling - Created a special view just to work with the newitem div.
 	 */
 	bb.view.NewItem = Backbone.View.extend(_.extend({
@@ -560,6 +647,16 @@ app.init = function() {
 	})
 	app.view.newitemview.render()
 
+	app.view.sett = new bb.view.Settings({
+		el : $("#settings")
+	})
+	app.view.sett.render()
+
+	app.view.main = new bb.view.Main({
+		el : $("#main")
+	})
+	app.view.main.render()
+
 	app.view.list = new bb.view.List(app.model.items)
 	app.view.list.render()
 
@@ -572,6 +669,29 @@ app.init = function() {
 		}
 	});
 	console.log('end init')
+}
+
+app.elemthemerefresh = function element_theme_refresh(element, oldTheme, newTheme) {
+	/* Update the page's new data theme. */
+	if($(element).attr('data-theme')) {
+		$(element).attr('data-theme', newTheme);
+	}
+	console.log('Changing theme...')
+	if($(element).attr('class')) {
+		/* Theme classes end in "-[a-z]$", so match that */
+		var classPattern = new RegExp('-' + oldTheme + '$');
+		newTheme = '-' + newTheme;
+
+		var classes = $(element).attr('class').split(' ');
+
+		for(var key in classes) {
+			if(classPattern.test(classes[key])) {
+				classes[key] = classes[key].replace(classPattern, newTheme);
+			}
+		}
+
+		$(element).attr('class', classes.join(' '));
+	}
 }
 
 app.initgeo = function initiate_geolocation() {
@@ -606,6 +726,5 @@ app.initgeo = function initiate_geolocation() {
 	} else {
 		alert("Geolocation API is not supported in your browser.");
 	}
-
 }
 $(app.init)

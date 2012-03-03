@@ -18,7 +18,7 @@
 		<script src="js/todo.js"></script>
 	</head>
 	<body>
-		<div id="main" data-role="page" class="app-page">
+		<div id="main" data-role="page" class="myapp-page">
 			<div data-role="header" data-position="fixed">
 				<h1 id="titlebar">{{-title}}</h1>
 				<a id="settings" data-icon="gear" class="ui-btn-left">Settings</a>
@@ -61,16 +61,12 @@
 		<div id="settings" data-role="page" class="app-page">
 			<div data-role="header" data-position="fixed">
 				<h1 id="titlebar">Settings</h1>
-				<a id="add" data-icon="plus" class="ui-btn-right">Add</a>
-				<a id="cancel" data-icon="delete" class="ui-btn-right">Cancel</a>
+				<a id="back" data-icon="back" class="ui-btn-left">Back</a>
 			</div>
-			<div data-role="content">
-				<ul id="list" data-role="listview">
-					<li id="{{-id}}" class="tm">
-						<span class="check">&nbsp;</span>
-						<span class="text">{{-text}}</span>
-					</li>
-				</ul>
+			<div data-role="content" id="first-content">
+				<p>
+					<a data-role="button" theme="a">Change to blue theme</a>
+				</p>
 			</div>
 		</div>
 	</body>

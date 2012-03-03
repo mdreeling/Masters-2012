@@ -25,7 +25,7 @@
       <file leaf-file-name="todo.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/site/public/todo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="43" selection-start="1568" selection-end="1568" vertical-scroll-proportion="0.7713249">
+            <state line="27" column="15" selection-start="1060" selection-end="1060" vertical-scroll-proportion="0.37023592">
               <folding />
             </state>
           </provider>
@@ -34,7 +34,7 @@
       <file leaf-file-name="todo.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/site/public/css/todo.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="0" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
+            <state line="28" column="0" selection-start="269" selection-end="269" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -43,9 +43,17 @@
       <file leaf-file-name="todo.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/site/public/js/todo.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="342" column="27" selection-start="8409" selection-end="8409" vertical-scroll-proportion="0.0">
+            <state line="490" column="0" selection-start="12057" selection-end="12057" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#3099#7951#0" expanded="false" />
+                <element signature="e#3429#8281#0" expanded="false" />
+                <marker date="1330818023443" expanded="true" signature="16644:16731" placeholder="/** Marks item with a strikethrough ...*/" />
+                <marker date="1330818023443" expanded="true" signature="16765:16918" placeholder="{...}" />
+                <marker date="1330818023443" expanded="true" signature="16811:16854" placeholder="{...}" />
+                <marker date="1330818023443" expanded="true" signature="17007:17031" placeholder="{...}" />
+                <marker date="1330818023443" expanded="true" signature="17054:17125" placeholder="{...}" />
+                <marker date="1330818023443" expanded="true" signature="17802:17901" placeholder="{...}" />
+                <marker date="1330818023443" expanded="true" signature="17809:17899" placeholder="{...}" />
+                <marker date="1330818023443" expanded="true" signature="17810:17828" placeholder="{&quot;items&quot;: 'loaded'...}" />
               </folding>
             </state>
           </provider>
@@ -55,15 +63,6 @@
         <entry file="file://$PROJECT_DIR$/site/public/js/todo-real.js">
           <provider selected="true" editor-type-id="text-editor">
             <state line="117" column="22" selection-start="2246" selection-end="2246" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="todo-real.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/site/public/todo-real.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -81,7 +80,7 @@
       <file leaf-file-name="db-rest-api.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node/lib/db-rest-api.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="117" column="29" selection-start="2061" selection-end="2061" vertical-scroll-proportion="0.0">
+            <state line="119" column="29" selection-start="2138" selection-end="2138" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -105,8 +104,8 @@
         <option value="$PROJECT_DIR$/site/public/js/packaged.js" />
         <option value="$PROJECT_DIR$/node/lib/db-server.js" />
         <option value="$PROJECT_DIR$/node/lib/db-rest-api.js" />
-        <option value="$PROJECT_DIR$/site/public/todo.html" />
         <option value="$PROJECT_DIR$/site/public/js/todo.js" />
+        <option value="$PROJECT_DIR$/site/public/todo.html" />
       </list>
     </option>
   </component>
@@ -181,86 +180,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="site" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assignment1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assignment1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="site" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assignment1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assignment1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="site" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assignment1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assignment1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="node" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assignment1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assignment1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="node" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -356,14 +275,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.49786323" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15010683" sideWeight="0.20155902" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32959402" sideWeight="0.6703786" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15010683" sideWeight="0.4610245" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15010683" sideWeight="0.4610245" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20824054" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32962137" sideWeight="0.49839744" order="7" side_tool="true" content_ui="tabs" />
@@ -448,19 +367,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/site/public/css/todo.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="0" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0" />
+        <state line="28" column="0" selection-start="269" selection-end="269" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/site/public/js/todo-real.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="117" column="22" selection-start="2246" selection-end="2246" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/site/public/todo-real.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node/lib/db-server.js">
@@ -470,21 +384,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/node/lib/db-rest-api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="29" selection-start="2061" selection-end="2061" vertical-scroll-proportion="0.0" />
+        <state line="119" column="29" selection-start="2138" selection-end="2138" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/site/public/js/todo.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="342" column="27" selection-start="8409" selection-end="8409" vertical-scroll-proportion="0.0">
+        <state line="490" column="0" selection-start="12057" selection-end="12057" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#3099#7951#0" expanded="false" />
+            <element signature="e#3429#8281#0" expanded="false" />
+            <marker date="1330818023443" expanded="true" signature="16644:16731" placeholder="/** Marks item with a strikethrough ...*/" />
+            <marker date="1330818023443" expanded="true" signature="16765:16918" placeholder="{...}" />
+            <marker date="1330818023443" expanded="true" signature="16811:16854" placeholder="{...}" />
+            <marker date="1330818023443" expanded="true" signature="17007:17031" placeholder="{...}" />
+            <marker date="1330818023443" expanded="true" signature="17054:17125" placeholder="{...}" />
+            <marker date="1330818023443" expanded="true" signature="17802:17901" placeholder="{...}" />
+            <marker date="1330818023443" expanded="true" signature="17809:17899" placeholder="{...}" />
+            <marker date="1330818023443" expanded="true" signature="17810:17828" placeholder="{&quot;items&quot;: 'loaded'...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/site/public/todo.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="43" selection-start="1568" selection-end="1568" vertical-scroll-proportion="0.7713249">
+        <state line="27" column="15" selection-start="1060" selection-end="1060" vertical-scroll-proportion="0.37023592">
           <folding />
         </state>
       </provider>
