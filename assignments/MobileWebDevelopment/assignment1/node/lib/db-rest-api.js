@@ -53,9 +53,10 @@ exports.rest = {
 
 		var todo = {
 			text : input.text,
-			created : new Date().getTime()
+			created : new Date().getTime(),
+			location : input.location
 		}
-        console.log('inserting...')
+        console.log('inserting...'+input)
 		todocoll.insert(todo, res.err$(function(docs) {
 			var output = util.fixid(docs[0])
 			res.sendjson$(output)
@@ -118,6 +119,7 @@ exports.rest = {
         todocoll.update(query, {$set : {
                 text : input.text,
                 done : input.done,
+				location : input.location,
                 created : new Date().getTime()
             }}, function(err) {
                 if (err) console.warn(err.message);

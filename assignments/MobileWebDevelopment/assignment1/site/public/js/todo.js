@@ -29,9 +29,19 @@ var bb = {
 
 bb.init = function() {
 
-    var swipeon = false
+	var swipeon = false
+	var userlocation = 'Unknown'
+	var Router = Backbone.Router.extend({
+		routes : {
+			'settings' : 'settingsFunction'
+		},
+		settingsFunction : function() {
+			$('div.app-page').hide();
+			$('div#settings').show();
+		}
+	});
 
-    var scrollContent = {
+	var scrollContent = {
 		scroll : function() {
 			var self = this
 			setTimeout(function() {
@@ -53,7 +63,8 @@ bb.init = function() {
 	bb.model.Item = Backbone.Model.extend(_.extend({
 		defaults : {
 			text : '',
-			done : false
+			done : false,
+			location : ''
 		},
 
 		initialize : function() {
@@ -87,22 +98,78 @@ bb.init = function() {
 		additem : function(textIn) {
 			console.log('bb.model.Items - additem')
 			var self = this
+			var latLong = '';
+
+			if(app.lastselectedgeo == "on") {
+				latLong = ' (' + app.userlocation.coords.latitude + ',' + app.userlocation.coords.longitude + ')';
+			} else {
+				/**
+				 * User asked not to have their location stored with the note.
+				 */
+				app.userlocation = null;
+			}
+
 			var item = new bb.model.Item({
-				text : textIn //'item ' + self.count
+				text : textIn + latLong,
+				done : false,
+				location : app.userlocation
 			})
-            console.log('bb.model.Items - adding item.')
+
+			console.log('bb.model.Items - adding item.')
 			self.add(item)
-            console.log('bb.model.Items - item added.')
+			console.log('bb.model.Items - item added.')
 			self.count++
-			//item.save()
-            item.save({success: function(){ addNewRow(); }});
-            console.log('bb.model.Items - done save.')
+			item.save({
+				success : function() {
+					addNewRow();
+				}
+			});
+			console.log('bb.model.Items - done save.')
+		}
+	}))
+
+	bb.model.ListsOfItems = Backbone.Collection.extend(_.extend({
+		model : bb.model.Items,
+		url : '/api/rest/todo',
+
+		initialize : function() {
+			console.log('bb.model.ListsOfItems - initialize')
+			var self = this
+			_.bindAll(self)
+			self.count = 0
+
+			self.on('reset', function() {
+				console.log('bb.model.ListsOfItems - reset')
+				self.count = self.length
+			})
+		},
+		additem2 : function(textIn) {
+			console.log('bb.model.ListsOfItems - additem')
+			var self = this
+
+			var item = new bb.model.Item({
+				text : textIn,
+				done : false,
+				location : app.userlocation
+			})
+
+			console.log('bb.model.ListsOfItems - adding item.')
+			self.add(item)
+			console.log('bb.model.ListsOfItems - item added.')
+			self.count++
+			item.save({
+				success : function() {
+					addNewRow();
+				}
+			});
+			console.log('bb.model.Items - done save.')
 		}
 	}))
 
 	bb.view.Head = Backbone.View.extend(_.extend({
 		events : {
-			'click #text' : 'enterText',
+			'tap #text' : 'enterText',
+			'tap #settings' : 'goToSettings',
 			'tap #add' : 'tapAdd',
 			'tap #cancel' : 'cancelTodoEntry',
 			'tap #save' : 'saveTodoEntry',
@@ -129,6 +196,8 @@ bb.init = function() {
 			app.model.state.on('change:items', self.render)
 			self.items.on('sync', self.render)
 
+			this.router = new Router();
+			Backbone.history.start();
 		},
 		render : function() {
 			console.log('bb.view.Head - render')
@@ -154,6 +223,9 @@ bb.init = function() {
 			if(loaded) {
 				self.elem.add.show()
 			}
+		},
+		goToSettings : function() {
+			this.router.navigate("settings");
 		},
 		cancelTodoEntry : function() {
 			var self = this
@@ -245,7 +317,7 @@ bb.init = function() {
 			self.elem.add.hide()
 			self.elem.cancel.show()
 			self.elem.newitem.slideDown()
-
+			self.elem.todotext.focus()
 			// mdreeling - Disable the save button until they type something
 			// Pass the text and also the save element itslef so it can be disabled
 			saveon = false
@@ -267,6 +339,50 @@ bb.init = function() {
 		}
 	}))
 
+	/**
+	 * mdreeling - Created a special view just to work with the newitem div.
+	 */
+	bb.view.NewItem = Backbone.View.extend(_.extend({
+		events : {
+			'change #locate-slider' : 'locateSlider',
+			'tap #save' : 'saveTodoEntry2',
+		},
+		initialize : function() {
+			console.log('bb.view.NewItem - initialize')
+			var self = this
+			_.bindAll(self)
+			self.setElement("div[id='newitem']")
+		},
+		render : function() {
+			console.log('bb.view.NewItem - render')
+			var self = this
+			_.bindAll(self)
+		},
+		locateSlider : function() {
+			var self = this
+			_.bindAll(self)
+			self.setElement("div[id='newitem']")
+			self.elem = {
+				ls : self.$el.find('#locate-slider')
+			}
+
+			var selectedOption = self.elem.ls[0].options[self.elem.ls[0].selectedIndex];
+
+			if(selectedOption.value == "on") {
+				console.log('tap #locateSlider - locating...')
+				app.lastselectedgeo = "on";
+				app.initgeo();
+				$('div#mapContainer').show();
+			} else {
+				app.lastselectedgeo = "off";
+				$('div#mapContainer').hide();
+			}
+		},
+		saveTodoEntry2 : function() {
+			console.log('IN SAVE ENTRY2...')
+		}
+	}))
+
 	bb.view.List = Backbone.View.extend(_.extend({
 		initialize : function(items) {
 			console.log('bb.view.List - initialize')
@@ -276,8 +392,8 @@ bb.init = function() {
 			self.setElement('#list')
 
 			self.items = items
-			self.items.on('sync', self.appenditem) // TODO - Tries to append on every sync - BAD
-            app.model.state.on('change:items', self.render)
+			self.items.on('sync', self.appenditem)// TODO - Tries to append on every sync - BAD
+			app.model.state.on('change:items', self.render)
 
 		},
 		render : function() {
@@ -312,52 +428,48 @@ bb.init = function() {
 		events : {
 			"tap .check" : "markItem",
 			"swipe .tm" : "swipeItem",
-            "tap .delete" : "deleteItem"
+			"tap .delete" : "deleteItem"
 		},
 		initialize : function() {
 			console.log('bb.view.Item - initialize')
 			var self = this
 			_.bindAll(self)
 			self.render()
-            //app.model.state.on('remove:items', self.deleteItem2)
-            //self.items.on('remove', self.deleteItem2)
 		},
 		render : function() {
 			console.log('bb.view.Item - render')
 			var self = this
-            console.log('bb.view.Item - appending id -> '+self.model.attributes.id)
+			console.log('bb.view.Item - appending id -> ' + self.model.attributes.id)
 
 			var html = self.tm.item(self.model.toJSON())
 			self.$el.append(html)
-            app.markitem(self.$el, self.model.attributes.done)
+			app.markitem(self.$el, self.model.attributes.done)
 		},
-        deleteItem2 : function() {// mdreeling - Add the CHECKBOX button event
-            console.log('tap #delete - deleting 22222222222...')
-        },
-        deleteItem : function() {// mdreeling - Add the CHECKBOX button event
-            console.log('tap #delete - deleting...')
-            var self = this
+		deleteItem2 : function() {// mdreeling - Add the CHECKBOX button event
+			console.log('tap #delete - deleting 22222222222...')
+		},
+		deleteItem : function() {// mdreeling - Add the CHECKBOX button event
+			console.log('tap #delete - deleting...')
+			var self = this
 
+			_.bindAll(self)
+			self.setElement("li[id='" + self.model.attributes.id + "']")
 
-            _.bindAll(self)
-            self.setElement("li[id='"+self.model.attributes.id+"']")
+			self.remove()
+			self.model.destroy();
+			self.unbind();
 
-            self.remove()
-            self.model.destroy();
-            self.unbind();
+			self.setElement("div[data-role='header']")
 
+			self.elem = {
+				add : self.$el.find('#add'),
+				cancel : self.$el.find('#cancel')
+			}
 
-            self.setElement("div[data-role='header']")
-
-            self.elem = {
-                add : self.$el.find('#add'),
-                cancel : self.$el.find('#cancel')
-            }
-
-            self.elem.add.show()
-            self.elem.cancel.hide()
-            console.log('tap #delete - done!')
-        },
+			self.elem.add.show()
+			self.elem.cancel.hide()
+			console.log('tap #delete - done!')
+		},
 		markItem : function() {// mdreeling - Add the CHECKBOX button event
 			console.log('tap #check - marking...')
 			var self = this
@@ -371,18 +483,18 @@ bb.init = function() {
 			console.log('swipe #item - iniating delete...')
 			var self = this
 			_.bindAll(self)
-			
+
 			var itemdata = self.model.attributes
-			
+
 			self.setElement("div[data-role='header']")
 
 			self.elem = {
 				add : self.$el.find('#add'),
 				cancel : self.$el.find('#cancel')
 			}
-			
+
 			if(!swipeon) {
-				console.log('swipe #item - showing delete button '+ itemdata.id)
+				console.log('swipe #item - showing delete button ' + itemdata.id)
 				$('#delete_' + itemdata.id).show()
 				self.elem.add.hide()
 				self.elem.cancel.show()
@@ -443,6 +555,11 @@ app.init = function() {
 	app.view.head = new bb.view.Head(app.model.items)
 	app.view.head.render()
 
+	app.view.newitemview = new bb.view.NewItem({
+		el : $("#newitem")
+	})
+	app.view.newitemview.render()
+
 	app.view.list = new bb.view.List(app.model.items)
 	app.view.list.render()
 
@@ -453,8 +570,42 @@ app.init = function() {
 			})
 			app.view.list.render()
 		}
-	})
-
+	});
 	console.log('end init')
+}
+
+app.initgeo = function initiate_geolocation() {
+
+	if(navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+
+			// Set location for Backbone to see it.
+			app.userlocation = position
+
+			var latitude = position.coords.latitude;
+			var longitude = position.coords.longitude;
+			var coords = new google.maps.LatLng(latitude, longitude);
+			var mapOptions = {
+				zoom : 15,
+				center : coords,
+				mapTypeControl : true,
+				navigationControlOptions : {
+					style : google.maps.NavigationControlStyle.SMALL
+				},
+				mapTypeId : google.maps.MapTypeId.ROADMAP
+			};
+			map = new google.maps.Map(document.getElementById("mapContainer"), mapOptions);
+			var marker = new google.maps.Marker({
+				position : coords,
+				map : map,
+				title : "Your current location!"
+			});
+
+		});
+		console.log('done mapping!')
+	} else {
+		alert("Geolocation API is not supported in your browser.");
+	}
+
 }
 $(app.init)

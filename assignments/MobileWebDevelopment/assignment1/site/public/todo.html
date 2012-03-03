@@ -7,6 +7,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<link rel="stylesheet" href="css/jquery.mobile.css" />
 		<link rel="stylesheet" href="css/todo.css" />
+		<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 		<script src="js/jquery.js"></script>
 		<script src="js/jquery.mobile.js"></script>
 		<script src="js/underscore.js"></script>
@@ -17,16 +18,33 @@
 		<script src="js/todo.js"></script>
 	</head>
 	<body>
-		<div id="main" data-role="page">
+		<div id="main" data-role="page" class="app-page">
 			<div data-role="header" data-position="fixed">
 				<h1 id="titlebar">{{-title}}</h1>
+				<a id="settings" data-icon="gear" class="ui-btn-left">Settings</a>
 				<a id="add" data-icon="plus" class="ui-btn-right">Add</a>
 				<a id="cancel" data-icon="delete" class="ui-btn-right">Cancel</a>
 			</div>
 			<div data-role="content">
-				<div id="newitem">
-					<input type="text" id="text" placeholder="Enter To Do item"/>
-					<a id="save" data-role="button" data-inline="true" data-icon='plus'>Save</a>
+				<div id="newitem" data-role="fieldcontain" class="ui-grid-b">
+					<div class="ui-block-a">
+						<input type="text" id="text" placeholder="Enter To Do item"/>
+						<a id="save" data-role="button" data-inline="true" data-icon='plus'>Save</a>
+					</div>
+					<div class="ui-block-b">
+						<label for="locate-slider">Tag Location</label>
+						<select id="locate-slider" name="locate" data-mini="true" data-role="slider">
+							<option value="off">Off</option>
+							<option value="on">On</option>
+						</select>
+					</div>
+					<div class="ui-block-c">
+						<label for="group-slider">Grouped List</label>
+						<select id="group-slider" name="group" data-mini="true" data-role="slider">
+							<option value="yes">Yes</option>
+							<option value="no">No</option>
+						</select>
+					</div>
 				</div>
 				<ul id="list" data-role="listview">
 					<li id="{{-id}}" class="tm">
@@ -35,6 +53,22 @@
 						<div id="delete_{{-id}}" class="delete">
 							Delete
 						</div>
+						<div id="mapContainer" class="maps"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="settings" data-role="page" class="app-page">
+			<div data-role="header" data-position="fixed">
+				<h1 id="titlebar">Settings</h1>
+				<a id="add" data-icon="plus" class="ui-btn-right">Add</a>
+				<a id="cancel" data-icon="delete" class="ui-btn-right">Cancel</a>
+			</div>
+			<div data-role="content">
+				<ul id="list" data-role="listview">
+					<li id="{{-id}}" class="tm">
+						<span class="check">&nbsp;</span>
+						<span class="text">{{-text}}</span>
 					</li>
 				</ul>
 			</div>

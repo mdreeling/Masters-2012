@@ -2,13 +2,20 @@
     display: none;
 }
 
+#mapContainer {
+	display: none;
+    height: 500px;
+    width: 800px;
+    border:10px solid #eaeaea;
+}
+
 #cancel {
   display: none;
 }
 
 #newitem {
   display: none;
-  height: 90px;
+  height: 100px;
 }
 
 #item_tm {
