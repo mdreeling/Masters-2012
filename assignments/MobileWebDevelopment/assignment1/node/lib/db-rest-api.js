@@ -54,7 +54,8 @@ exports.rest = {
 		var todo = {
 			text : input.text,
 			created : new Date().getTime(),
-			location : input.location
+			location : input.location,
+			parentid : input.parentid
 		}
         console.log('inserting...'+input)
 		todocoll.insert(todo, res.err$(function(docs) {

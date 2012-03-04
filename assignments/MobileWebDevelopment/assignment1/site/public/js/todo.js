@@ -30,16 +30,26 @@ var bb = {
 bb.init = function() {
 
 	var swipeon = false
+	var groupedmode = false
 	var userlocation = 'Unknown'
+
 	var Router = Backbone.Router.extend({
 		routes : {
-			'settings' : 'settingsFunction'
+			'settings' : 'settingsFunction',
+			'viewgrouping/:tid' : 'showGrouping'
 		},
 		settingsFunction : function() {
 			$('div.app-page').hide();
 			$('div#settings').show();
+		},
+		showGrouping : function(tid) {
+			console.log('showing groupings')
+			$('div.app-page').hide();
+			$('div#viewgrouping').show();
 		}
 	});
+	app_router = new Router();
+	Backbone.history.start();
 
 	var scrollContent = {
 		scroll : function() {
@@ -64,7 +74,8 @@ bb.init = function() {
 		defaults : {
 			text : '',
 			done : false,
-			location : ''
+			location : '',
+			parentid : ''
 		},
 
 		initialize : function() {
@@ -108,11 +119,12 @@ bb.init = function() {
 				 */
 				app.userlocation = null;
 			}
-
+			console.log('bb.model.Items - Parent is '+app.activegroupingparent)
 			var item = new bb.model.Item({
 				text : textIn + latLong,
 				done : false,
-				location : app.userlocation
+				location : app.userlocation,
+				parentid : app.activegroupingparent
 			})
 
 			console.log('bb.model.Items - adding item.')
@@ -195,9 +207,6 @@ bb.init = function() {
 
 			app.model.state.on('change:items', self.render)
 			self.items.on('sync', self.render)
-
-			this.router = new Router();
-			Backbone.history.start();
 		},
 		render : function() {
 			console.log('bb.view.Head - render')
@@ -225,7 +234,7 @@ bb.init = function() {
 			}
 		},
 		goToSettings : function() {
-			this.router.navigate("settings");
+			app_router.navigate("settings");
 		},
 		cancelTodoEntry : function() {
 			var self = this
@@ -336,6 +345,43 @@ bb.init = function() {
 				todotext : self.$el.find('#text')
 			}
 			self.elem.todotext.focus()
+		}
+	}))
+
+	/**
+	 * mdreeling - Created a special view just to work with the settings div.
+	 */
+	bb.view.TodoGrouping = Backbone.View.extend(_.extend({
+		events : {
+			'tap #back' : 'goBack'
+		},
+		initialize : function() {
+			console.log('bb.view.TodoGrouping - initialize')
+			var self = this
+			_.bindAll(self)
+			self.setElement("div[id='viewgrouping']")
+			self.on('refresh', function() {
+				console.log('Refreshing view...')
+
+				console.log('Rebinding theme...')
+				/* Default to the "a" theme. */
+				var oldTheme = self.$el.attr('data-theme') || 'a';
+				var newTheme = 'b';
+
+				app.elemthemerefresh(self.el, oldTheme, newTheme);
+
+				self.$el.find('*').each(function() {
+					app.elemthemerefresh($(this), oldTheme, newTheme);
+				});
+			})
+		},
+		render : function() {
+			console.log('bb.view.TodoGrouping - render')
+			var self = this
+			_.bindAll(self)
+		},
+		goBack : function() {
+			window.history.back()
 		}
 	}))
 
@@ -515,7 +561,8 @@ bb.init = function() {
 		events : {
 			"tap .check" : "markItem",
 			"swipe .tm" : "swipeItem",
-			"tap .delete" : "deleteItem"
+			"tap .delete" : "deleteItem",
+			"tap .showgroupings" : "showGroupedView"
 		},
 		initialize : function() {
 			console.log('bb.view.Item - initialize')
@@ -534,6 +581,13 @@ bb.init = function() {
 		},
 		deleteItem2 : function() {// mdreeling - Add the CHECKBOX button event
 			console.log('tap #delete - deleting 22222222222...')
+		},
+		showGroupedView : function() {// mdreeling - Add the CHECKBOX button event
+			var self = this
+			_.bindAll(self)
+			groupedmode = true;
+			app.activegroupingparent = self.model.attributes.id;
+			console.log('tap #showgroups - Showing groupings for task ' + self.model.attributes.text+'.'+app.activegroupingparent)
 		},
 		deleteItem : function() {// mdreeling - Add the CHECKBOX button event
 			console.log('tap #delete - deleting...')
@@ -556,6 +610,13 @@ bb.init = function() {
 			self.elem.add.show()
 			self.elem.cancel.hide()
 			console.log('tap #delete - done!')
+		},
+		tapItem : function() {// mdreeling - Add the CHECKBOX button event
+			console.log('tap #tapItem...')
+			var self = this
+
+			_.bindAll(self);
+			app_router.navigate("viewgrouping");
 		},
 		markItem : function() {// mdreeling - Add the CHECKBOX button event
 			console.log('tap #check - marking...')
@@ -641,6 +702,11 @@ app.init = function() {
 	app.model.items = new bb.model.Items()
 	app.view.head = new bb.view.Head(app.model.items)
 	app.view.head.render()
+
+	app.view.todogrouping = new bb.view.TodoGrouping({
+		el : $("#viewgrouping")
+	})
+	app.view.todogrouping.render()
 
 	app.view.newitemview = new bb.view.NewItem({
 		el : $("#newitem")

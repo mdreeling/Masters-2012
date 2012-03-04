@@ -25,7 +25,7 @@
       <file leaf-file-name="todo.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/site/public/todo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="15" selection-start="1060" selection-end="1060" vertical-scroll-proportion="0.37023592">
+            <state line="57" column="21" selection-start="1076" selection-end="2195" vertical-scroll-proportion="0.938294">
               <folding />
             </state>
           </provider>
@@ -43,26 +43,7 @@
       <file leaf-file-name="todo.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/site/public/js/todo.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="490" column="0" selection-start="12057" selection-end="12057" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#3429#8281#0" expanded="false" />
-                <marker date="1330818023443" expanded="true" signature="16644:16731" placeholder="/** Marks item with a strikethrough ...*/" />
-                <marker date="1330818023443" expanded="true" signature="16765:16918" placeholder="{...}" />
-                <marker date="1330818023443" expanded="true" signature="16811:16854" placeholder="{...}" />
-                <marker date="1330818023443" expanded="true" signature="17007:17031" placeholder="{...}" />
-                <marker date="1330818023443" expanded="true" signature="17054:17125" placeholder="{...}" />
-                <marker date="1330818023443" expanded="true" signature="17802:17901" placeholder="{...}" />
-                <marker date="1330818023443" expanded="true" signature="17809:17899" placeholder="{...}" />
-                <marker date="1330818023443" expanded="true" signature="17810:17828" placeholder="{&quot;items&quot;: 'loaded'...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="todo-real.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/site/public/js/todo-real.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="117" column="22" selection-start="2246" selection-end="2246" vertical-scroll-proportion="0.0">
+            <state line="535" column="0" selection-start="13159" selection-end="13159" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -157,6 +138,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -185,21 +167,20 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
-    <property name="recentsLimit" value="5" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="options.lastSelected" value="web.server" />
+    <property name="recentsLimit" value="5" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
-    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
   </component>
   <component name="PublishConfig" serverName="services.dreeling.com" serverId="88d5c4bb-2d83-465a-a78e-7ac067bbc97d" createEmptyFolders="true">
     <servers>
@@ -280,9 +261,9 @@
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.49786323" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15010683" sideWeight="0.20155902" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15170941" sideWeight="0.35746104" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32959402" sideWeight="0.6703786" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15010683" sideWeight="0.4610245" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15170941" sideWeight="0.3051225" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20824054" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32962137" sideWeight="0.49839744" order="7" side_tool="true" content_ui="tabs" />
@@ -367,14 +348,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/site/public/css/todo.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="269" selection-end="269" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="28" column="0" selection-start="269" selection-end="269" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/site/public/js/todo-real.js">
+    <entry file="file://$PROJECT_DIR$/site/public/js/todo.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="22" selection-start="2246" selection-end="2246" vertical-scroll-proportion="0.0" />
+        <state line="535" column="0" selection-start="13159" selection-end="13159" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node/lib/db-server.js">
@@ -384,31 +363,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/node/lib/db-rest-api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="29" selection-start="2138" selection-end="2138" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/site/public/js/todo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="490" column="0" selection-start="12057" selection-end="12057" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#3429#8281#0" expanded="false" />
-            <marker date="1330818023443" expanded="true" signature="16644:16731" placeholder="/** Marks item with a strikethrough ...*/" />
-            <marker date="1330818023443" expanded="true" signature="16765:16918" placeholder="{...}" />
-            <marker date="1330818023443" expanded="true" signature="16811:16854" placeholder="{...}" />
-            <marker date="1330818023443" expanded="true" signature="17007:17031" placeholder="{...}" />
-            <marker date="1330818023443" expanded="true" signature="17054:17125" placeholder="{...}" />
-            <marker date="1330818023443" expanded="true" signature="17802:17901" placeholder="{...}" />
-            <marker date="1330818023443" expanded="true" signature="17809:17899" placeholder="{...}" />
-            <marker date="1330818023443" expanded="true" signature="17810:17828" placeholder="{&quot;items&quot;: 'loaded'...}" />
-          </folding>
-        </state>
+        <state line="119" column="29" selection-start="2138" selection-end="2138" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/site/public/todo.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="15" selection-start="1060" selection-end="1060" vertical-scroll-proportion="0.37023592">
+        <state line="57" column="21" selection-start="1076" selection-end="2195" vertical-scroll-proportion="0.938294">
           <folding />
         </state>
       </provider>
