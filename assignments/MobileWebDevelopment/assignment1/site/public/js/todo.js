@@ -104,6 +104,8 @@ bb.init = function() {
 			self.on('reset', function() {
 				console.log('bb.model.Items - reset')
 				self.count = self.length
+				// Re-render after a refresh - required for groupings.
+				app.view.list.render();
 			})
 		},
 		additem : function(textIn) {
@@ -119,7 +121,7 @@ bb.init = function() {
 				 */
 				app.userlocation = null;
 			}
-			console.log('bb.model.Items - Parent is '+app.activegroupingparent)
+			console.log('bb.model.Items - Parent is ' + app.activegroupingparent)
 			var item = new bb.model.Item({
 				text : textIn + latLong,
 				done : false,
@@ -182,6 +184,7 @@ bb.init = function() {
 		events : {
 			'tap #text' : 'enterText',
 			'tap #settings' : 'goToSettings',
+			'tap #backtotoplevel' : 'goToMain',
 			'tap #add' : 'tapAdd',
 			'tap #cancel' : 'cancelTodoEntry',
 			'tap #save' : 'saveTodoEntry',
@@ -206,6 +209,7 @@ bb.init = function() {
 			self.elem.add.hide()
 
 			app.model.state.on('change:items', self.render)
+			app.model.state.on('reset:items', self.render)
 			self.items.on('sync', self.render)
 		},
 		render : function() {
@@ -232,6 +236,33 @@ bb.init = function() {
 			if(loaded) {
 				self.elem.add.show()
 			}
+		},
+		goToMain : function() {
+			//app_router.navigate("settings");
+			var self = this
+			_.bindAll(self)
+			groupedmode = false;
+			app.activegroupingparent = null;
+			console.log('tap #showgroups - Showing main tasks ');
+
+			app.model.items.fetch({
+				success : function() {
+					app.model.state.set({
+						items : 'loaded'
+					})
+					app.view.list.render()
+				}
+			});
+
+			self.setElement("div[data-role='header']")
+
+			self.elem = {
+				back : self.$el.find('#backtotoplevel'),
+				settings : self.$el.find('#settings')
+			}
+
+			self.elem.back.hide()
+			self.elem.settings.show()
 		},
 		goToSettings : function() {
 			app_router.navigate("settings");
@@ -576,8 +607,17 @@ bb.init = function() {
 			console.log('bb.view.Item - appending id -> ' + self.model.attributes.id)
 
 			var html = self.tm.item(self.model.toJSON())
+
 			self.$el.append(html)
 			app.markitem(self.$el, self.model.attributes.done)
+
+			if(self.model.attributes.parentid != null) {
+				self.elem = {
+					grp : self.$el.find('.showgroupings'),
+				}
+
+				self.elem.grp.hide()
+			}
 		},
 		deleteItem2 : function() {// mdreeling - Add the CHECKBOX button event
 			console.log('tap #delete - deleting 22222222222...')
@@ -587,7 +627,23 @@ bb.init = function() {
 			_.bindAll(self)
 			groupedmode = true;
 			app.activegroupingparent = self.model.attributes.id;
-			console.log('tap #showgroups - Showing groupings for task ' + self.model.attributes.text+'.'+app.activegroupingparent)
+			console.log('tap #showgroups - Showing groupings for task ' + self.model.attributes.text + '.' + app.activegroupingparent)
+
+			app.model.items.fetch({
+				data : {
+					parentid : app.activegroupingparent
+				}
+			});
+
+			self.setElement("div[data-role='header']")
+
+			self.elem = {
+				back : self.$el.find('#backtotoplevel'),
+				settings : self.$el.find('#settings')
+			}
+
+			self.elem.back.show()
+			self.elem.settings.hide()
 		},
 		deleteItem : function() {// mdreeling - Add the CHECKBOX button event
 			console.log('tap #delete - deleting...')

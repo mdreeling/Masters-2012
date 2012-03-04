@@ -57,12 +57,12 @@ exports.rest = {
 			location : input.location,
 			parentid : input.parentid
 		}
-        console.log('inserting...'+input)
+		console.log('inserting...' + input)
 		todocoll.insert(todo, res.err$(function(docs) {
 			var output = util.fixid(docs[0])
 			res.sendjson$(output)
 		}))
-        console.log('done inserting!')
+		console.log('done inserting!')
 	},
 	read : function(req, res) {
 		var input = req.params
@@ -83,12 +83,22 @@ exports.rest = {
 	},
 	list : function(req, res) {
 
-        console.log('listing')
+		console.log('listing')
 
 		var input = req.query
 		var output = []
+		var query = null;
 
-		var query = {}
+		if(req.query.parentid == null) {
+			query = {
+				"parentid" : null
+			}
+		} else {
+			query = {
+				"parentid" : req.query.parentid
+			}
+		}
+
 		var options = {
 			sort : [['created', 'desc']]
 		}
@@ -115,33 +125,37 @@ exports.rest = {
 			id : id
 		})
 
-        console.log('Updating '+query+' with '+input.text)
+		console.log('Updating ' + query + ' with ' + input.text)
 
-        todocoll.update(query, {$set : {
-                text : input.text,
-                done : input.done,
-				location : input.location,
-                created : new Date().getTime()
-            }}, function(err) {
-                if (err) console.warn(err.message);
-                else console.log('successfully updated');
-            });
-    /**
 		todocoll.update(query, {
 			$set : {
 				text : input.text,
-                done : input.done,
-                created : new Date().getTime()
+				done : input.done,
+				location : input.location,
+				created : new Date().getTime()
 			}
-		}, res.err$(function(count) {
-			if(0 < count) {
-				var output = util.fixid(doc)
-				res.sendjson$(output)
-			} else {
-				console.log('404')
-				res.send$(404, 'not found')
-			}
-		}))**/
+		}, function(err) {
+			if(err)
+				console.warn(err.message);
+			else
+				console.log('successfully updated');
+		});
+		/**
+		 todocoll.update(query, {
+		 $set : {
+		 text : input.text,
+		 done : input.done,
+		 created : new Date().getTime()
+		 }
+		 }, res.err$(function(count) {
+		 if(0 < count) {
+		 var output = util.fixid(doc)
+		 res.sendjson$(output)
+		 } else {
+		 console.log('404')
+		 res.send$(404, 'not found')
+		 }
+		 }))**/
 	},
 	del : function(req, res) {
 		var input = req.params

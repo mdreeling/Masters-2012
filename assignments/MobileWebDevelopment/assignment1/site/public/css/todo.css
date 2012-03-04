@@ -18,6 +18,10 @@
   height: 100px;
 }
 
+#backtotoplevel {
+  display: none;
+}
+
 #item_tm {
   display: none;
 }
