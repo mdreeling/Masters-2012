@@ -1,10 +1,5 @@
-// Mobile Web Development - Assignment 1
-// [Michael Dreeling](http://wordpress.dreeling.com/). 
-// This source code fulfills the following requirements
-// Baseline - Views / In-Memory Store / Desktop Safari / Replicates Todo List
-//
-//
-//
+// Mobile Web Development
+// [Michael Dreeling](http://wordpress.dreeling.com/).
 
 function pd(func) {
 	return function(event) {
@@ -15,32 +10,44 @@ function pd(func) {
 
 document.ontouchmove = pd()
 
+// Underscore template settings
 _.templateSettings = {
 	interpolate : /\{\{(.+?)\}\}/g,
 	escape : /\{\{-(.+?)\}\}/g,
 	evaluate : /\{\{=(.+?)\}\}/g
 };
+
+// User Agent tester for Android/iPhone
 var browser = {
 	android : /Android/.test(navigator.userAgent)
 }
 browser.iphone = !browser.android
 
+// Main application variables scope
 var app = {
 	model : {},
 	view : {}
 }
 
+// Backbone application variables scope
 var bb = {
 	model : {},
 	view : {}
 }
 
+// Backbone initialization
+// ----------
 bb.init = function() {
 
 	var swipeon = false
+	// Indicates that we are adding a todo item that will contain nested tasks.
 	var groupedmode = false
+	// Indicates that we have the map open in the app
+	var mapopen = false
+
+	// User location co-ordinates holder
 	var userlocation = 'Unknown'
-	
+
 	// Main router - it serves 3 functions, to allow you
 	// to get to settings, the main div and back to the login if necessary
 	var Router = Backbone.Router.extend({
@@ -60,8 +67,12 @@ bb.init = function() {
 		},
 		showMain : function() {
 			console.log('showing main')
+			$('div.app-page').hide();
+			$('div#main').show();
 		}
 	});
+
+	// Main application router - referenced elswhere.
 	app_router = new Router();
 	Backbone.history.start();
 
@@ -84,6 +95,9 @@ bb.init = function() {
 		}
 	}))
 
+	// bb.model.Item
+	// ----------
+	// Contains additional attribute 'parentid' which is used for grouping
 	bb.model.Item = Backbone.Model.extend(_.extend({
 		defaults : {
 			text : '',
@@ -104,10 +118,10 @@ bb.init = function() {
 			});
 		}
 	}))
-	
-	/**
-	 * Login Data!!!
-	 */
+
+	// bb.model.LoginData
+	// ----------
+	// Represents login data sitting inside a collection
 	bb.model.LoginData = Backbone.Model.extend(_.extend({
 		defaults : {
 			username : '',
@@ -121,8 +135,11 @@ bb.init = function() {
 		}
 	}))
 
+	// bb.model.Logins
+	// ----------
+	// Represents a collection of login data pulled via REST from the server
 	bb.model.Logins = Backbone.Collection.extend(_.extend({
-		model : bb.model.Item,
+		model : bb.model.LoginData,
 		url : '/api/rest/login',
 
 		initialize : function() {
@@ -132,6 +149,9 @@ bb.init = function() {
 		}
 	}))
 
+	// bb.model.Items
+	// ----------
+	// Main items Collection for the todo's
 	bb.model.Items = Backbone.Collection.extend(_.extend({
 		model : bb.model.Item,
 		url : '/api/rest/todo',
@@ -145,21 +165,21 @@ bb.init = function() {
 			self.on('reset', function() {
 				console.log('bb.model.Items - reset')
 				self.count = self.length
-				// Re-render after a refresh - required for groupings.
+				// Re-render after a refresh - (required for groupings to work)
 				app.view.list.render();
 			})
 		},
+		// Adds an item (recording location if desired)
 		additem : function(textIn) {
 			console.log('bb.model.Items - additem')
 			var self = this
 			var latLong = '';
 
+			// User requested location to be stored.
 			if(app.lastselectedgeo == "on") {
 				latLong = ' (' + app.userlocation.coords.latitude + ',' + app.userlocation.coords.longitude + ')';
 			} else {
-				/**
-				 * User asked not to have their location stored with the note.
-				 */
+				// User asked not to have their location stored with the todo.
 				app.userlocation = null;
 			}
 			console.log('bb.model.Items - Parent is ' + app.activegroupingparent)
@@ -183,9 +203,11 @@ bb.init = function() {
 		}
 	}))
 
-	/**
-	 * This view defines common behaviour for all headers but not particular one specifically (as it did before)
-	 */
+	// bb.view.Head
+	// ----------
+	// This view defines common behaviour for all headers but not particular one specifically (as it did before)
+	// I moved most of the functionality out to the Main view once i realized that it did not really make sense once
+	// you had more than one view.
 	bb.view.Head = Backbone.View.extend(_.extend({
 		initialize : function(items) {
 			console.log('bb.view.Head - initialize')
@@ -198,9 +220,13 @@ bb.init = function() {
 		}
 	}))
 
-	/**
-	 * mdreeling - Created a special view just to work with the settings div.
-	 */
+	// bb.view.Login
+	// ----------
+	// The login view is mainly here to allow me to work with the login action button
+	// to verify the user via the REST api. I was unable to get the main div to properly reload
+	// after a successful login - so the only way to very this is working is to go to
+	// http://todo.dreeling.com/#login and enter test and test, which queries the database
+	// via REST and checks the password. It only moves the div forward if the password is correct
 	bb.view.Login = Backbone.View.extend(_.extend({
 		events : {
 			'tap #Submit1' : 'tapLogin',
@@ -217,14 +243,50 @@ bb.init = function() {
 			console.log('bb.view.Settings - render')
 			var self = this
 			_.bindAll(self)
+			self.elem = {
+				title : self.$el.find('#titlebar'),
+			}
+
+			self.tm = {
+				title : _.template(self.elem.title.html())
+			}
+
+			self.elem.title.html(self.tm.title({
+				title : 'Todo App Login'
+			}))
 		},
 		tapLogin : function() {
 			console.log('In tap Login...')
 			var self = this
-			_.bindAll(self)
-			app_router.navigate("main");
-			app.listinit()
-			app.view.head.render();
+			_.bindAll(self);
+
+			self.elem = {
+				user : self.$el.find('#username'),
+				pass : self.$el.find('#password')
+			}
+
+			// Go to the server and pull the login data via REST.
+			// The users are already pre-loaded in the database
+			app.model.logins.fetch({
+				data : {
+					id : self.elem.user.val()
+				},
+				success : function() {
+
+					app.model.logins.each(function(item) {
+						if(item.attributes.username == self.elem.user.val()) {
+							if(self.elem.pass.val() == item.attributes.password) {
+								app_router.navigate("main", {
+									trigger : true
+								});
+								//app.listinit()
+							} else {
+								alert('Bad password');
+							}
+						}
+					})
+				},
+			});
 		},
 		tapUser : function() {
 			console.log('In tap User...')
@@ -240,15 +302,18 @@ bb.init = function() {
 		}
 	}))
 
-	/**
-	 * mdreeling - Created a special view just to work with the main div.
-	 */
+	// bb.view.Main
+	// ----------
+	// The main view. This is hte view that should render the list items - and only this view.
+	// Previously the header was in charge of everything.
 	bb.view.Main = Backbone.View.extend(_.extend({
 		events : {
 			'tap #text' : 'enterText',
 			'tap #settings' : 'goToSettings',
-			'tap #backtotoplevel' : 'goToMain',
-			'tap #add' : 'tapAdd',
+			// FIX FOR IPAD - tap event does NOT work. Triggers some erroneous junk events.
+			'click #backtotoplevel' : 'goToMain',
+			// FIX FOR IPAD - tap event does NOT work. Triggers some erroneous junk events.
+			'click #add' : 'tapAdd',
 			'tap #cancel' : 'cancelTodoEntry',
 			'tap #save' : 'saveTodoEntry',
 			'keyup #text' : 'keyupTodoText'
@@ -273,6 +338,8 @@ bb.init = function() {
 
 			app.model.state.on('change:items', self.render)
 			app.model.state.on('reset:items', self.render)
+			// I added this because there were some issues with the save callback.
+			// This is in replacement of addNewRow
 			self.items.on('sync', self.render)
 		},
 		render : function() {
@@ -301,8 +368,10 @@ bb.init = function() {
 				self.elem.add.show()
 			}
 		},
+		// This method is here to allow main to refresh 'itself'
+		// When you use groupings - they are also displayed in the main div.
 		goToMain : function() {
-			//app_router.navigate("settings");
+
 			var self = this
 			_.bindAll(self)
 			groupedmode = false;
@@ -334,28 +403,22 @@ bb.init = function() {
 		cancelTodoEntry : function() {
 			var self = this
 			_.bindAll(self)
-			// mdreeling - Find the main div and start playing with it
-			// We can find everything if we start from here instead of the header div
-			self.setElement("div[id='main']")
+
 			self.elem = {
 				add : self.$el.find('#add'),
 				cancel : self.$el.find('#cancel'),
 				newitem : self.$el.find('#newitem')
 			}
-			// mdreeling - Just reverse the previous actions
+			// Just reverse the previous actions
 			self.elem.add.show()
 			self.elem.cancel.hide()
 			self.elem.newitem.slideUp()
 		},
-		saveTodoEntry : function() {// mdreeling - Add the SAVE button event
+		saveTodoEntry : function() {// Add the SAVE button event
 			console.log('tap #save - saving...')
 			var self = this
 
 			_.bindAll(self)
-
-			// mdreeling - Find the main div and start playing with it
-			// We can find everything if we start from here instead of the header div
-			self.setElement("div[id='main']")
 
 			self.elem = {
 				todotext : self.$el.find('#text'),
@@ -364,51 +427,43 @@ bb.init = function() {
 				newitem : self.$el.find('#newitem')
 			}
 
-			// mdreeling - Pull the item text out of the input box
+			// Pull the item text out of the input box
 			var text = self.elem.todotext.val()
 
 			if(0 == text.length) {
 				return
 			}
 
-			// mdreeling - scrub the textfield and relinquish focus
+			// scrub the textfield and relinquish focus
 			self.elem.todotext.val('').blur()
 
 			console.log('tap #save - adding item...')
-			// mdreeling - Add the item to the master list
+			// Add the item to the master list
 			self.items.additem(text)
 			console.log('tap #save - Reversing buttons and sliding up...')
-			// mdreeling - Just reverse the previous actions
+			// Just reverse the previous actions
 			self.elem.cancel.hide()
 			self.elem.add.show()
 			self.elem.newitem.slideUp()
 			console.log('tap #save - done!')
 		},
-		keyupTodoText : function() {// mdreeling - Add the KEYUP handler to enable and disbale the save button
+		keyupTodoText : function() {// Add the KEYUP handler to enable and disbale the save button
 			var self = this
 
 			_.bindAll(self)
-
-			// mdreeling - Find the main div and start playing with it
-			// We can find everything if we start from here instead of the header div
-			self.setElement("div[id='main']")
 
 			self.elem = {
 				save : self.$el.find('#save'),
 				todotext : self.$el.find('#text')
 			}
 
-			// mdreeling - Toggle a save check on each keyup
+			// Toggle a save check on each keyup
 			app.activatesave(self.elem.todotext.val(), self.elem.save)
 		},
 		tapAdd : function() {
 			var self = this
 
 			_.bindAll(self)
-
-			// mdreeling - Find the main div and start playing with it
-			// We can find everything if we start from here instead of the header div
-			self.setElement("div[id='main']")
 
 			self.elem = {
 				add : self.$el.find('#add'),
@@ -418,11 +473,12 @@ bb.init = function() {
 				save : self.$el.find('#save')
 			}
 
-			self.elem.add.hide()
 			self.elem.cancel.show()
+			self.elem.add.hide()
 			self.elem.newitem.slideDown()
 			self.elem.todotext.focus()
-			// mdreeling - Disable the save button until they type something
+
+			// Disable the save button until they type something
 			// Pass the text and also the save element itslef so it can be disabled
 			saveon = false
 			app.activatesave(self.elem.todotext.val(), self.elem.save)
@@ -435,14 +491,17 @@ bb.init = function() {
 			self.elem = {
 				todotext : self.$el.find('#text')
 			}
-			
+
 			self.elem.todotext.focus()
 		}
 	}))
 
-	/**
-	 * mdreeling - Created a special view just to work with the settings div.
-	 */
+	// bb.view.Settings
+	// ----------
+	// The settings view. This allows you to change the DOM to a new theme.
+	// I used some GitHub code here which was not setup for Backbone.
+	// I switched it up to be used in the style of my own app.
+	// https://gist.github.com/1117707
 	bb.view.Settings = Backbone.View.extend(_.extend({
 		events : {
 			'tap #first-content a' : 'tapTheme',
@@ -463,10 +522,8 @@ bb.init = function() {
 			}
 
 			self.on('refresh', function() {
-				console.log('Refreshing view...')
-
 				console.log('Rebinding theme...')
-				/* Default to the "a" theme. */
+				// Default to the "a" theme
 				var oldTheme = self.$el.attr('data-theme') || 'a';
 				var newTheme = 'b';
 
@@ -490,15 +547,10 @@ bb.init = function() {
 				title : 'Settings'
 			}))
 		},
-		locateSlider : function() {
-			var self = this
-			_.bindAll(self)
-		},
 		tapTheme : function() {
 			console.log('In tap Theme...')
 			var newTheme = $(this).attr('theme');
 
-			//$('#current-theme').text('Current Theme: ' + newTheme);
 			var self = this
 			_.bindAll(self)
 			self.trigger('refresh', newTheme);
@@ -513,13 +565,13 @@ bb.init = function() {
 		}
 	}))
 
-	/**
-	 * mdreeling - Created a special view just to work with the newitem div.
-	 */
+	// bb.view.NewItem
+	// ----------
+	// The new item view. This is a seperate view to handle only the NewItem div.
+	// I switched this DIV back up to the Header View because i had problems with iScroll.
 	bb.view.NewItem = Backbone.View.extend(_.extend({
 		events : {
-			'change #locate-slider' : 'locateSlider',
-			'tap #save' : 'saveTodoEntry2',
+			'change #locate-slider' : 'locateSlider'
 		},
 		initialize : function() {
 			console.log('bb.view.NewItem - initialize')
@@ -532,6 +584,7 @@ bb.init = function() {
 			var self = this
 			_.bindAll(self)
 		},
+		// This toggles location for the current todo.
 		locateSlider : function() {
 			var self = this
 			_.bindAll(self)
@@ -546,17 +599,17 @@ bb.init = function() {
 				console.log('tap #locateSlider - locating...')
 				app.lastselectedgeo = "on";
 				app.initgeo();
-				$('div#mapContainer').show();
 			} else {
 				app.lastselectedgeo = "off";
-				$('div#mapContainer').hide();
 			}
-		},
-		saveTodoEntry2 : function() {
-			console.log('IN SAVE ENTRY2...')
 		}
 	}))
 
+	// bb.view.List
+	// ----------
+	// The main list view which is scrollable. I initially had problems with iScroll
+	// where if the list was included AFTER a new item DIV - it simply would not scroll.
+	// I resolved this by leaving the list by itself inside the content pane.
 	bb.view.List = Backbone.View.extend(_.extend({
 		initialize : function(items) {
 			console.log('bb.view.List - initialize')
@@ -566,7 +619,8 @@ bb.init = function() {
 			self.setElement('#list')
 
 			self.items = items
-			self.items.on('sync', self.appenditem)// TODO - Tries to append on every sync - BAD
+			// Again - i used sync here due to bugs on callbacks.
+			self.items.on('sync', self.appenditem)
 			app.model.state.on('change:items', self.render)
 
 		},
@@ -576,7 +630,8 @@ bb.init = function() {
 
 			self.$el.empty()
 
-			// Here - we already have the HTML inside a template variable and we are going to replace an attribute of the template before appending the whole HTML fragment.
+			// Here - we already have the HTML inside a template variable and we are going to replace an attribute of the template before
+			// appending the whole HTML fragment.
 			self.items.each(function(item) {
 				self.appenditem(item)
 			})
@@ -589,7 +644,7 @@ bb.init = function() {
 				model : item
 			})
 
-			// mdreeling - MAJOR BUG HERE that took hours to fix.
+			// MAJOR BUG HERE that took hours to fix.
 			// self.$el.append(itemview.el$.html())
 			// Events are lost and never fire for an item if you use above code.
 			self.$el.append(itemview.el)
@@ -598,12 +653,16 @@ bb.init = function() {
 		}
 	}, scrollContent))
 
+	// bb.view.List
+	// ----------
+	// The per item view.
 	bb.view.Item = Backbone.View.extend(_.extend({
 		events : {
 			"tap .check" : "markItem",
 			"swipe .tm" : "swipeItem",
 			"tap .delete" : "deleteItem",
-			"tap .showgroupings" : "showGroupedView"
+			"tap .showgroupings" : "showGroupedView",
+			"tap .showmap" : "showMapView"
 		},
 		initialize : function() {
 			console.log('bb.view.Item - initialize')
@@ -619,20 +678,59 @@ bb.init = function() {
 			var html = self.tm.item(self.model.toJSON())
 
 			self.$el.append(html)
-			app.markitem(self.$el, self.model.attributes.done)
 
+			// Mark the item per its database model value
+			app.markitem(self.$el, self.model.attributes.done)
 			if(self.model.attributes.parentid != null) {
 				self.elem = {
 					grp : self.$el.find('.showgroupings'),
 				}
+				self.elem.grp.hide()
+			} else {
 
+			}
+
+			// Hide show map if there are no co-ordinates stored with the todo
+			if(self.model.attributes.location == null) {
+				self.elem = {
+					grp : self.$el.find('.showmap'),
+				}
 				self.elem.grp.hide()
 			}
 		},
-		deleteItem2 : function() {// mdreeling - Add the CHECKBOX button event
-			console.log('tap #delete - deleting 22222222222...')
+		// showMapView
+		// ----------
+		// Uses google maps API to generate an interactive map.
+		// The map is specific to the item.
+		showMapView : function() {// Add the CHECKBOX button event
+			var self = this
+			_.bindAll(self)
+
+			// Map button toggle code.
+			if(!mapopen) {
+				console.log('tap #showmaps - Showing map for task ' + self.model.attributes.text)
+
+				self.elem = {
+					map : self.$el.find('#mapContainer_' + self.model.attributes.id),
+				}
+				app.generateMap(self.model.attributes.id, self.model.attributes.location)
+				$('#showmap_' + self.model.attributes.id).text('Close Map');
+				mapopen = true;
+			} else {
+				$('#mapContainer_' + self.model.attributes.id).hide();
+				mapopen = false
+				$('#showmap_' + self.model.attributes.id).text('Show Map');
+			}
+
 		},
-		showGroupedView : function() {// mdreeling - Add the CHECKBOX button event
+		// showGroupedView
+		// ----------
+		// This view is to try satisfy the lists of lists requirement. It basically
+		// reloads the main div with a new model - the previous items children.
+		// This allows for infinite nesting. I only allow 1 level.
+		// This could also be solved i am assuming - by using a Collection inside
+		// a Collection but i did not explorer this opton due to time constraints.
+		showGroupedView : function() {// Add the CHECKBOX button event
 			var self = this
 			_.bindAll(self)
 			groupedmode = true;
@@ -648,6 +746,7 @@ bb.init = function() {
 			self.setElement("div[data-role='header']")
 
 			self.elem = {
+				// This action just 'returns' the user to the main div
 				back : self.$el.find('#backtotoplevel'),
 				settings : self.$el.find('#settings')
 			}
@@ -655,7 +754,8 @@ bb.init = function() {
 			self.elem.back.show()
 			self.elem.settings.hide()
 		},
-		deleteItem : function() {// mdreeling - Add the CHECKBOX button event
+		// Add the delete button event
+		deleteItem : function() {
 			console.log('tap #delete - deleting...')
 			var self = this
 
@@ -677,14 +777,12 @@ bb.init = function() {
 			self.elem.cancel.hide()
 			console.log('tap #delete - done!')
 		},
-		tapItem : function() {// mdreeling - Add the CHECKBOX button event
+		tapItem : function() {
 			console.log('tap #tapItem...')
 			var self = this
-
 			_.bindAll(self);
-			app_router.navigate("viewgrouping");
 		},
-		markItem : function() {// mdreeling - Add the CHECKBOX button event
+		markItem : function() {
 			console.log('tap #check - marking...')
 			var self = this
 
@@ -693,7 +791,7 @@ bb.init = function() {
 			app.markitem(self.$el, self.model.attributes.done)
 			console.log('tap #check - done!')
 		},
-		swipeItem : function() {// mdreeling - Add the CHECKBOX button event
+		swipeItem : function() {// Add the CHECKBOX button event
 			console.log('swipe #item - iniating delete...')
 			var self = this
 			_.bindAll(self)
@@ -727,7 +825,9 @@ bb.init = function() {
 	}))
 
 }
-
+// init_browser
+// ----------
+// Snips the bottom off for android
 app.init_browser = function() {
 	if(browser.android) {
 		$("#main div[data-role='content']").css({
@@ -735,16 +835,18 @@ app.init_browser = function() {
 		})
 	}
 }
-/**
- * Marks item with a strikethrough
- */
+// markitem
+// ----------
+// Modifies the css styling of the checkbox
 app.markitem = function(item, done) {
 	item.find('span.check').html( done ? '&#10003;' : '&nbsp;')
 	item.find('span.text').css({
 		'text-decoration' : done ? 'line-through' : 'none'
 	})
 }
-
+// activatesave
+// ----------
+// Fades in and out the save box
 app.activatesave = function(currentTextIn, save) {
 	console.log('app.activatesave')
 	var textlen = currentTextIn.length
@@ -757,7 +859,9 @@ app.activatesave = function(currentTextIn, save) {
 		saveon = false
 	}
 }
-
+// init
+// ----------
+// Main init
 app.init = function() {
 	console.log('start init')
 
@@ -766,6 +870,7 @@ app.init = function() {
 
 	app.model.state = new bb.model.State()
 	app.model.items = new bb.model.Items()
+	app.model.logins = new bb.model.Logins()
 	app.view.head = new bb.view.Head(app.model.items)
 	app.view.head.render()
 
@@ -776,7 +881,9 @@ app.init = function() {
 
 	app.listinit()
 }
-
+// listinit
+// ----------
+// I seperated this out when i started working on login because i thought it might make sense.
 app.listinit = function() {
 	app.view.newitemview = new bb.view.NewItem({
 		el : $("#newitem")
@@ -806,6 +913,9 @@ app.listinit = function() {
 	});
 	console.log('end init')
 }
+// elemthemerefresh
+// ----------
+// GitHub ripped code to refresh the theme.
 app.elemthemerefresh = function element_theme_refresh(element, oldTheme, newTheme) {
 	/* Update the page's new data theme. */
 	if($(element).attr('data-theme')) {
@@ -829,37 +939,51 @@ app.elemthemerefresh = function element_theme_refresh(element, oldTheme, newThem
 	}
 }
 
+// initgeo
+// ----------
+// Gets the current location
 app.initgeo = function initiate_geolocation() {
 
 	if(navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position) {
-
 			// Set location for Backbone to see it.
 			app.userlocation = position
-
-			var latitude = position.coords.latitude;
-			var longitude = position.coords.longitude;
-			var coords = new google.maps.LatLng(latitude, longitude);
-			var mapOptions = {
-				zoom : 15,
-				center : coords,
-				mapTypeControl : true,
-				navigationControlOptions : {
-					style : google.maps.NavigationControlStyle.SMALL
-				},
-				mapTypeId : google.maps.MapTypeId.ROADMAP
-			};
-			map = new google.maps.Map(document.getElementById("mapContainer"), mapOptions);
-			var marker = new google.maps.Marker({
-				position : coords,
-				map : map,
-				title : "Your current location!"
-			});
-
 		});
-		console.log('done mapping!')
+		console.log('done locating!')
 	} else {
 		alert("Geolocation API is not supported in your browser.");
 	}
+}
+
+// initgeo
+// ----------
+// Google ripped and modified.... Creates a really nice map on a per item basis.
+app.generateMap = function genMapforLocation(id, position) {
+
+	// Set location for Backbone to see it.
+	app.userlocation = position
+
+	var latitude = position.coords.latitude;
+	var longitude = position.coords.longitude;
+	var coords = new google.maps.LatLng(latitude, longitude);
+	var mapOptions = {
+		zoom : 15,
+		center : coords,
+		mapTypeControl : true,
+		navigationControlOptions : {
+			style : google.maps.NavigationControlStyle.SMALL
+		},
+		mapTypeId : google.maps.MapTypeId.ROADMAP
+	};
+	map = new google.maps.Map(document.getElementById("mapContainer_" + id), mapOptions);
+	var marker = new google.maps.Marker({
+		position : coords,
+		map : map,
+		title : "Where you created this todo!"
+	});
+
+	$('#mapContainer_' + id).show();
+
+	console.log('done genmapping!')
 }
 $(app.init)

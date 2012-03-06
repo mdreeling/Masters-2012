@@ -36,6 +36,7 @@ function init() {
 		app.post('/api/rest/todo', api.rest.create)
 		app.get('/api/rest/todo/:id', api.rest.read)
 		app.get('/api/rest/login/:id', api.rest.readlogin)
+		app.get('/api/rest/login', api.rest.readlogin)
 		app.get('/api/rest/todo', api.rest.list)
 		app.put('/api/rest/todo/:id', api.rest.update)
 		app.del('/api/rest/todo/:id', api.rest.del)

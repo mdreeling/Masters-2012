@@ -25,8 +25,6 @@
 				<a id="backtotoplevel" data-icon="back" class="ui-btn-left">Return</a>
 				<a id="add" data-icon="plus" class="ui-btn-right">Add</a>
 				<a id="cancel" data-icon="delete" class="ui-btn-right">Cancel</a>
-			</div>
-			<div data-role="content">
 				<div id="newitem" data-role="fieldcontain" class="ui-grid-b">
 					<div class="ui-block-a">
 						<input type="text" id="text" placeholder="Enter To Do item"/>
@@ -39,25 +37,23 @@
 							<option value="on">On</option>
 						</select>
 					</div>
-					<div class="ui-block-c">
-						<label for="group-slider">Grouped List</label>
-						<select id="group-slider" name="group" data-mini="true" data-role="slider">
-							<option value="yes">Yes</option>
-							<option value="no">No</option>
-						</select>
-					</div>
 				</div>
+			</div>
+			<div data-role="content">
 				<ul id="list" data-role="listview">
 					<li id="{{-id}}" class="tm">
 						<span class="check">&nbsp;</span>
 						<span class="text">{{-text}}</span>
+						<div id="showmap_{{-id}}" class="showmap">
+							Show map
+						</div>
 						<div id="showgroupings_{{-id}}" class="showgroupings">
-							Show tasks
+							Show/Add tasks
 						</div>
 						<div id="delete_{{-id}}" class="delete">
 							Delete
 						</div>
-						<div id="mapContainer" class="maps"></div>
+						<div id="mapContainer_{{-id}}" class="maps"></div>
 					</li>
 				</ul>
 			</div>

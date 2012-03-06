@@ -2,10 +2,10 @@
     display: none;
 }
 
-#mapContainer {
+.maps {
 	display: none;
-    height: 500px;
-    width: 800px;
+    height: 250px;
+    width: 400px;
     border:10px solid #eaeaea;
 }
 
@@ -15,7 +15,7 @@
 
 #newitem {
   display: none;
-  height: 100px;
+  height: 60px;
 }
 
 #backtotoplevel {
@@ -48,6 +48,22 @@ div.delete {
     left top,
     color-stop(0.18, rgb(173,0,0)),
     color-stop(0.57, rgb(250,120,120))
+  );
+}
+
+div.showmap {
+  font-size: 8pt;
+  float: right;
+  border: 1px solid #900;
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+  background: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.18, rgb(100,0,0)),
+    color-stop(0.57, rgb(70,180,55))
   );
 }
 

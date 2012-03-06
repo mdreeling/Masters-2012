@@ -89,7 +89,7 @@ exports.rest = {
 				if(err) {
 					return util.memcachedend(err);
 				} else {
-					console.log('Inserted to memcached')
+					console.log('MEMCACHE *** Inserted to memcached')
 				}
 			})
 		}))
@@ -98,10 +98,10 @@ exports.rest = {
 	readlogin : function(req, res) {
 		var input = req.params
 
-		console.log(req.params)
+		console.log('Searching for username='+req.query.id)
 
 		var query = util.fixid({
-			username : input.id
+			username : req.query.id
 		})
 		logincoll.findOne(query, res.err$(function(doc) {
 			if(doc) {
@@ -123,7 +123,7 @@ exports.rest = {
 
 		memcached.get(input.id, util.err(function(todocached) {
 			if(todocached) {
-				console.log('*** Cache hit for ' + todocached.id)
+				console.log('MEMCACHE *** Cache hit for ' + todocached.id)
 				res.sendjson$(todocached)
 			} else {
 
@@ -135,7 +135,7 @@ exports.rest = {
 							if(err) {
 								return util.memcachedend(err);
 							} else {
-								console.log('Inserted to memcached after read')
+								console.log('MEMCACHE *** Inserted to memcached after read')
 							}
 						})
 
@@ -211,7 +211,7 @@ exports.rest = {
 					if(err) {
 						return util.memcachedend(err);
 					} else {
-						console.log('Updating memcached ' + query.id + ' after update')
+						console.log('MEMCACHE *** Updating memcached ' + query.id + ' after update')
 					}
 				})
 			}
