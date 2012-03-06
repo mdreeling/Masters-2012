@@ -1,3 +1,11 @@
+// Mobile Web Development - Assignment 1
+// [Michael Dreeling](http://wordpress.dreeling.com/). 
+// This source code fulfills the following requirements
+// Baseline - Views / In-Memory Store / Desktop Safari / Replicates Todo List
+//
+//
+//
+
 function pd(func) {
 	return function(event) {
 		event.preventDefault()
@@ -32,20 +40,26 @@ bb.init = function() {
 	var swipeon = false
 	var groupedmode = false
 	var userlocation = 'Unknown'
-
+	
+	// Main router - it serves 3 functions, to allow you
+	// to get to settings, the main div and back to the login if necessary
 	var Router = Backbone.Router.extend({
 		routes : {
-			'settings' : 'settingsFunction',
-			'viewgrouping/:tid' : 'showGrouping'
+			'settings' : 'showSettings',
+			'login' : 'showLogin',
+			'main' : 'showMain'
 		},
-		settingsFunction : function() {
+		showSettings : function() {
 			$('div.app-page').hide();
 			$('div#settings').show();
 		},
-		showGrouping : function(tid) {
-			console.log('showing groupings')
+		showLogin : function() {
+			console.log('showing login')
 			$('div.app-page').hide();
-			$('div#viewgrouping').show();
+			$('div#login').show();
+		},
+		showMain : function() {
+			console.log('showing main')
 		}
 	});
 	app_router = new Router();
@@ -88,6 +102,33 @@ bb.init = function() {
 			this.save({
 				done : !this.get("done")
 			});
+		}
+	}))
+	
+	/**
+	 * Login Data!!!
+	 */
+	bb.model.LoginData = Backbone.Model.extend(_.extend({
+		defaults : {
+			username : '',
+			password : '',
+		},
+
+		initialize : function() {
+			console.log('bb.model.LoginData - initialize')
+			var self = this
+			_.bindAll(self)
+		}
+	}))
+
+	bb.model.Logins = Backbone.Collection.extend(_.extend({
+		model : bb.model.Item,
+		url : '/api/rest/login',
+
+		initialize : function() {
+			console.log('bb.model.Logins - initialize')
+			var self = this
+			_.bindAll(self)
 		}
 	}))
 
@@ -142,45 +183,67 @@ bb.init = function() {
 		}
 	}))
 
-	bb.model.ListsOfItems = Backbone.Collection.extend(_.extend({
-		model : bb.model.Items,
-		url : '/api/rest/todo',
-
-		initialize : function() {
-			console.log('bb.model.ListsOfItems - initialize')
+	/**
+	 * This view defines common behaviour for all headers but not particular one specifically (as it did before)
+	 */
+	bb.view.Head = Backbone.View.extend(_.extend({
+		initialize : function(items) {
+			console.log('bb.view.Head - initialize')
 			var self = this
 			_.bindAll(self)
-			self.count = 0
-
-			self.on('reset', function() {
-				console.log('bb.model.ListsOfItems - reset')
-				self.count = self.length
-			})
 		},
-		additem2 : function(textIn) {
-			console.log('bb.model.ListsOfItems - additem')
+		render : function() {
+			console.log('bb.view.Head - render')
 			var self = this
-
-			var item = new bb.model.Item({
-				text : textIn,
-				done : false,
-				location : app.userlocation
-			})
-
-			console.log('bb.model.ListsOfItems - adding item.')
-			self.add(item)
-			console.log('bb.model.ListsOfItems - item added.')
-			self.count++
-			item.save({
-				success : function() {
-					addNewRow();
-				}
-			});
-			console.log('bb.model.Items - done save.')
 		}
 	}))
 
-	bb.view.Head = Backbone.View.extend(_.extend({
+	/**
+	 * mdreeling - Created a special view just to work with the settings div.
+	 */
+	bb.view.Login = Backbone.View.extend(_.extend({
+		events : {
+			'tap #Submit1' : 'tapLogin',
+			'tap #username' : 'tapUser',
+			'tap #password' : 'tapPass'
+		},
+		initialize : function() {
+			console.log('bb.view.Settings - initialize')
+			var self = this
+			_.bindAll(self)
+			self.setElement("div[id='login']")
+		},
+		render : function() {
+			console.log('bb.view.Settings - render')
+			var self = this
+			_.bindAll(self)
+		},
+		tapLogin : function() {
+			console.log('In tap Login...')
+			var self = this
+			_.bindAll(self)
+			app_router.navigate("main");
+			app.listinit()
+			app.view.head.render();
+		},
+		tapUser : function() {
+			console.log('In tap User...')
+			var self = this
+			_.bindAll(self)
+			self.$el.find('#username').focus();
+		},
+		tapPass : function() {
+			console.log('In tap Pass...')
+			var self = this
+			_.bindAll(self)
+			self.$el.find('#password').focus();
+		}
+	}))
+
+	/**
+	 * mdreeling - Created a special view just to work with the main div.
+	 */
+	bb.view.Main = Backbone.View.extend(_.extend({
 		events : {
 			'tap #text' : 'enterText',
 			'tap #settings' : 'goToSettings',
@@ -191,11 +254,11 @@ bb.init = function() {
 			'keyup #text' : 'keyupTodoText'
 		},
 		initialize : function(items) {
-			console.log('bb.view.Head - initialize')
+			console.log('bb.view.Main - initialize')
 			var self = this
 			_.bindAll(self)
 			self.items = items
-			self.setElement("div[data-role='header']")
+			self.setElement("div[id='main']")
 
 			self.elem = {
 				add : self.$el.find('#add'),
@@ -213,11 +276,8 @@ bb.init = function() {
 			self.items.on('sync', self.render)
 		},
 		render : function() {
-			console.log('bb.view.Head - render')
+			console.log('bb.view.Main - render')
 			var self = this
-			// mdreeling - CHange this guy to operate on main instead of just the header div
-			// as methods which use self later - need newitem, todotext and others to actually to be there!
-			self.setElement("div[id='main']")
 
 			self.elem = {
 				add : self.$el.find('#add'),
@@ -229,9 +289,13 @@ bb.init = function() {
 
 			var loaded = 'loaded' == app.model.state.get('items')
 
+			console.log('bb.view.Main - loaded=' + loaded)
+
 			self.elem.title.html(self.tm.title({
 				title : loaded ? self.items.length + ' Items' : 'Loading...'
 			}))
+
+			console.log('bb.view.Main - title=' + loaded ? self.items.length + ' Items' : 'Loading...')
 
 			if(loaded) {
 				self.elem.add.show()
@@ -368,51 +432,11 @@ bb.init = function() {
 
 			_.bindAll(self)
 
-			// mdreeling - Find the main div and start playing with it
-			// We can find everything if we start from here instead of the header div
-			self.setElement("div[id='main']")
-
 			self.elem = {
 				todotext : self.$el.find('#text')
 			}
+			
 			self.elem.todotext.focus()
-		}
-	}))
-
-	/**
-	 * mdreeling - Created a special view just to work with the settings div.
-	 */
-	bb.view.TodoGrouping = Backbone.View.extend(_.extend({
-		events : {
-			'tap #back' : 'goBack'
-		},
-		initialize : function() {
-			console.log('bb.view.TodoGrouping - initialize')
-			var self = this
-			_.bindAll(self)
-			self.setElement("div[id='viewgrouping']")
-			self.on('refresh', function() {
-				console.log('Refreshing view...')
-
-				console.log('Rebinding theme...')
-				/* Default to the "a" theme. */
-				var oldTheme = self.$el.attr('data-theme') || 'a';
-				var newTheme = 'b';
-
-				app.elemthemerefresh(self.el, oldTheme, newTheme);
-
-				self.$el.find('*').each(function() {
-					app.elemthemerefresh($(this), oldTheme, newTheme);
-				});
-			})
-		},
-		render : function() {
-			console.log('bb.view.TodoGrouping - render')
-			var self = this
-			_.bindAll(self)
-		},
-		goBack : function() {
-			window.history.back()
 		}
 	}))
 
@@ -429,6 +453,15 @@ bb.init = function() {
 			var self = this
 			_.bindAll(self)
 			self.setElement("div[id='settings']")
+
+			self.elem = {
+				title : self.$el.find('#titlebar')
+			}
+
+			self.tm = {
+				title : _.template(self.elem.title.html())
+			}
+
 			self.on('refresh', function() {
 				console.log('Refreshing view...')
 
@@ -448,6 +481,14 @@ bb.init = function() {
 			console.log('bb.view.Settings - render')
 			var self = this
 			_.bindAll(self)
+
+			self.elem = {
+				title : self.$el.find('#titlebar'),
+			}
+
+			self.elem.title.html(self.tm.title({
+				title : 'Settings'
+			}))
 		},
 		locateSlider : function() {
 			var self = this
@@ -472,37 +513,6 @@ bb.init = function() {
 		}
 	}))
 
-	/**
-	 * mdreeling - Created a special view just to work with the main div.
-	 */
-	bb.view.Main = Backbone.View.extend(_.extend({
-
-		initialize : function() {
-			console.log('bb.view.Main - initialize')
-			var self = this
-			_.bindAll(self)
-			self.setElement("div[id='main']")
-			self.on('refresh', function() {
-				console.log('Refreshing main view...')
-
-				console.log('Rebinding main theme...')
-				/* Default to the "a" theme. */
-				var oldTheme = self.$el.attr('data-theme') || 'a';
-				var newTheme = 'b';
-
-				app.elemthemerefresh(self.el, oldTheme, newTheme);
-
-				self.$el.find('*').each(function() {
-					app.elemthemerefresh($(this), oldTheme, newTheme);
-				});
-			})
-		},
-		render : function() {
-			console.log('bb.view.Main - render')
-			var self = this
-			_.bindAll(self)
-		}
-	}))
 	/**
 	 * mdreeling - Created a special view just to work with the newitem div.
 	 */
@@ -759,25 +769,29 @@ app.init = function() {
 	app.view.head = new bb.view.Head(app.model.items)
 	app.view.head.render()
 
-	app.view.todogrouping = new bb.view.TodoGrouping({
-		el : $("#viewgrouping")
+	app.view.login = new bb.view.Login({
+		el : $("#login")
 	})
-	app.view.todogrouping.render()
+	app.view.login.render()
 
+	app.listinit()
+}
+
+app.listinit = function() {
 	app.view.newitemview = new bb.view.NewItem({
 		el : $("#newitem")
 	})
 	app.view.newitemview.render()
 
+	app.view.main = new bb.view.Main(app.model.items, {
+		el : $("#main")
+	})
+	app.view.main.render()
+
 	app.view.sett = new bb.view.Settings({
 		el : $("#settings")
 	})
 	app.view.sett.render()
-
-	app.view.main = new bb.view.Main({
-		el : $("#main")
-	})
-	app.view.main.render()
 
 	app.view.list = new bb.view.List(app.model.items)
 	app.view.list.render()
@@ -792,7 +806,6 @@ app.init = function() {
 	});
 	console.log('end init')
 }
-
 app.elemthemerefresh = function element_theme_refresh(element, oldTheme, newTheme) {
 	/* Update the page's new data theme. */
 	if($(element).attr('data-theme')) {

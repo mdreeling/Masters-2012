@@ -6,8 +6,32 @@ var uuid = common.uuid
 var mongodb = common.mongodb
 
 var todocoll = null
+var logincoll = null
+
+//memcached
+var Memcached = require('memcached')
+
+var memcached = new Memcached("127.0.0.1:11211")
+var lifetime = 3600
 
 var util = {}
+
+util.memcachedend = function end(msg) {
+	if(msg) {
+		console.log(msg)
+	}
+	memcached.end()
+}
+
+util.err = function error(win) {
+	return function(err, result) {
+		if(err) {
+			console.log(err)
+		} else {
+			win && win(result)
+		}
+	}
+}
 
 util.validate = function(input) {
 	return input.text
@@ -61,8 +85,32 @@ exports.rest = {
 		todocoll.insert(todo, res.err$(function(docs) {
 			var output = util.fixid(docs[0])
 			res.sendjson$(output)
+			memcached.set(output.id, todo, lifetime, function(err, result) {
+				if(err) {
+					return util.memcachedend(err);
+				} else {
+					console.log('Inserted to memcached')
+				}
+			})
 		}))
 		console.log('done inserting!')
+	},
+	readlogin : function(req, res) {
+		var input = req.params
+
+		console.log(req.params)
+
+		var query = util.fixid({
+			username : input.id
+		})
+		logincoll.findOne(query, res.err$(function(doc) {
+			if(doc) {
+				var output = util.fixid(doc)
+				res.sendjson$(output)
+			} else {
+				res.send$(404, 'not found')
+			}
+		}))
 	},
 	read : function(req, res) {
 		var input = req.params
@@ -72,12 +120,30 @@ exports.rest = {
 		var query = util.fixid({
 			id : input.id
 		})
-		todocoll.findOne(query, res.err$(function(doc) {
-			if(doc) {
-				var output = util.fixid(doc)
-				res.sendjson$(output)
+
+		memcached.get(input.id, util.err(function(todocached) {
+			if(todocached) {
+				console.log('*** Cache hit for ' + todocached.id)
+				res.sendjson$(todocached)
 			} else {
-				res.send$(404, 'not found')
+
+				todocoll.findOne(query, res.err$(function(doc) {
+					if(doc) {
+						var output = util.fixid(doc)
+
+						memcached.set(output.id, todo, lifetime, function(err, result) {
+							if(err) {
+								return util.memcachedend(err);
+							} else {
+								console.log('Inserted to memcached after read')
+							}
+						})
+
+						res.sendjson$(output)
+					} else {
+						res.send$(404, 'not found')
+					}
+				}))
 			}
 		}))
 	},
@@ -125,37 +191,31 @@ exports.rest = {
 			id : id
 		})
 
-		console.log('Updating ' + query + ' with ' + input.text)
+		console.log('Updating ' + input.id + ' with ' + input.text)
 
-		todocoll.update(query, {
-			$set : {
-				text : input.text,
-				done : input.done,
-				location : input.location,
-				created : new Date().getTime()
-			}
-		}, function(err) {
-			if(err)
+		var todo = {
+			text : input.text,
+			created : new Date().getTime(),
+			location : input.location,
+			parentid : input.parentid,
+			done : input.done
+		}
+
+		todocoll.update(query, todo, function(err) {
+			if(err) {
 				console.warn(err.message);
-			else
+			} else {
 				console.log('successfully updated');
+
+				memcached.set(input.id, todo, lifetime, function(err, result) {
+					if(err) {
+						return util.memcachedend(err);
+					} else {
+						console.log('Updating memcached ' + query.id + ' after update')
+					}
+				})
+			}
 		});
-		/**
-		 todocoll.update(query, {
-		 $set : {
-		 text : input.text,
-		 done : input.done,
-		 created : new Date().getTime()
-		 }
-		 }, res.err$(function(count) {
-		 if(0 < count) {
-		 var output = util.fixid(doc)
-		 res.sendjson$(output)
-		 } else {
-		 console.log('404')
-		 res.send$(404, 'not found')
-		 }
-		 }))**/
 	},
 	del : function(req, res) {
 		var input = req.params
@@ -180,6 +240,13 @@ exports.connect = function(options, callback) {
 			if(err)
 				return callback(err);
 			todocoll = collection
+			callback()
+		})
+
+		client.collection('login', function(err, collection) {
+			if(err)
+				return callback(err);
+			logincoll = collection
 			callback()
 		})
 	})
