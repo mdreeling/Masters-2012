@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import doconnor.jpa.domain.Company;
-import doconnor.jpa.domain.Sponsorship;
+import doconnor.jpa.domain.LicensingDeal;
 
 @Repository
-public class CompanyDAOImpl extends HibernateDAO implements CompanyDAO {
+public class LicensingDAOImpl extends HibernateDAO implements LicensingDAO {
 
 	@Override
 	public void reattach(Company company) {
@@ -17,8 +17,9 @@ public class CompanyDAOImpl extends HibernateDAO implements CompanyDAO {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Company> getAll() {
-		return  getEntityManager().createQuery("from Company").
+	public List<LicensingDeal> getAll() {
+		return getEntityManager().createQuery("from LicensingDeal")
+				.
 					getResultList();
 	}
 
@@ -28,7 +29,7 @@ public class CompanyDAOImpl extends HibernateDAO implements CompanyDAO {
 	}
 
 	@Override
-	public void save(Sponsorship s) {
+	public void save(LicensingDeal s) {
 		getEntityManager().persist(s) ;
 	}
 

@@ -12,14 +12,18 @@ import doconnor.jpa.dao.AgentDAO;
 import doconnor.jpa.dao.ClubDAO;
 import doconnor.jpa.dao.CompanyDAO;
 import doconnor.jpa.dao.DivisionDAO;
+import doconnor.jpa.dao.LicensingDAO;
 import doconnor.jpa.dao.PlayerDAO;
+import doconnor.jpa.dao.ProductDAO;
 import doconnor.jpa.dao.ResultDAO;
 import doconnor.jpa.domain.Agent;
 import doconnor.jpa.domain.Club;
 import doconnor.jpa.domain.Company;
 import doconnor.jpa.domain.Contract;
 import doconnor.jpa.domain.Division;
+import doconnor.jpa.domain.LicensingDeal;
 import doconnor.jpa.domain.Player;
+import doconnor.jpa.domain.Product;
 import doconnor.jpa.domain.Result;
 import doconnor.jpa.domain.Sponsorship;
 
@@ -30,8 +34,10 @@ public class LeagueManagerImpl implements LeagueManager {
 	private ClubDAO clubDAO;
 	private DivisionDAO divisionDAO;
 	private CompanyDAO companyDAO;
+	private LicensingDAO licensingDAO;
 	private AgentDAO agentDAO;
 	private ResultDAO resultDAO;
+	private ProductDAO productDAO;
 
 	public LeagueManagerImpl() {
 	}
@@ -39,7 +45,7 @@ public class LeagueManagerImpl implements LeagueManager {
 	@Autowired
 	public LeagueManagerImpl(PlayerDAO playerDAO, ClubDAO clubDAO,
 			DivisionDAO divisionDAO, CompanyDAO companyDAO, AgentDAO agentDAO,
-			ResultDAO resultDAO) {
+			ResultDAO resultDAO, LicensingDAO licensingDAO,ProductDAO productDAO) {
 		super();
 		this.playerDAO = playerDAO;
 		this.clubDAO = clubDAO;
@@ -47,6 +53,8 @@ public class LeagueManagerImpl implements LeagueManager {
 		this.companyDAO = companyDAO;
 		this.agentDAO = agentDAO;
 		this.resultDAO = resultDAO;
+		this.licensingDAO = licensingDAO;
+		this.productDAO = productDAO;
 	}
 
 	@Override
@@ -84,10 +92,23 @@ public class LeagueManagerImpl implements LeagueManager {
 
 	@Override
 	@Transactional
+	public void createProduct(Product pr, Company com) {
+		pr.setCompany(com);
+		productDAO.save(pr);
+	}
+
+	@Override
+	@Transactional
 	public void movePlayer(Player player, Club newClub) {
 		Player playerM = playerDAO.reattach(player);
 		// Club clubM = clubDAO.reattach(newClub) ;
 		playerM.setClub(newClub);
+	}
+
+	@Override
+	@Transactional
+	public List<Product> readProducts() {
+		return productDAO.getProducts();
 	}
 
 	@Override
@@ -161,6 +182,12 @@ public class LeagueManagerImpl implements LeagueManager {
 	@Transactional
 	public void addSponsor(Sponsorship s) {
 		companyDAO.save(s);
+	}
+
+	@Override
+	@Transactional
+	public void addLicensingDeal(LicensingDeal l) {
+		licensingDAO.save(l);
 	}
 
 	@Override

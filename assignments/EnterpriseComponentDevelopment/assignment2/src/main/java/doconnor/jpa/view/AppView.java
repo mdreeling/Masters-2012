@@ -32,7 +32,14 @@ public class AppView {
 	        request = scanner.next();
 	        Command command = commands.get(request) ;
 	        if (command != null) {
-	        	command.execute() ;
+				try {
+					command.execute() ;
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out
+							.println("An error occurred. Resetting system...");
+					System.out.println();
+				}
 	        }
 	        else if (request.equals("help"))
 	        {

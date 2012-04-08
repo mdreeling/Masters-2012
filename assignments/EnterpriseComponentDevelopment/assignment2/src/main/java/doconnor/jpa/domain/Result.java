@@ -1,5 +1,7 @@
 package doconnor.jpa.domain;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,9 +21,27 @@ public class Result {
 	private Club awayClub;
 	private int homeScore;
 	private int awayScore;
+	private Date datePlayed;
 
-	public Result(Club homeClub, Club awayClub, int homeScore, int awayScore) {
+	/**
+	 * @return the datePlayed
+	 */
+	public Date getDatePlayed() {
+		return datePlayed;
+	}
+
+	/**
+	 * @param datePlayed
+	 *            the datePlayed to set
+	 */
+	public void setDatePlayed(Date datePlayed) {
+		this.datePlayed = datePlayed;
+	}
+
+	public Result(Date date, Club homeClub, Club awayClub, int homeScore,
+			int awayScore) {
 		super();
+		this.datePlayed = date;
 		this.homeClub = homeClub;
 		this.awayClub = awayClub;
 		this.homeScore = homeScore;
@@ -31,6 +51,7 @@ public class Result {
 	public Result() {
 		super();
 	}
+
 	/**
 	 * @return the awayClub
 	 */

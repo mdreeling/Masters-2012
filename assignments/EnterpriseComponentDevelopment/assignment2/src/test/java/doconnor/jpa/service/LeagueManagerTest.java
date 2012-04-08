@@ -2,6 +2,7 @@ package doconnor.jpa.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -48,7 +49,7 @@ public class LeagueManagerTest extends
 		List<Result> results = leagueManager.readResults();
 		int res_pre = results.size();
 
-		Result res = new Result(clubs.get(0), clubs.get(1), 3, 0);
+		Result res = new Result(new Date(), clubs.get(0), clubs.get(1), 3, 0);
 		leagueManager.addResult(res);
 		int res_post = simpleJdbcTemplate
 				.queryForInt("SELECT COUNT(0) FROM RESULT");
