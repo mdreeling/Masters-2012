@@ -14,6 +14,7 @@ import doconnor.jpa.domain.Sponsorship;
 
 public interface LeagueManager {
 	public  List<Club>  readClubs();
+	public List<Result> readResults();
 	public List<Club> listClubs() ;
 	public Set<Player> readClubPlayers(Club club) ;
 	public void signPlayer(Player player, Club club);

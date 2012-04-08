@@ -49,16 +49,25 @@ public class LeagueManagerImpl implements LeagueManager {
 		this.resultDAO = resultDAO;
 	}
 
+	@Override
+	@Transactional
+	public List<Result> readResults() {
+		return resultDAO.getAll();
+	}
+
+	@Override
 	@Transactional
 	public List<Club> readClubs() {
 		return clubDAO.getClubs();
 	}
 
+	@Override
 	@Transactional
 	public List<Club> listClubs() {
 		return clubDAO.getClubs();
 	}
 
+	@Override
 	@Transactional
 	public Set<Player> readClubPlayers(Club club) {
 		Club clubM = clubDAO.reattach(club);
@@ -66,12 +75,14 @@ public class LeagueManagerImpl implements LeagueManager {
 		return clubM.getPlayers();
 	}
 
+	@Override
 	@Transactional
 	public void signPlayer(Player player, Club club) {
 		player.setClub(club);
 		playerDAO.save(player);
 	}
 
+	@Override
 	@Transactional
 	public void movePlayer(Player player, Club newClub) {
 		Player playerM = playerDAO.reattach(player);
@@ -79,22 +90,26 @@ public class LeagueManagerImpl implements LeagueManager {
 		playerM.setClub(newClub);
 	}
 
+	@Override
 	@Transactional
 	public List<Player> readPlayers() {
 		return playerDAO.getPlayers();
 	}
 
+	@Override
 	@Transactional
 	public List<Division> readDivisions() {
 		return divisionDAO.getDivisions();
 	}
 
+	@Override
 	@Transactional
 	public void addClub(Club club, Division division) {
 		Division divisionM = divisionDAO.reattach(division);
 		divisionM.getMembers().add(club);
 	}
 
+	@Override
 	@Transactional
 	public void removeClub(Club club) {
 		Club clubM = clubDAO.reattach(club);
@@ -102,6 +117,7 @@ public class LeagueManagerImpl implements LeagueManager {
 		clubDAO.remove(clubM);
 	}
 
+	@Override
 	@Transactional
 	public Set<Club> listDivision(Division division) {
 		Division divisionM = divisionDAO.reattach(division);
@@ -112,12 +128,14 @@ public class LeagueManagerImpl implements LeagueManager {
 		return divisionM.getMembers();
 	}
 
+	@Override
 	@Transactional
 	public void removePlayer(Player player) {
 		Player playerM = playerDAO.reattach(player);
 		playerDAO.remove(playerM);
 	}
 
+	@Override
 	@Transactional
 	public void removeDivision(Division division) {
 		Division divisionM = divisionDAO.reattach(division);
@@ -127,36 +145,43 @@ public class LeagueManagerImpl implements LeagueManager {
 		divisionDAO.remove(divisionM);
 	}
 
+	@Override
 	@Transactional
 	public void addCompany(Company c) {
 		companyDAO.save(c);
 	}
 
+	@Override
 	@Transactional
 	public List<Company> readCompanies() {
 		return companyDAO.getAll();
 	}
 
+	@Override
 	@Transactional
 	public void addSponsor(Sponsorship s) {
 		companyDAO.save(s);
 	}
 
+	@Override
 	@Transactional
 	public void addAgent(Agent agent) {
 		agentDAO.save(agent);
 	}
 
+	@Override
 	@Transactional
 	public List<Agent> readAgents() {
 		return agentDAO.getAll();
 	}
 
+	@Override
 	@Transactional
 	public void givePlayerAgent(Contract c) {
 		agentDAO.save(c);
 	}
 
+	@Override
 	@Transactional
 	public void addClubAgent(Club club, Agent agent) {
 		Club c = clubDAO.reattach(club);
@@ -178,6 +203,7 @@ public class LeagueManagerImpl implements LeagueManager {
 		return false;
 	}
 
+	@Override
 	@Transactional
 	public void addResult(Result res) {
 		resultDAO.save(res);

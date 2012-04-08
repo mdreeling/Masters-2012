@@ -28,6 +28,9 @@ public class Result {
 		this.awayScore = awayScore;
 	}
 
+	public Result() {
+		super();
+	}
 	/**
 	 * @return the awayClub
 	 */

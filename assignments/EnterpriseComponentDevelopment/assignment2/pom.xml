@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>doconnor.jpa</groupId>
-	<artifactId>jpa-lab2-solution</artifactId>
+	<artifactId>ECD-Assignment2</artifactId>
 	<version>1.0.2.SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -26,14 +26,14 @@
 
 	<build>
 	
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-			<resource>
-				<directory>src/main/java</directory>
-			</resource>
-		</resources>
+	<resources>
+        <resource>
+            <directory>src/main/resources</directory>
+        </resource>
+        <resource>
+            <directory>src/test/resources</directory>
+        </resource>
+    </resources>
 	
 		<plugins>
 			<plugin>
@@ -205,7 +205,20 @@
 				</exclusion>
 			</exclusions>
 		</dependency>  -->
-
+		<!-- Test -->
+	    <dependency>
+	        <groupId>junit</groupId>
+	        <artifactId>junit</artifactId>
+	        <version>4.7</version>
+	
+	    </dependency>
+	
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-test</artifactId>
+	        <version>${spring.version}</version>
+	
+	    </dependency>
 	</dependencies>
 
 	<repositories>
