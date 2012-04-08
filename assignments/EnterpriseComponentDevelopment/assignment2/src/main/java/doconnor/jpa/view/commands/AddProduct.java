@@ -19,9 +19,9 @@ public class AddProduct extends AbstractCommand implements Command {
 	public void execute() {
 		System.out.print("Product Name?");
 	    String name = scanner.next();
-		Product player = new Product(name);
+		Product product = new Product(name);
 		Company com = getCompany();
-		leagueService.createProduct(player, com);
+		leagueService.createProduct(product, com);
  	}
 
 	@Override

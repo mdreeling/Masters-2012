@@ -14,7 +14,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 import doconnor.jpa.domain.Club;
+import doconnor.jpa.domain.Company;
+import doconnor.jpa.domain.LicensingDeal;
 import doconnor.jpa.domain.Player;
+import doconnor.jpa.domain.Product;
 import doconnor.jpa.domain.Result;
 
 @ContextConfiguration
@@ -54,5 +57,34 @@ public class LeagueManagerTest extends
 		int res_post = simpleJdbcTemplate
 				.queryForInt("SELECT COUNT(0) FROM RESULT");
 		assertEquals("Add Result failed", res_post, res_pre + 1);
+	}
+
+	@Test
+	public void addProduct() {
+
+		Product product = new Product("Gillette Fusion Proglide");
+		List<Company> comps = leagueManager.readCompanies();
+		List<Product> prods = leagueManager.readProducts();
+		int res_pre = prods.size();
+
+		leagueManager.createProduct(product, comps.get(0));
+		int res_post = simpleJdbcTemplate
+				.queryForInt("SELECT COUNT(0) FROM PRODUCT");
+		assertEquals("Add Product failed", res_post, res_pre + 1);
+	}
+
+	@Test
+	public void addLicensingDeal() {
+		List<LicensingDeal> licdeals = leagueManager.readLicensingDeals();
+		List<Product> prods = leagueManager.readProducts();
+		List<Player> players = leagueManager.readPlayers();
+		int res_pre = licdeals.size();
+
+		LicensingDeal s = new LicensingDeal(prods.get(0), players.get(0), 100,
+				4);
+		leagueManager.addLicensingDeal(s);
+		int res_post = simpleJdbcTemplate
+				.queryForInt("SELECT COUNT(0) FROM LICENSINGDEAL");
+		assertEquals("Add Licensing Deal failed", res_post, res_pre + 1);
 	}
 }

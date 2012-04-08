@@ -35,6 +35,7 @@ public interface LeagueManager {
 	public void addAgent(Agent agent);
 	public List<Agent> readAgents();
 	public List<Product> readProducts();
+	public List<LicensingDeal> readLicensingDeals();
 	public void givePlayerAgent(Contract c);
 	public void addClubAgent(Club club, Agent agent);
 	public void addResult(Result res);

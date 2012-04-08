@@ -113,6 +113,12 @@ public class LeagueManagerImpl implements LeagueManager {
 
 	@Override
 	@Transactional
+	public List<LicensingDeal> readLicensingDeals() {
+		return licensingDAO.getAll();
+	}
+
+	@Override
+	@Transactional
 	public List<Player> readPlayers() {
 		return playerDAO.getPlayers();
 	}
@@ -187,6 +193,10 @@ public class LeagueManagerImpl implements LeagueManager {
 	@Override
 	@Transactional
 	public void addLicensingDeal(LicensingDeal l) {
+		System.out.println("Adding licensing deal for player "
+				+ l.getPlayer().getId() + " and product "
+				+ l.getProduct().getName() + " for " + l.getDuration()
+				+ " years @ " + l.getValue() + " million");
 		licensingDAO.save(l);
 	}
 

@@ -31,6 +31,8 @@ public class LicensingDAOImpl extends HibernateDAO implements LicensingDAO {
 	@Override
 	public void save(LicensingDeal s) {
 		getEntityManager().persist(s) ;
+		getEntityManager().flush();
+		System.out.println("Persisted licensing deal.");
 	}
 
 }
