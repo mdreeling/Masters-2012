@@ -10,12 +10,12 @@ import doconnor.jpa.domain.LicensingDeal;
 @Repository
 public class LicensingDAOImpl extends HibernateDAO implements LicensingDAO {
 
-	@Override
+
 	public void reattach(Company company) {
 		 getEntityManager().merge(company) ;
 	}
 
-	@Override
+
 	@SuppressWarnings("unchecked")
 	public List<LicensingDeal> getAll() {
 		return getEntityManager().createQuery("from LicensingDeal")
@@ -23,15 +23,17 @@ public class LicensingDAOImpl extends HibernateDAO implements LicensingDAO {
 					getResultList();
 	}
 
-	@Override
+
 	public void save(Company c) {
 		getEntityManager().persist(c) ;
 	}
 
-	@Override
+
 	public void save(LicensingDeal s) {
 		getEntityManager().persist(s) ;
-		getEntityManager().flush();
+		getEntityManager().flush(); // Had to add flush here! Junit did not
+									// recognise the persist event had occurred
+									// yet.
 		System.out.println("Persisted licensing deal.");
 	}
 

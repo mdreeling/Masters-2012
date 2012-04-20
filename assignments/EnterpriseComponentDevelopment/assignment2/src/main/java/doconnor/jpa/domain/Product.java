@@ -13,7 +13,7 @@ public class Product {
 	@GeneratedValue
 	private long id ;
 	private String name ;
-	@ManyToOne (fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "company", nullable = true)
 	private Company company;
 

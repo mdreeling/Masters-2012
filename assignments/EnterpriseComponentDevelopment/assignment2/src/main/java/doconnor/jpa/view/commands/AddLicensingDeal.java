@@ -17,7 +17,6 @@ public class AddLicensingDeal extends AbstractCommand implements Command {
 		super(leagueService, scanner);
 		}
 
-	@Override
 	public void execute() {
 		Product product = getProduct();
 		Player player = getPlayer();
@@ -30,7 +29,6 @@ public class AddLicensingDeal extends AbstractCommand implements Command {
 		leagueService.addLicensingDeal(s);
 	}
 
-	@Override
 	public String help() {
 		return "setup a player licensing deal with a company";
 	}

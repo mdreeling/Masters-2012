@@ -19,8 +19,6 @@ public class AddResult extends AbstractCommand implements Command {
 		super(leagueService, scanner);
 	}
 
-
-	@Override
 	public void execute() {
 
 		System.out.print("Match date? (dd/mm/yyyy)");
@@ -59,7 +57,6 @@ public class AddResult extends AbstractCommand implements Command {
 		leagueService.addResult(r);
 	}
 
-	@Override
 	public String help() {
 		return "Add a new match result";
 	}

@@ -12,17 +12,17 @@ public class ProductDAOImpl extends HibernateDAO implements ProductDAO {
 			super();
 		}
 
-	@Override
+
 	public void remove(Product product) {
 		getEntityManager().remove(product);
 	}
 
-	@Override
+
 	public Product getProduct(long productId) {
 		return getEntityManager().find(Product.class, productId);
 	}
 
-	@Override
+
 	public Product getProductAndCompany(long productId) {
 		return (Product) getEntityManager()
 				.createQuery(
@@ -30,18 +30,18 @@ public class ProductDAOImpl extends HibernateDAO implements ProductDAO {
 				.setParameter("id", productId).getSingleResult();
 	}
 
-	@Override
+
 	public void save(Product product) {
 		getEntityManager().persist(product);
 	}
 
-	@Override
+
 	@SuppressWarnings("unchecked")
 	public List<Product> getProducts() {
 		return getEntityManager().createQuery("from Product").getResultList();
 	}
 
-	@Override
+
 	public Product reattach(Product product) {
 		return getEntityManager().merge(product);
 	}

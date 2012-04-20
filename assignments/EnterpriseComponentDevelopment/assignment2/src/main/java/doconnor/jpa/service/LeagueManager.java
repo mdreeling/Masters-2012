@@ -5,6 +5,7 @@ import java.util.Set;
 
 import doconnor.jpa.domain.Agent;
 import doconnor.jpa.domain.Club;
+import doconnor.jpa.domain.ClubStats;
 import doconnor.jpa.domain.Company;
 import doconnor.jpa.domain.Contract;
 import doconnor.jpa.domain.Division;
@@ -40,4 +41,6 @@ public interface LeagueManager {
 	public void addClubAgent(Club club, Agent agent);
 	public void addResult(Result res);
 	public void createProduct(Product pr, Company com);
+	public void addClubStats(ClubStats s);
+	public List<ClubStats> readClubStats();
 }

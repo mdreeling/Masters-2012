@@ -15,7 +15,6 @@ public class AddProduct extends AbstractCommand implements Command {
 		super(leagueService, scanner);
 	}
 
-	@Override
 	public void execute() {
 		System.out.print("Product Name?");
 	    String name = scanner.next();
@@ -24,7 +23,6 @@ public class AddProduct extends AbstractCommand implements Command {
 		leagueService.createProduct(product, com);
  	}
 
-	@Override
 	public String help() {
 		return "create a new product that can use for licensing with players";
 	}

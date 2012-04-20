@@ -3,6 +3,7 @@ package doconnor.jpa.service;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
+import doconnor.jpa.domain.Agent;
 import doconnor.jpa.domain.Club;
+import doconnor.jpa.domain.ClubStats;
 import doconnor.jpa.domain.Company;
 import doconnor.jpa.domain.LicensingDeal;
 import doconnor.jpa.domain.Player;
@@ -78,13 +81,32 @@ public class LeagueManagerTest extends
 		List<LicensingDeal> licdeals = leagueManager.readLicensingDeals();
 		List<Product> prods = leagueManager.readProducts();
 		List<Player> players = leagueManager.readPlayers();
+		List<Agent> ags = leagueManager.readAgents();
 		int res_pre = licdeals.size();
 
 		LicensingDeal s = new LicensingDeal(prods.get(0), players.get(0), 100,
 				4);
+		s.setAgents(new HashSet(ags));
+
 		leagueManager.addLicensingDeal(s);
 		int res_post = simpleJdbcTemplate
 				.queryForInt("SELECT COUNT(0) FROM LICENSINGDEAL");
 		assertEquals("Add Licensing Deal failed", res_post, res_pre + 1);
+	}
+
+	@Test
+	public void addClubStats() {
+		List<Club> clubs = leagueManager.readClubs();
+		List<ClubStats> sts = leagueManager.readClubStats();
+		int res_pre = sts.size();
+
+		ClubStats s = new ClubStats(clubs.get(0), 5, 0, 1, 16);
+
+		leagueManager.addClubStats(s);
+
+		int res_post = simpleJdbcTemplate
+				.queryForInt("SELECT COUNT(0)  FROM CLUBSTATS");
+		;
+		assertEquals("Add Club Statistics failed", res_post, res_pre + 1);
 	}
 }

@@ -2,12 +2,16 @@ package doconnor.jpa.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -57,6 +61,16 @@ public class LicensingDeal {
 	@ManyToOne
 	@JoinColumn(name = "productId", insertable = false, updatable = false)
 	private Product product;
+	@ManyToMany(fetch = FetchType.LAZY)
+	private Set<Agent> agents = new HashSet<Agent>();
+
+	/**
+	 * @param agents
+	 *            the agents to set
+	 */
+	public void setAgents(Set<Agent> agents) {
+		this.agents = agents;
+	}
 
 	/**
 	 * @return the product
@@ -127,5 +141,12 @@ public class LicensingDeal {
 
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+	}
+
+	/**
+	 * @return the agents
+	 */
+	public Set<Agent> getAgents() {
+		return agents;
 	}
 }
