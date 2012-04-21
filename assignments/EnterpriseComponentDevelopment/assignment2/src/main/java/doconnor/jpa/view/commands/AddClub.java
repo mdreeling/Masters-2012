@@ -1,10 +1,13 @@
 package doconnor.jpa.view.commands;
 
 import java.util.Scanner;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import doconnor.jpa.domain.*;
+import doconnor.jpa.domain.Club;
+import doconnor.jpa.domain.Division;
+import doconnor.jpa.domain.Stadium;
 import doconnor.jpa.service.LeagueManager;
 
 @Component
@@ -13,7 +16,7 @@ public class AddClub extends AbstractCommand implements Command {
 	public AddClub(LeagueManager leagueService, Scanner scanner) {
 		super(leagueService, scanner);
 	}
-	
+
 	public void execute() {
 	    System.out.print("Club Name?");
 	    String name = scanner.next();
@@ -30,7 +33,7 @@ public class AddClub extends AbstractCommand implements Command {
 	}
 
 	public String help() {
-		return "add new club to division";
+		return "add new statistics to a club";
 	}
 
 }

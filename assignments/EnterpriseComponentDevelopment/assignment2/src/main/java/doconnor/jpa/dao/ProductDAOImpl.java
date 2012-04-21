@@ -38,7 +38,15 @@ public class ProductDAOImpl extends HibernateDAO implements ProductDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Product> getProducts() {
-		return getEntityManager().createQuery("from Product").getResultList();
+		List<Product> prds = getEntityManager().createQuery("from Product")
+				.getResultList();
+
+		for (Product product : prds) {
+			System.out.println("Debug company :"
+					+ product.getCompany().getName());
+		}
+
+		return prds;
 	}
 
 

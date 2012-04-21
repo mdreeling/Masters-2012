@@ -60,6 +60,10 @@ public class LeagueManagerTest extends
 		int res_post = simpleJdbcTemplate
 				.queryForInt("SELECT COUNT(0) FROM RESULT");
 		assertEquals("Add Result failed", res_post, res_pre + 1);
+
+		leagueManager.removeResult(res);
+
+		assertEquals("Remove Result failed", res_post - 1, res_pre);
 	}
 
 	@Test
@@ -74,6 +78,10 @@ public class LeagueManagerTest extends
 		int res_post = simpleJdbcTemplate
 				.queryForInt("SELECT COUNT(0) FROM PRODUCT");
 		assertEquals("Add Product failed", res_post, res_pre + 1);
+
+		leagueManager.removeProduct(product);
+
+		assertEquals("Remove Product failed", res_post - 1, res_pre);
 	}
 
 	@Test
@@ -92,6 +100,10 @@ public class LeagueManagerTest extends
 		int res_post = simpleJdbcTemplate
 				.queryForInt("SELECT COUNT(0) FROM LICENSINGDEAL");
 		assertEquals("Add Licensing Deal failed", res_post, res_pre + 1);
+
+		leagueManager.removeLicensingDeal(s);
+
+		assertEquals("Remove Licensing Deal failed", res_post - 1, res_pre);
 	}
 
 	@Test
@@ -108,5 +120,9 @@ public class LeagueManagerTest extends
 				.queryForInt("SELECT COUNT(0)  FROM CLUBSTATS");
 		;
 		assertEquals("Add Club Statistics failed", res_post, res_pre + 1);
+
+		leagueManager.removeClubStats(s);
+
+		assertEquals("Remove ClubStats failed", res_post - 1, res_pre);
 	}
 }

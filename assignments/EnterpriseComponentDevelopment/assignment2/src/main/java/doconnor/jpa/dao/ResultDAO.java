@@ -11,4 +11,8 @@ public interface ResultDAO {
 
 	public abstract void save(Result agent);
 
+	public abstract Result reattach(Result res);
+
+	public abstract void remove(Result ress);
+
 }

@@ -17,18 +17,18 @@ public class ClubStats {
 	@JoinColumn(name = "club", unique = true, updatable = false)
 	private Club club;
 
-	private float won;
+	private int won;
 
-	private float draw;
+	private int draw;
 
-	private float lost;
+	private int lost;
 
-	private float points;
+	private int points;
 
 	public ClubStats() {
 	}
 
-	public ClubStats(Club club, float won, float draw, float lost, float points) {
+	public ClubStats(Club club, int won, int draw, int lost, int points) {
 		super();
 		this.club = club;
 		this.won = won;
@@ -47,28 +47,28 @@ public class ClubStats {
 	/**
 	 * @return the draw
 	 */
-	public float getDraw() {
+	public int getDraw() {
 		return draw;
 	}
 
 	/**
 	 * @return the lost
 	 */
-	public float getLost() {
+	public int getLost() {
 		return lost;
 	}
 
 	/**
 	 * @return the points
 	 */
-	public float getPoints() {
+	public int getPoints() {
 		return points;
 	}
 
 	/**
 	 * @return the won
 	 */
-	public float getWon() {
+	public int getWon() {
 		return won;
 	}
 
@@ -83,7 +83,7 @@ public class ClubStats {
 	 * @param draw
 	 *            the draw to set
 	 */
-	public void setDraw(float draw) {
+	public void setDraw(int draw) {
 		this.draw = draw;
 	}
 
@@ -91,7 +91,7 @@ public class ClubStats {
 	 * @param lost
 	 *            the lost to set
 	 */
-	public void setLost(float lost) {
+	public void setLost(int lost) {
 		this.lost = lost;
 	}
 
@@ -99,7 +99,7 @@ public class ClubStats {
 	 * @param points
 	 *            the points to set
 	 */
-	public void setPoints(float points) {
+	public void setPoints(int points) {
 		this.points = points;
 	}
 
@@ -107,7 +107,7 @@ public class ClubStats {
 	 * @param won
 	 *            the won to set
 	 */
-	public void setWon(float won) {
+	public void setWon(int won) {
 		this.won = won;
 	}
 

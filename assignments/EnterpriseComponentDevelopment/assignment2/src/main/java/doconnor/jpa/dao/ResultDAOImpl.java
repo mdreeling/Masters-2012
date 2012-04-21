@@ -28,4 +28,13 @@ public class ResultDAOImpl extends HibernateDAO implements ResultDAO {
 					getResultList();
 	}
 
+	public Result reattach(Result res) {
+		return getEntityManager().merge(res);
+	}
+
+	public void remove(Result ress) {
+		getEntityManager().remove(ress);
+
+	}
+
 }

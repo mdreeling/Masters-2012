@@ -43,4 +43,9 @@ public interface LeagueManager {
 	public void createProduct(Product pr, Company com);
 	public void addClubStats(ClubStats s);
 	public List<ClubStats> readClubStats();
+	public void removeResult(Result res);
+	public void removeProduct(Product product);
+	public void removeClubStats(ClubStats s);
+	public void removeLicensingDeal(LicensingDeal s);
+	public Product reattachProduct(Product product);
 }

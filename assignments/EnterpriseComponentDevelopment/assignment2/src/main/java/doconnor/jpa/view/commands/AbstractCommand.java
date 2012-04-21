@@ -117,7 +117,9 @@ public abstract class AbstractCommand {
 		Product result = null;
 		boolean finished = false;
 		List<Product> prds = leagueService.readProducts();
+
 		for (Product p : prds) {
+
 			System.out.println(p.getId() + ". " + p.getName() + " ("
 					+ p.getCompany().getName()
 					+ ")");

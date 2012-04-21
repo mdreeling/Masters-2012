@@ -6,8 +6,12 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import doconnor.jpa.annotations.meta.LMReadOnly;
+import doconnor.jpa.annotations.meta.LMWrite;
 import doconnor.jpa.dao.AgentDAO;
 import doconnor.jpa.dao.ClubDAO;
 import doconnor.jpa.dao.ClubStatsDAO;
@@ -62,19 +66,19 @@ public class LeagueManagerImpl implements LeagueManager {
 	}
 
 
-	@Transactional
+	@LMWrite
 	public void addAgent(Agent agent) {
 		agentDAO.save(agent);
 	}
 
 
-	@Transactional
+	@LMWrite
 	public void addClub(Club club, Division division) {
 		Division divisionM = divisionDAO.reattach(division);
 		divisionM.getMembers().add(club);
 	}
 
-	@Transactional
+	@LMWrite
 	public void addClubAgent(Club club, Agent agent) {
 		Club c = clubDAO.reattach(club);
 		if (!checkForAgent(c, agent)) {
@@ -82,35 +86,36 @@ public class LeagueManagerImpl implements LeagueManager {
 		}
 	}
 
-	@Transactional
+	@LMWrite
 	public void addClubStats(ClubStats l) {
 		clubStatsDAO.save(l);
 	}
 
 
-	@Transactional
+	@LMWrite
 	public void addCompany(Company c) {
 		companyDAO.save(c);
 	}
 
 
-	@Transactional
+	@LMWrite
 	public void addLicensingDeal(LicensingDeal l) {
 		System.out.println("Adding licensing deal for player "
 				+ l.getPlayer().getId() + " and product "
 				+ l.getProduct().getName() + " for " + l.getDuration()
 				+ " years @ " + l.getValue() + " million");
+
 		licensingDAO.save(l);
 	}
 
 
-	@Transactional
+	@LMWrite
 	public void addResult(Result res) {
 		resultDAO.save(res);
 	}
 
 
-	@Transactional
+	@LMWrite
 	public void addSponsor(Sponsorship s) {
 		companyDAO.save(s);
 	}
@@ -130,7 +135,7 @@ public class LeagueManagerImpl implements LeagueManager {
 	}
 
 
-	@Transactional
+	@LMWrite
 	public void createProduct(Product pr, Company com) {
 		pr.setCompany(com);
 		productDAO.save(pr);
@@ -145,18 +150,18 @@ public class LeagueManagerImpl implements LeagueManager {
 	}
 
 
-	@Transactional
+	@LMWrite
 	public void givePlayerAgent(Contract c) {
 		agentDAO.save(c);
 	}
 
 
-	@Transactional
+	@LMReadOnly
 	public List<Club> listClubs() {
 		return clubDAO.getClubs();
 	}
 
-	@Transactional
+	@LMReadOnly
 	public Set<Club> listDivision(Division division) {
 		Division divisionM = divisionDAO.reattach(division);
 		for (Club club : divisionM.getMembers()) {
@@ -166,66 +171,66 @@ public class LeagueManagerImpl implements LeagueManager {
 		return divisionM.getMembers();
 	}
 
-	@Transactional
+	@LMWrite
 	public void movePlayer(Player player, Club newClub) {
 		Player playerM = playerDAO.reattach(player);
 		// Club clubM = clubDAO.reattach(newClub) ;
 		playerM.setClub(newClub);
 	}
 
-	@Transactional
+	@LMReadOnly
 	public List<Agent> readAgents() {
 		return agentDAO.getAll();
 	}
 
-	@Transactional
+	@LMReadOnly
 	public Set<Player> readClubPlayers(Club club) {
 		Club clubM = clubDAO.reattach(club);
 		clubM.getPlayers().size();
 		return clubM.getPlayers();
 	}
 
-	@Transactional
+	@LMReadOnly
 	public List<Club> readClubs() {
 		return clubDAO.getClubs();
 	}
 
-	@Transactional
+	@LMReadOnly
 	public List<ClubStats> readClubStats() {
 		return clubStatsDAO.getClubStats();
 	}
 
-	@Transactional
+	@LMReadOnly
 	public List<Company> readCompanies() {
 		return companyDAO.getAll();
 	}
 
-	@Transactional
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED, timeout = 5)
 	public List<Division> readDivisions() {
 		return divisionDAO.getDivisions();
 	}
 
-	@Transactional
+	@LMReadOnly
 	public List<LicensingDeal> readLicensingDeals() {
 		return licensingDAO.getAll();
 	}
 
-	@Transactional
+	@LMReadOnly
 	public List<Player> readPlayers() {
 		return playerDAO.getPlayers();
 	}
 
-	@Transactional
+	@LMReadOnly
 	public List<Product> readProducts() {
 		return productDAO.getProducts();
 	}
 
-	@Transactional
+	@LMReadOnly
 	public List<Result> readResults() {
 		return resultDAO.getAll();
 	}
 
-	@Transactional
+	@LMWrite
 	public void removeClub(Club club) {
 		Club clubM = clubDAO.reattach(club);
 		clubM.deregister();
@@ -233,7 +238,7 @@ public class LeagueManagerImpl implements LeagueManager {
 	}
 
 
-	@Transactional
+	@LMWrite
 	public void removeDivision(Division division) {
 		Division divisionM = divisionDAO.reattach(division);
 		for (Club club : divisionM.getMembers()) {
@@ -242,22 +247,54 @@ public class LeagueManagerImpl implements LeagueManager {
 		divisionDAO.remove(divisionM);
 	}
 
-	@Transactional
+	@LMWrite
 	public void removePlayer(Player player) {
 		Player playerM = playerDAO.reattach(player);
 		playerDAO.remove(playerM);
 	}
 
-	/**
-	 * @param clubStatsDAO the clubStatsDAO to set
-	 */
-	public void setClubStatsDAO(ClubStatsDAO clubStatsDAO) {
-		this.clubStatsDAO = clubStatsDAO;
-	}
-
-	@Transactional
+	@LMWrite
 	public void signPlayer(Player player, Club club) {
 		player.setClub(club);
 		playerDAO.save(player);
+	}
+
+	@LMWrite
+	public void removeResult(Result res) {
+		Result ress = resultDAO.reattach(res);
+		resultDAO.remove(ress);
+	}
+
+	@LMWrite
+	public void removeProduct(Product product) {
+		Product ress = productDAO.reattach(product);
+		productDAO.remove(ress);
+
+	}
+
+	@LMWrite
+	public void removeClubStats(ClubStats s) {
+		ClubStats ress = clubStatsDAO.reattach(s);
+		clubStatsDAO.remove(ress);
+
+	}
+
+	@LMWrite
+	public void removeLicensingDeal(LicensingDeal s) {
+		LicensingDeal ress = licensingDAO.reattach(s);
+		licensingDAO.remove(ress);
+
+	}
+
+	public Product reattachProduct(Product product) {
+		return productDAO.reattach(product);
+	}
+
+	/**
+	 * @param clubStatsDAO
+	 *            the clubStatsDAO to set
+	 */
+	public void setClubStatsDAO(ClubStatsDAO clubStatsDAO) {
+		this.clubStatsDAO = clubStatsDAO;
 	}
 }
