@@ -1,0 +1,1 @@
+node --debug node/lib/db-server.js 8181
