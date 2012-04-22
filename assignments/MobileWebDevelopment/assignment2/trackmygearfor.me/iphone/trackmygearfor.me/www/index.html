@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Title</title>
+		<meta name="viewport"
+		content="user-scalable=no,initial-scale=1.0,maximum-scale=1.0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<link rel="stylesheet" href="css/jquery.mobile.css" />
+		<link rel="stylesheet" href="css/todo.css" />
+		<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery.mobile.js"></script>
+		<script src="js/underscore.js"></script>
+		<script src="js/backbone.js"></script>
+		<!-- Add scrolling -->
+		<!-- Add scrolling -->
+		<script src="js/iscroll.js"></script>
+		<script src="js/util.js"></script>
+		<script src="js/data-capsule-client.js"></script>
+		<script src="js/trackmygear.js"></script>
+        <!-- Cordova/PhoneGap support -->
+        <script type="text/javascript" charset="utf-8" src="js/cordova-1.6.1.js"></script>
+	</head>
+	<body>
+		<div id="login" data-role="page" class="app-page">
+			<div class="header" data-role="header" data-position="fixed">
+				<h1>Login</h1>
+			</div>
+			<div data-role="content">
+				<a href="/auth/twitter"  rel="external" data-role="button" data-iconpos="right" class="social_login twitter_login">Twitter</a>
+				<a href="/auth/facebook" rel="external" data-role="button" data-iconpos="right" class="social_login facebook_login">Facebook</a>
+				<a id="social_msg_twitter"  data-role="button" data-iconpos="right" class="social_msg twitter_msg ui-corner-right ui-corner-left">tweet now</a>
+			</div>
+		</div>
+		<div id="home" data-role="page" class="app-page">
+			<div data-role="header" data-position="fixed">
+				<h1 id="titlebar">TrackMyGearFor.Me 1.0</h1>
+			</div>
+			<div data-role="content"></div>
+			<div data-role="controlgroup" data-type="horizontal">
+				<a href="#additem" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">Guitar</a>
+				<a href="#additem" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">Mic</a>
+				<a href="#main" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">List</a>
+				<a onclick="localStorage.clear();window.location='/'" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">Reset</a>
+			</div>
+		</div>
+		<div id="main" data-role="page" class="app-page">
+			<div data-role="header" data-position="fixed">
+				<h1 id="titlebar">{{-title}}</h1>
+				<a id="settings" data-icon="gear" class="ui-btn-left">Settings</a>
+				<a id="backtotoplevel" data-icon="back" class="ui-btn-left">Return</a>
+				<a id="add" data-icon="plus" class="ui-btn-right" href="#additem" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">Add Stuff</a>
+				<a id="cancel" data-icon="delete" class="ui-btn-right">Cancel</a>
+				<div id="newitem" data-role="fieldcontain" class="ui-grid-b">
+					<div class="ui-block-a">
+						<input type="text" id="text" placeholder="Enter To Do item"/>
+						<a id="save" data-role="button" data-inline="true" data-icon='plus'>Save</a>
+					</div>
+					<div class="ui-block-b">
+						<label for="locate-slider">Tag Location</label>
+						<select id="locate-slider" name="locate" data-mini="true" data-role="slider">
+							<option value="off">Off</option>
+							<option value="on">On</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div data-role="content">
+				<ul id="list" data-role="listview">
+					<li id="{{-id}}" class="tm">
+						<span class="check">&nbsp;</span>
+						<span class="text">{{-name}} ({{-category}})</span>
+						<div id="showmap_{{-id}}" class="showmap">
+							Show map
+						</div>
+						<div id="showgroupings_{{-id}}" class="showgroupings">
+							Show/Add tasks
+						</div>
+						<div id="delete_{{-id}}" class="delete">
+							Delete
+						</div>
+						<div id="mapContainer_{{-id}}" class="maps"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="additem" data-role="page" class="app-page" data-add-back-btn="true">
+			<div data-role="header" data-position="fixed">
+				<h1 id="titlebar">Add Inventory Item</h1>
+			</div>
+			<div data-role="content" data-inset="true">
+				<div id="nameDiv" data-role="fieldcontain">
+					<label for="itemname">Name</label>
+					<input id="itemname" name="itemname_r" type="text" />
+				</div>
+				<div id="descDiv" data-role="fieldcontain">
+					<label for="itemdesc">Description</label>
+					<input id="itemdesc" name="itemdesc_r" type="text"/>
+				</div>
+				<div id="catDiv" data-role="fieldcontain">
+					<label id="catLabel" for="itemcat">Category</label>
+					<select id="itemcat" name="itemcat_r" tabindex="2">
+						<option value="ZZ">Please select a category</option>
+						<option value="ELEC">Electronics</option>
+						<option value="MUSC">Music</option>
+						<option value="VIDE">Video</option>
+						<option value="GAME">Game</option>
+						<option value="BOOK">Book</option>
+					</select>
+				</div>
+				<div id="imageDiv" data-role="fieldcontain">
+					<label for="itemimage">Image</label>
+					<input id="itemimage" name="itemimage_r" type="text"/>
+				</div>
+				<a id="saveinvbutton" data-role="button" data-inline="true" data-icon='plus'>Save</a>
+			</div>
+		</div>
+		<div id="login" data-role="page" class="app-page">
+			<div data-role="header" data-position="fixed">
+				<h1 id="titlebar">{{-title}}</h1>
+			</div>
+			<div data-role="content" data-inset="true">
+				<fieldset>
+					<p>
+						<label for="email">Username:</label>
+						<input type="email" name="email" id="username" value=""  />
+					</p>
+					<label for="password">Password:</label>
+					<input type="password" name="password" id="password" value="" />
+					<input id="Submit1" type="submit" value="Login" data-role="button" data-inline="true" data-theme="c" />
+					<hr />
+					Don't have a login? <a href="http://www.google.com">Sign Up</a>
+				</fieldset>
+			</div>
+		</div>
+		<div id="settings" data-role="page" class="app-page">
+			<div data-role="header" data-position="fixed">
+				<h1 id="titlebar">{{-title}}</h1>
+				<a id="back" data-icon="back" class="ui-btn-left">Back</a>
+			</div>
+			<div data-role="content" id="first-content">
+				<p>
+					<a data-role="button" theme="a">Change to blue theme</a>
+				</p>
+			</div>
+		</div>
+	</body>
+</html>
+<!-- <script src="http://192.168.1.6:8080/target/target-script-min.js#anonymous"></script>-->
