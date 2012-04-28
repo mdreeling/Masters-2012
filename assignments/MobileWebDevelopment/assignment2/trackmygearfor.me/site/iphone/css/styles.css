@@ -381,3 +381,14 @@ body{
     right: 10px;
 	width: 28px;
 }
+
+input.button_add {
+    background-image: url('/css/images/button-2830.png'); /* 16x16 px */
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    height: 16px;
+    padding-left: 16px;
+    vertical-align: middle;
+}
