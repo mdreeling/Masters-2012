@@ -135,7 +135,7 @@ exports.rest = {
 					if(doc) {
 						var output = util.fixid(doc)
 
-						memcached.set(output.id, todo, lifetime, function(err, result) {
+						memcached.set(output.id, output, lifetime, function(err, result) {
 							if(err) {
 								return util.memcachedend(err);
 							} else {

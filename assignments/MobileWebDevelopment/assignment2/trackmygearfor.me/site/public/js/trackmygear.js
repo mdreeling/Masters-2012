@@ -53,6 +53,8 @@ bb.init = function() {
 	// User location co-ordinates holder
 	var userlocation = 'Unknown'
 
+	var currentCapturedImageData = 'None'
+
 	// Main router - it serves 3 functions, to allow you
 	// to get to settings, the main div and back to the login if necessary
 	var Router = Backbone.Router.extend({
@@ -62,18 +64,14 @@ bb.init = function() {
 			'main' : 'showMain'
 		},
 		showSettings : function() {
-			$('div.app-page').hide();
-			$('div#settings').show();
 		},
 		showLogin : function() {
 			console.log('showing login')
-			$('div.app-page').hide();
-			$('div#login').show();
 		},
 		showMain : function() {
 			console.log('showing main')
-			$('div.app-page').hide();
-			$('div#main').show();
+			//$('div.app-page').hide();
+			//app.view.list.render();
 		}
 	});
 
@@ -89,6 +87,19 @@ bb.init = function() {
 					self.scroller.refresh()
 				} else {
 					self.scroller = new iScroll($("div[data-role='content']")[0])
+				}
+			}, 1)
+		}
+	}
+
+	var scrollForm = {
+		scroll : function() {
+			var self = this
+			setTimeout(function() {
+				if(self.scroller) {
+					self.scroller.refresh()
+				} else {
+					self.scroller = new iScroll('scrollwrapper')
 				}
 			}, 1)
 		}
@@ -204,11 +215,37 @@ bb.init = function() {
 	// bb.view.SocialMsg
 	// ----------
 	// For social messages
+	bb.view.LoadImage = Backbone.View.extend({
+		initialize : function(items) {
+			var self = this
+			_.bindAll(self)
+
+			self.elem = {
+				cap : {}
+			}
+
+			self.elem.cap = $('#capturebutton')
+			self.elem.cap.tap(function() {
+				self.capture()
+			})
+		},
+		render : function() {
+			var self = this
+		},
+		capture : function() {
+			console.log('tapped capture')
+			capturePhoto();
+		}
+	})
+
+	// bb.view.SocialMsg
+	// ----------
+	// For social messages
 	bb.view.SocialMsg = Backbone.View.extend({
 		initialize : function(items) {
 			var self = this
 			_.bindAll(self)
-			
+
 			self.elem = {
 				msg : {}
 			}
@@ -218,9 +255,9 @@ bb.init = function() {
 					self.socialmsg(service)
 				})
 			})
-			
+
 			app.model.state.on('change:user', self.render)
-			
+
 		},
 		render : function() {
 			var self = this
@@ -229,7 +266,7 @@ bb.init = function() {
 			console.log('user is ' + user)
 		},
 		socialmsg : function(service) {
-			console.log('tapped '+service.name)
+			console.log('tapped ' + service.name)
 
 			var currentTime = new Date();
 
@@ -654,11 +691,34 @@ bb.init = function() {
 			_.bindAll(self)
 			self.setElement("div[id='additem']")
 			self.items = app.model.items
+
+			self.scroller
 		},
 		render : function() {
 			console.log('bb.view.NewInventoryItem - render')
 			var self = this
 			_.bindAll(self)
+
+			self.scroller = new iScroll('scrollwrapper', {
+				useTransform : false,
+				onBeforeScrollStart : function(e) {
+					var target = e.target;
+					while(target.nodeType != 1)
+					target = target.parentNode;
+
+					if(target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA')
+						e.preventDefault();
+				}
+			});
+
+			app.scrollheight = window.innerHeight - 80;
+
+			var content = $("#scrollwrapper")
+			content.height(app.scrollheight)
+
+			setTimeout(function() {
+				self.scroller.refresh()
+			}, 300)
 		},
 		// This toggles location for the current todo.
 		locateSlider : function() {
@@ -676,7 +736,7 @@ bb.init = function() {
 			var iname = self.elem.itemnametext.val()
 			var idesc = self.elem.itemdesctext.val()
 			var selectedCat = self.elem.itemcat[0].options[self.elem.itemcat[0].selectedIndex];
-			var iimg = self.elem.itemimagedata.val()
+			///var iimg = app.currentCapturedImageData
 
 			if(0 == text.length) {
 				return
@@ -687,7 +747,7 @@ bb.init = function() {
 
 			console.log('tap #save - adding item...')
 			// Add the item to the master list
-			self.items.additem(iname, idesc, selectedCat.text, iimg)
+			self.items.additem(iname, idesc, selectedCat.text, app.currentCapturedImageData)
 			// Just reverse the previous actions
 			console.log('tap #save - done!')
 		}
@@ -974,6 +1034,11 @@ app.init = function() {
 // I seperated this out when i started working on login because i thought it might make sense.
 app.listinit = function() {
 
+	app.view.loadimage = new bb.view.LoadImage({
+		el : $("#capturebutton")
+	})
+	app.view.loadimage.render()
+
 	app.view.socialmsg = new bb.view.SocialMsg({
 		el : $("#social_msg_twitter")
 	})
@@ -1083,4 +1148,83 @@ app.generateMap = function genMapforLocation(id, position) {
 
 	console.log('done genmapping!')
 }
+// Called when a photo is successfully retrieved
+//
+function onPhotoDataSuccess(imageData) {
+	// Uncomment to view the base64 encoded image data
+	// console.log(imageData);
+
+	// Get image handle
+	//
+	var smallImage = document.getElementById('smallImage');
+
+	// Unhide image elements
+	//
+	smallImage.style.display = 'block';
+
+	// Show the captured photo
+	// The inline CSS rules are used to resize the image
+	//
+	smallImage.src = "data:image/jpeg;base64," + imageData;
+	app.currentCapturedImageData = imageData;
+}
+
+// Called when a photo is successfully retrieved
+//
+function onPhotoURISuccess(imageURI) {
+	// Uncomment to view the image file URI
+	// console.log(imageURI);
+
+	// Get image handle
+	//
+	var largeImage = document.getElementById('largeImage');
+
+	// Unhide image elements
+	//
+	largeImage.style.display = 'block';
+
+	// Show the captured photo
+	// The inline CSS rules are used to resize the image
+	//
+	largeImage.src = imageURI;
+}
+
+// A button will call this function
+//
+function capturePhoto() {
+	// Take picture using device camera and retrieve image as base64-encoded string
+	navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+		quality : 50,
+		destinationType : destinationType.DATA_URL
+	});
+}
+
+// A button will call this function
+//
+function capturePhotoEdit() {
+	// Take picture using device camera, allow edit, and retrieve image as base64-encoded string
+	navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+		quality : 20,
+		allowEdit : true,
+		destinationType : destinationType.DATA_URL
+	});
+}
+
+// A button will call this function
+//
+function getPhoto(source) {
+	// Retrieve image file location from specified source
+	navigator.camera.getPicture(onPhotoURISuccess, onFail, {
+		quality : 50,
+		destinationType : destinationType.FILE_URI,
+		sourceType : source
+	});
+}
+
+// Called if something bad happens.
+//
+function onFail(message) {
+	alert('Failed because: ' + message);
+}
+
 $(app.init)

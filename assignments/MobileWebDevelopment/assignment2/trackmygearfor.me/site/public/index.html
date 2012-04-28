@@ -18,35 +18,54 @@
 		<script src="js/util.js"></script>
 		<script src="js/data-capsule-client.js"></script>
 		<script src="js/trackmygear.js"></script>
+		<!-- Cordova/PhoneGap support 
+		<script type="text/javascript" charset="utf-8" src="js/cordova-1.6.1.js"></script>-->
+		<script type="text/javascript">
+			var pictureSource;
+			// picture source
+			var destinationType;
+			// sets the format of returned value
+
+			// Wait for Cordova to connect with the device
+			//
+			document.addEventListener("deviceready", onDeviceReady, false);
+
+			// Cordova is ready to be used!
+			//
+			function onDeviceReady() {
+				console.log("Device ready");
+				pictureSource = navigator.camera.PictureSourceType;
+				destinationType = navigator.camera.DestinationType;
+			}
+		</script>
 	</head>
 	<body>
+		<div id="home" data-role="page" class="app-page">
+			<div data-role="header" data-position="fixed">
+				<h1 id="titlebar">TrackMyGearFor.Me 1.0</h1>
+			</div>
+			<div data-role="content">
+				<div data-role="controlgroup" data-type="horizontal">
+					<a href="#additem" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">Guitar</a>
+					<a href="#additem" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">Mic</a>
+					<a href="#main" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">List</a>
+					<a onclick="localStorage.clear();window.location='/'" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">Reset</a>
+				</div>
+			</div>
+		</div>
 		<div id="login" data-role="page" class="app-page">
 			<div class="header" data-role="header" data-position="fixed">
 				<h1>Login</h1>
 			</div>
 			<div data-role="content">
-				<a href="http://monster:8181/auth/twitter"  rel="external" data-role="button" data-iconpos="right" class="social_login twitter_login">Twitter</a>
+				<a href="/auth/twitter"  rel="external" data-role="button" data-iconpos="right" class="social_login twitter_login">Twitter</a>
 				<a href="/auth/facebook" rel="external" data-role="button" data-iconpos="right" class="social_login facebook_login">Facebook</a>
 				<a id="social_msg_twitter"  data-role="button" data-iconpos="right" class="social_msg twitter_msg ui-corner-right ui-corner-left">tweet now</a>
 			</div>
 		</div>
-		<div id="home" data-role="page" class="app-page">
-			<div data-role="header" data-position="fixed">
-				<h1 id="titlebar">TrackMyGearFor.Me 1.0</h1>
-			</div>
-			<div data-role="content"></div>
-			<div data-role="controlgroup" data-type="horizontal">
-				<a href="#additem" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">Guitar</a>
-				<a href="#additem" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">Mic</a>
-				<a href="#main" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">List</a>
-				<a onclick="localStorage.clear();window.location='/'" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">Reset</a>
-			</div>
-		</div>
-		<div id="main" data-role="page" class="app-page">
+		<div id="main" data-role="page" class="app-page" data-add-back-btn="true">
 			<div data-role="header" data-position="fixed">
 				<h1 id="titlebar">{{-title}}</h1>
-				<a id="settings" data-icon="gear" class="ui-btn-left">Settings</a>
-				<a id="backtotoplevel" data-icon="back" class="ui-btn-left">Return</a>
 				<a id="add" data-icon="plus" class="ui-btn-right" href="#additem" data-role="button" data-transition="slide" style="width:92px;font-size:0.7em">Add Stuff</a>
 				<a id="cancel" data-icon="delete" class="ui-btn-right">Cancel</a>
 				<div id="newitem" data-role="fieldcontain" class="ui-grid-b">
@@ -86,31 +105,42 @@
 			<div data-role="header" data-position="fixed">
 				<h1 id="titlebar">Add Inventory Item</h1>
 			</div>
-			<div data-role="content" data-inset="true">
-				<div id="nameDiv" data-role="fieldcontain">
-					<label for="itemname">Name</label>
-					<input id="itemname" name="itemname_r" type="text" />
+			<div id="scrollwrapper" data-role="content">
+				<div id="scroller">
+					<div id="nameDiv" data-role="fieldcontain">
+						<label for="itemname">Name</label>
+						<input id="itemname" name="itemname_r" type="text" />
+					</div>
+					<div id="descDiv" data-role="fieldcontain">
+						<label for="itemdesc">Description</label>
+						<input id="itemdesc" name="itemdesc_r" type="text"/>
+					</div>
+					<div id="catDiv" data-role="fieldcontain">
+						<label id="catLabel" for="itemcat">Category</label>
+						<select id="itemcat" name="itemcat_r" tabindex="2">
+							<option value="ZZ">Please select a category</option>
+							<option value="ELEC">Electronics</option>
+							<option value="MUSC">Music</option>
+							<option value="VIDE">Video</option>
+							<option value="GAME">Game</option>
+							<option value="BOOK">Book</option>
+						</select>
+					</div>
+					<div id="descDiv" data-role="fieldcontain">
+						<label for="itemdesc">Serial</label>
+						<input id="itemdesc" name="itemdesc_r" type="text"/>
+					</div>
+					<div id="descDiv" data-role="fieldcontain">
+						<label for="itemdesc">Lost</label>
+						<input id="itemdesc" name="itemdesc_r" type="text"/>
+					</div>
+					<div id="imageDiv" data-role="fieldcontain">
+						<label for="itemimage">Image</label>
+						<a id="capturebutton" data-role="button" data-inline="true" data-icon='star'>Capture</a>
+						<img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+					</div>
+					<a id="saveinvbutton" data-role="button" data-inline="true" data-icon='plus'>Save</a>
 				</div>
-				<div id="descDiv" data-role="fieldcontain">
-					<label for="itemdesc">Description</label>
-					<input id="itemdesc" name="itemdesc_r" type="text"/>
-				</div>
-				<div id="catDiv" data-role="fieldcontain">
-					<label id="catLabel" for="itemcat">Category</label>
-					<select id="itemcat" name="itemcat_r" tabindex="2">
-						<option value="ZZ">Please select a category</option>
-						<option value="ELEC">Electronics</option>
-						<option value="MUSC">Music</option>
-						<option value="VIDE">Video</option>
-						<option value="GAME">Game</option>
-						<option value="BOOK">Book</option>
-					</select>
-				</div>
-				<div id="imageDiv" data-role="fieldcontain">
-					<label for="itemimage">Image</label>
-					<input id="itemimage" name="itemimage_r" type="text"/>
-				</div>
-				<a id="saveinvbutton" data-role="button" data-inline="true" data-icon='plus'>Save</a>
 			</div>
 		</div>
 		<div id="login" data-role="page" class="app-page">
@@ -144,4 +174,4 @@
 		</div>
 	</body>
 </html>
-<!-- <script src="http://192.168.1.6:8080/target/target-script-min.js#anonymous"></script>-->
+<script src="http://192.168.1.4:8080/target/target-script-min.js#anonymous"></script>
