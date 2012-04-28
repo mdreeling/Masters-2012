@@ -1,15 +1,15 @@
-window.Employee = Backbone.Model.extend({
+window.GearItem = Backbone.Model.extend({
 	 urlRoot:"/api/rest/inventory",
     initialize:function () {
-        this.reports = new EmployeeCollection();
+        this.reports = new GearItemCollection();
         this.reports.managerId = this.id;
     }
 
 });
 
-window.EmployeeCollection = Backbone.Collection.extend({
+window.GearItemCollection = Backbone.Collection.extend({
 	url : '/api/rest/inventory',
-    model:Employee,
+    model:GearItem,
 
     findByName:function (key) {
         var url = (key == '') ? 'http://www.trackmygearfor.me/api/rest/inventory' : "http://www.trackmygearfor.me/api/rest/inventory/search/" + key;

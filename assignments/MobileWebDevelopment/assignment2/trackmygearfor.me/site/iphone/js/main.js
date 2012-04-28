@@ -8,10 +8,10 @@ Backbone.sync = function (method, model, options) {
                 // Request to read a single item identified by its id.
                 options.success(store.findById(model.id));
             } else if (model.managerId) {
-                // Request to read a collection of employees identified by the manager they work for.
+                // Request to read a collection of gearitems identified by the manager they work for.
                 options.success(store.findByManager(model.managerId));
             } else {
-                // Request to read a collection of all employees.
+                // Request to read a collection of all gearitems.
                 options.success(store.findAll());
             }
             break;
@@ -23,8 +23,8 @@ var AppRouter = Backbone.Router.extend({
     routes:{
         "":"list",
         "list":"list",
-        "employees/:id":"employeeDetails",
-        "employees/:id/reports":"directReports"
+        "gearitems/:id":"gearitemDetails",
+        "gearitems/:id/reports":"directReports"
     },
 
     initialize: function() {
@@ -60,8 +60,8 @@ var AppRouter = Backbone.Router.extend({
             });
         }
 
-        // We keep a single instance of the SearchPage and its associated Employee collection throughout the app
-        this.searchResults = new EmployeeCollection();
+        // We keep a single instance of the SearchPage and its associated GearItem collection throughout the app
+        this.searchResults = new GearItemCollection();
         this.searchPage = new SearchPage({model: this.searchResults});
         this.searchPage.render();
 
@@ -80,20 +80,20 @@ var AppRouter = Backbone.Router.extend({
         this.slidePage(this.searchPage);
     },
 
-    employeeDetails:function (id) {
-        var employee = new Employee({id:id});
+    gearitemDetails:function (id) {
+        var gearitem = new GearItem({id:id});
         var self = this;
-        employee.fetch({
+        gearitem.fetch({
             success:function (data) {
-                self.slidePage(new EmployeePage({model:data}).render());
+                self.slidePage(new GearItemPage({model:data}).render());
             }
         });
     },
 
     directReports:function (id) {
-        var employee = new Employee({id:id});
-        employee.reports.fetch();
-        this.slidePage(new DirectReportPage({model:employee.reports}).render());
+        var gearitem = new GearItem({id:id});
+        gearitem.reports.fetch();
+        this.slidePage(new DirectReportPage({model:gearitem.reports}).render());
     },
 
     slidePage:function(page) {
@@ -147,7 +147,7 @@ var AppRouter = Backbone.Router.extend({
 });
 
 $(document).ready(function () {
-    tpl.loadTemplates(['search-page', 'report-page', 'employee-page', 'employee-list-item'],
+    tpl.loadTemplates(['search-page', 'report-page', 'gearitem-page', 'gearitem-list-item'],
         function () {
             app = new AppRouter();
             Backbone.history.start();

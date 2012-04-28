@@ -6,7 +6,7 @@ window.SearchPage = Backbone.View.extend({
 
     render:function (eventName) {
         $(this.el).html(this.template(this.model.toJSON()));
-        this.listView = new EmployeeListView({el: $('ul', this.el), model: this.model});
+        this.listView = new GearItemListView({el: $('ul', this.el), model: this.model});
         this.listView.render();
         return this;
     },
@@ -29,14 +29,14 @@ window.DirectReportPage = Backbone.View.extend({
 
     render:function (eventName) {
         $(this.el).html(this.template(this.model.toJSON()));
-        this.listView = new EmployeeListView({el: $('ul', this.el), model: this.model});
+        this.listView = new GearItemListView({el: $('ul', this.el), model: this.model});
         this.listView.render();
         return this;
     }
 
 });
 
-window.EmployeeListView = Backbone.View.extend({
+window.GearItemListView = Backbone.View.extend({
 
     initialize:function () {
         this.model.bind("reset", this.render, this);
@@ -44,21 +44,21 @@ window.EmployeeListView = Backbone.View.extend({
 
     render:function (eventName) {
         $(this.el).empty();
-        _.each(this.model.models, function (employee) {
-            console.log('rendering ' + employee);
-            $(this.el).append(new EmployeeListItemView({model:employee}).render().el);
+        _.each(this.model.models, function (gearitem) {
+            console.log('rendering ' + gearitem);
+            $(this.el).append(new GearItemListItemView({model:gearitem}).render().el);
         }, this);
         return this;
     }
 
 });
 
-window.EmployeeListItemView = Backbone.View.extend({
+window.GearItemListItemView = Backbone.View.extend({
 
     tagName:"li",
 
     initialize:function () {
-        this.template = _.template(tpl.get('employee-list-item'));
+        this.template = _.template(tpl.get('gearitem-list-item'));
     },
 
     render:function (eventName) {
@@ -68,10 +68,10 @@ window.EmployeeListItemView = Backbone.View.extend({
 
 });
 
-window.EmployeePage = Backbone.View.extend({
+window.GearItemPage = Backbone.View.extend({
 
     initialize:function () {
-        this.template = _.template(tpl.get('employee-page'));
+        this.template = _.template(tpl.get('gearitem-page'));
     },
 
     render:function (eventName) {
