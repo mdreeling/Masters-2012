@@ -196,4 +196,5 @@ tmgapp.init = function() {
 
 	tmgapp.model.items = new bb.model.GearItemCollection();
 }
+
 $(tmgapp.init)

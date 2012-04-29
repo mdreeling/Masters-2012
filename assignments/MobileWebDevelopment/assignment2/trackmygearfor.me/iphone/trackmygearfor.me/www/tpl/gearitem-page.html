@@ -1,0 +1,41 @@
+<div class="header">
+    <a href="#" class="header-button header-button-left header-back-button">
+        <button>Back</button>
+    </a>
+    <a href="#" class="header-button header-button-icon header-button-right search" id="view-home-refresh">
+        <button><img src="css/images/search-icon.png" alt="Refresh" width="16" height="16"></button>
+    </a>
+
+    <h1><%= name %></h1>
+</div>
+
+<div class="scroll striped" style="top:44px;">
+    <div class="gearitem-summary">
+        <header>
+            <img id="gearitemPic" src="data:image/jpeg;base64,<%= imagedata %>" width="100"/>
+
+            <h1><%= name %></h1>
+        </header>
+    </div>
+
+    <ul class="tableview tableview-links">
+         <li>
+            <a href="">
+                <div class="story">
+                    <b>Description</b><br/>
+                    <span class="metadata"><%= description %></span>
+                </div>
+                <img src="css/images/call.png" class="action-icon"/>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <div class="story">
+                    <b>Category</b><br/>
+                    <span class="metadata"><%= category %></span>
+                </div>
+                <img src="css/images/call.png" class="action-icon"/>
+            </a>
+        </li>
+    </ul>
+</div>
