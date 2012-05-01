@@ -1,4 +1,3 @@
-
 // Called when a photo is successfully retrieved
 //
 function onPhotoDataSuccess(imageData) {
@@ -7,17 +6,32 @@ function onPhotoDataSuccess(imageData) {
 
 	// Get image handle
 	//
-	var smallImage = document.getElementById('smallImage');
+	if(!app.capturingSerial) {
+		var smallImage = document.getElementById('smallImage');
+        // Unhide image elements
+        //
+        smallImage.style.display = 'block';
+        // Show the captured photo
+        // The inline CSS rules are used to resize the image
+        //
+        smallImage.src = "data:image/jpeg;base64," + imageData;
+	} else {
+		var smallImageSer = document.getElementById('smallImageSerial');
+        // Unhide image elements
+        //
+        smallImageSer.style.display = 'block';
+        // Show the captured photo
+        // The inline CSS rules are used to resize the image
+        //
+        smallImageSer.src = "data:image/jpeg;base64," + imageData;
+	}
 
-	// Unhide image elements
-	//
-	smallImage.style.display = 'block';
 
-	// Show the captured photo
-	// The inline CSS rules are used to resize the image
-	//
-	smallImage.src = "data:image/jpeg;base64," + imageData;
-	app.currentCapturedImageData = imageData;
+	if(!app.capturingSerial) {
+		app.currentCapturedImageData = imageData;
+	} else {
+		app.currentCapturedSerialNoImageData = imageData;
+	}
 }
 
 // Called when a photo is successfully retrieved
@@ -47,8 +61,8 @@ function capturePhoto() {
 	navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
 		quality : 50,
 		destinationType : destinationType.DATA_URL,
-		targetWidth: 640,
-  		targetHeight: 480 
+		targetWidth : 640,
+		targetHeight : 480
 	});
 }
 

@@ -36,7 +36,7 @@ bb.model.GearItemCollection = Backbone.Collection.extend({
 		});
 	},
 	// Adds an item (recording location if desired)
-	additem : function(textIn, modelIn, descIn, categoryIn, imageIn) {
+	additem : function(textIn, modelIn, descIn, categoryIn, imageIn, serialIn, serialImageDataIn) {
 
 		console.log('bb.model.GearItemCollection - additem (' + textIn + ',' + descIn + ',' + categoryIn + ',' + imageIn + ')')
 
@@ -47,7 +47,10 @@ bb.model.GearItemCollection = Backbone.Collection.extend({
 			model : modelIn,
 			description : descIn,
 			category : categoryIn,
-			imagedata : imageIn
+			imagedata : imageIn,
+			username : app.loggedinusername,
+			serialnumber : serialIn,
+			serialimagedata : serialImageDataIn
 		})
 
 		console.log('bb.model.Items - adding item.')
@@ -62,3 +65,13 @@ bb.model.GearItemCollection = Backbone.Collection.extend({
 		console.log('bb.model.Items - done save.')
 	}
 });
+
+bb.model.State = Backbone.Model.extend({
+	initialize : function(items) {
+		var self = this
+		_.bindAll(self)
+	},
+	init : function() {
+		var self = this
+	}
+})

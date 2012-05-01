@@ -1,29 +1,27 @@
 var common = require('./common')
 var api = require('./db-rest-api')
-var everyauth  = common.everyauth
-var dispatch   = common.dispatch
+var everyauth = common.everyauth
+var dispatch = common.dispatch
 var connect = common.connect
 var DataCapsule = common.DataCapsule
 var config = common.config
 
 var dc, authcap
 
+function init_datacapsule() {
+	dc = new DataCapsule({})
 
-function init_datacapsule( ) {
-  dc = new DataCapsule({})
-
-  dc.capsule( 'internal','user', config.secret, function( err, cap ) {
-    if( err) return console.log(err);
-    authcap = cap
-  })
+	dc.capsule('internal', 'user', config.secret, function(err, cap) {
+		if(err)
+			return console.log(err);
+		authcap = cap
+	})
 }
 
-
-
 function init() {
-	
+
 	init_datacapsule();
-	
+
 	function make_promise(user, promise) {
 		authcap.save(user, function(err, user) {
 			if(err)
@@ -76,12 +74,14 @@ function init() {
 	var server = connect.createServer()
 	server.use(connect.logger())
 	server.use(connect.bodyParser())
-	server.use(connect.cookieParser()); 
+	server.use(connect.cookieParser());
 	server.use(connect.query())
-	server.use(connect.session({secret: config.secret}))
-    server.use(everyauth.middleware())
-    //server.use(dc.middleware())
-    
+	server.use(connect.session({
+		secret : config.secret
+	}))
+	server.use(everyauth.middleware())
+	//server.use(dc.middleware())
+
 	server.use(function(req, res, next) {
 		res.sendjson$ = function(obj) {
 			common.sendjson(res, obj)
@@ -115,16 +115,16 @@ function init() {
 		app.del('/api/rest/inventory/:id', api.rest.del)
 
 	})
-	
+
 	server.use(dispatch({
-      '/user': {
-        GET: api.get_user,
-        '/socialmsg/:when': {
-          POST: api.social_msg
-        }
-      }
-    }))
-	
+		'/user' : {
+			GET : api.get_user,
+			'/socialmsg/:when' : {
+				POST : api.social_msg
+			}
+		}
+	}))
+
 	server.use(router, null)
 
 	server.use(connect.static(__dirname + '/../../site/iphone'))

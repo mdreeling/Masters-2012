@@ -21,7 +21,7 @@
 		</li>
 		<li>
 			<div class="story">
-				 <label for="itemmodel"><b>Model</b></label>
+				<label for="itemmodel"><b>Model</b></label>
 				<input id="itemmodel" type="text" name="name" />
 			</div>
 		</li>
@@ -34,11 +34,31 @@
 		<% if (jQuery.browser.mobile) { %>
 		<li>
 			<div id="imageDiv" data-role="fieldcontain">
-				<b><label for="itemimage">Image</label></b>
-				<button  id="capturebutton">Capture</button>
-				<img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+				<b><label for="captureserialbutton">Serial No. Image</label></b>
+				<button  id="captureserialbutton">
+					Capture Serial Number
+				</button>
+				<img style="display:none;width:120px;height:120px;" id="smallImageSerial" src="" />
 			</div>
-		</li><% } %>
+		</li>
+		<% } %>
+		<li>
+			<div class="story">
+				<label for="itemserial"><b>Serial No.</b></label>
+				<input id ="itemserial" type="text" name="name" />
+			</div>
+		</li>
+		<% if (jQuery.browser.mobile) { %>
+		<li>
+			<div id="imageDiv" data-role="fieldcontain">
+				<b><label for="capturebutton">Image Of Equipment</label></b>
+				<button  id="capturebutton">
+					Take Photo
+				</button>
+				<img style="display:none;width:120px;height:120px;" id="smallImage" src="" />
+			</div>
+		</li>
+		<% } %>
 		<li>
 			<div id="catDiv" data-role="fieldcontain" class="story">
 				<b><label id="catLabel" for="itemcat">Category</label></b>
@@ -55,7 +75,9 @@
 			</div>
 		</li>
 		<li>
-			<button  id="saveinvbutton">Save</button>
+			<button  id="saveinvbutton">
+				Save
+			</button>
 		</li>
 	</ul>
 </div>

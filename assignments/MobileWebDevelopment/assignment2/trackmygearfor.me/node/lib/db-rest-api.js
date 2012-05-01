@@ -80,9 +80,13 @@ exports.rest = {
 
 		var todo = {
 			name : input.name,
+			model : input.model,
 			description : input.description,
 			category : input.category,
+			serialnumber : input.serialnumber,
+			username : input.username,
 			imagedata : input.imagedata,
+			serialimagedata : input.serialimagedata,
 			creatd : new Date().getTime()
 		}
 		console.log('inserting...' + input)
@@ -321,7 +325,7 @@ exports.social_msg = function( req, res, next, when ) {
 
     send_social_msg[user.service]( 
       user, 
-      'Burning out on '+d+'! Better get back to work... ', 
+      'I just tracked some of my studio gear (my '+decodeURIComponent(when)+') on http://trackmygearfor.me! Track your gear! Keep it safe!', 
       function(ok) {
         common.util.sendjson(res,{ok:ok})
       }

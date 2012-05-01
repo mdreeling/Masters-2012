@@ -6,7 +6,7 @@
         <button><img src="css/images/search-icon.png" alt="Refresh" width="16" height="16"></button>
     </a>
 
-    <h1><%= name %></h1>
+    <h1><%= name %><%= model %></h1>
 </div>
 
 <div class="scroll striped" style="top:44px;">
@@ -15,6 +15,10 @@
             <img id="gearitemPic" src="data:image/jpeg;base64,<%= imagedata %>" width="100"/>
 
             <h1><%= name %></h1>
+            <span class="link-text"><%= model %></span><br/>
+            <button  id="editbutton">
+				Edit
+			</button>
         </header>
     </div>
 
@@ -25,7 +29,6 @@
                     <b>Description</b><br/>
                     <span class="metadata"><%= description %></span>
                 </div>
-                <img src="css/images/call.png" class="action-icon"/>
             </a>
         </li>
         <li>
@@ -34,8 +37,28 @@
                     <b>Category</b><br/>
                     <span class="metadata"><%= category %></span>
                 </div>
-                <img src="css/images/call.png" class="action-icon"/>
             </a>
         </li>
+        <li>
+            <a href="">
+                <div class="story">
+                    <b>Serial No.</b><br/>
+                    <span class="metadata"><%= serialnumber %></span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <div class="story">
+                    <b>Serial No. Image</b><br/>
+                   <img id="gearSerialItemPic" src="data:image/jpeg;base64,<%= serialimagedata %>" width="100"/>
+                </div>
+            </a>
+        </li>
+        <li>
+			<button  id="tweetbutton" class="tweeter">
+				Tweet!
+			</button>
+		</li>
     </ul>
 </div>

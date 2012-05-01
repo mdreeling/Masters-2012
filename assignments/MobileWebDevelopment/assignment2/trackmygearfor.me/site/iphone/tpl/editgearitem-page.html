@@ -7,7 +7,7 @@
 	<button><img src="css/images/search-icon.png" alt="Refresh" width="16" height="16">
 	</button> </a>
 
-	<h1>Add Gear</h1>
+	<h1>Edit Gear</h1>
 </div>
 
 <div id="addgeardiv" class="scroll striped" style="top:44px;">
@@ -15,47 +15,47 @@
 		<li>
 			<div class="story">
 				<label for="itemmake"><b>Make</b></label>
-				<input id="itemmake" type="text" name="name" />
+				<input id="itemmake" type="text" name="name" value="<%= name %>"/>
 			</div>
 
 		</li>
 		<li>
 			<div class="story">
 				<label for="itemmodel"><b>Model</b></label>
-				<input id="itemmodel" type="text" name="name" />
+				<input id="itemmodel" type="text" name="name" value="<%= model %>"/> 
 			</div>
 		</li>
 		<li>
 			<div class="story">
 				<label for="itemdesc"><b>Description</b></label>
-				<input id ="itemdesc" type="text" name="name" />
+				<input id ="itemdesc" type="text" name="name" value="<%= description %>"/>
 			</div>
 		</li>
-		<% if (jQuery.browser.mobile) { %>
+		<% if (!jQuery.browser.mobile) { %>
 		<li>
 			<div id="imageDiv" data-role="fieldcontain">
 				<b><label for="captureserialbutton">Serial No. Image</label></b>
 				<button  id="captureserialbutton">
 					Capture Serial Number
 				</button>
-				<img style="display:none;width:120px;height:120px;" id="smallImageSerial" src="" />
+				<img style="display:block;width:240px;height:240px;" id="smallImage" src="data:image/jpeg;base64,<%= serialimagedata %>" />
 			</div>
 		</li>
 		<% } %>
 		<li>
 			<div class="story">
 				<label for="itemserial"><b>Serial No.</b></label>
-				<input id ="itemserial" type="text" name="name" />
+				<input id ="itemserial" type="text" name="name" value="<%= serialnumber %>"/>
 			</div>
 		</li>
-		<% if (jQuery.browser.mobile) { %>
+		<% if (!jQuery.browser.mobile) { %>
 		<li>
 			<div id="imageDiv" data-role="fieldcontain">
 				<b><label for="capturebutton">Image Of Equipment</label></b>
 				<button  id="capturebutton">
 					Take Photo
 				</button>
-				<img style="display:none;width:120px;height:120px;" id="smallImage" src="" />
+				<img style="display:block;width:240px;height:240px;" id="smallImage" src="data:image/jpeg;base64,<%= imagedata %>" />
 			</div>
 		</li>
 		<% } %>
@@ -81,3 +81,6 @@
 		</li>
 	</ul>
 </div>
+<script>
+	$("#itemcat").val('GAME');
+</script>

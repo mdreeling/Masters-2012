@@ -18,7 +18,9 @@ var bb = {
 // Backbone initialization
 // ----------
 bb.init = function() {
-
+    
+    console.log("bb.init");
+    
 	var swipeon = false
 	// Indicates that we are adding a todo item that will contain nested tasks.
 	var groupedmode = false
@@ -29,11 +31,15 @@ bb.init = function() {
 	var userlocation = 'Unknown'
 
 	var currentCapturedImageData = 'None'
+	var currentCapturedSerialNoImageData = 'None'
+	var loggedin = false
+
+	var loggedinusername = 'notloggedin'
 
 	var AppRouter = Backbone.Router.extend({
 
 		routes : {
-			"" : "list",
+			"" : "login",
 			"list" : "list",
 			"gearitems/:id" : "gearitemDetails",
 			"addgear" : "addGear",
@@ -43,6 +49,8 @@ bb.init = function() {
 		initialize : function() {
 
 			var self = this;
+
+			tmgapp.model.state.on('change:user', self.userChanged)
 
 			// Keep track of the history of pages (we only store the page URL). Used to identify the direction
 			// (left or right) of the sliding transition between pages.
@@ -73,15 +81,32 @@ bb.init = function() {
 				});
 			}
 
+			// Make a call out to the OAuth in order to set the user variable.
+			http.get('/user', function(user) {
+				if(user.id) {
+					tmgapp.model.state.set({
+						user : user
+					})
+				}
+			})
+			if(loggedin) {
+				renderSearch();
+			} else {
+				this.loginPage = new bb.view.LoginPage({
+					model : '{ "social": "twitter"}'
+				});
+				this.loginPage.render();
+			}
+
+		},
+		renderSearch : function() {
 			// We keep a single instance of the SearchPage and its associated GearItem collection throughout the app
 			tmgapp.model.items = new bb.model.GearItemCollection();
 			this.searchPage = new bb.view.SearchPage({
 				model : tmgapp.model.items
 			});
 			this.searchPage.render();
-
 		},
-
 		selectItem : function(event) {
 			$(event.target).addClass('tappable-active');
 		},
@@ -89,12 +114,15 @@ bb.init = function() {
 		deselectItem : function(event) {
 			$(event.target).removeClass('tappable-active');
 		},
-
 		list : function() {
+			this.renderSearch();
 			var self = this;
 			this.slidePage(this.searchPage);
 		},
-
+		login : function() {
+			var self = this;
+			this.slidePage(this.loginPage);
+		},
 		addGear : function(id) {
 			var gearitem = new bb.model.GearItem({
 				id : id
@@ -105,7 +133,6 @@ bb.init = function() {
 				model : '{ "category": "speaker"}'
 			}).render());
 		},
-
 		gearitemDetails : function(id) {
 			var gearitem = new bb.model.GearItem({
 				id : id
@@ -119,17 +146,6 @@ bb.init = function() {
 				}
 			});
 		},
-
-		directReports : function(id) {
-			var gearitem = new bb.model.GearItem({
-				id : id
-			});
-			gearitem.reports.fetch();
-			this.slidePage(new bb.view.DirectReportPage({
-				model : gearitem.reports
-			}).render());
-		},
-
 		slidePage : function(page) {
 
 			if(!this.currentPage) {
@@ -176,10 +192,22 @@ bb.init = function() {
 				self.currentPage = page;
 			});
 
-		}
+		},
+		userChanged : function() {
+			var self = this;
+			var user = tmgapp.model.state.get('user')
+			console.log('user ' + user.username + ' is logged on via ' + user.service)
+
+			app.loggedinusername = user.username;
+
+			if(app.loggedinusername.length > 0) {
+				window.location.href = "#list"
+			}
+
+		},
 	});
 
-	tpl.loadTemplates(['search-page', 'report-page', 'gearitem-page', 'addgearitem-page', 'gearitem-list-item'], function() {
+	tpl.loadTemplates(['search-page', 'login-page', 'gearitem-page', 'editgearitem-page','addgearitem-page', 'gearitem-list-item'], function() {
 		app = new AppRouter();
 		Backbone.history = Backbone.history || new Backbone.History({});
 		Backbone.history.start();
@@ -189,11 +217,20 @@ bb.init = function() {
 // init
 // ----------
 // Main init
+tmgapp.listitems = function() {
+	this.slidePage(this.searchPage);
+}
+// init
+// ----------
+// Main init
 tmgapp.init = function() {
 
 	console.log('start init')
 	bb.init()
 
-	tmgapp.model.items = new bb.model.GearItemCollection();
+	tmgapp.model.state = new bb.model.State()
+	tmgapp.model.state.init()
+
+	//tmgapp.model.items = new bb.model.GearItemCollection();
 }
 $(tmgapp.init)
