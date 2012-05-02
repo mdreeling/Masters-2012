@@ -150,13 +150,8 @@
         if(granted) {
             NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
             ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
-            NSString *userID = [[twitterAccount accountProperties] objectForKey:@"username"];
             NSString *username = twitterAccount.username;
-            NSLog(@"%@", username);
             [super writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:username] toSuccessCallbackString:callbackId]];
-
-            
-           
         }
     }];
     
