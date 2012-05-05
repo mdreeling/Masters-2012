@@ -10,6 +10,8 @@
   ],
   "dependencies": {
     "dispatch": "*",
+    "mongodb": "*",
+    "memcached": "*",
     "node-uuid": "*",
     "connect": "1.8.6",
     "request": "*",
@@ -17,7 +19,8 @@
     "node-oauth": "*",
     "twitter": "*",
     "facebook-client": "*",
-    "data-capsule":"git://github.com/rjrodger/data-capsule.git"
+    "data-capsule":"git://github.com/rjrodger/data-capsule.git",
+    "postmark":"git://github.com/voodootikigod/postmark.js.git"
   },
   "engines": {
     "node": ">=0.4"
