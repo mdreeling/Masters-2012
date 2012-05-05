@@ -26,6 +26,8 @@
 	</array>
 	<key>Plugins</key>
 	<dict>
+		<key>FlurryPlugin</key>
+		<string>FlurryPlugin</string>
 		<key>TwitterPlugin</key>
 		<string>TwitterPlugin</string>
 		<key>Compass</key>

@@ -106,7 +106,6 @@ bb.init = function() {
 				model : tmgapp.model.items
 			});
 			this.searchPage.render();
-
 		},
 
 		selectItem : function(event) {
@@ -234,8 +233,6 @@ tmgapp.init = function() {
 
 	tmgapp.model.state = new bb.model.State()
 	tmgapp.model.state.init()
-
-	//tmgapp.model.items = new bb.model.GearItemCollection();
 }
 
 $(tmgapp.init)

@@ -40,23 +40,6 @@ bb.view.SearchPage = Backbone.View.extend({
 	}
 });
 
-bb.view.DirectReportPage = Backbone.View.extend({
-
-	initialize : function() {
-		this.template = _.template(tpl.get('report-page'));
-	},
-
-	render : function(eventName) {
-		$(this.el).html(this.template(this.model.toJSON()));
-		this.listView = new bb.view.GearItemListView({
-			el : $('ul', this.el),
-			model : this.model
-		});
-		this.listView.render();
-		return this;
-	}
-});
-
 bb.view.GearItemListView = Backbone.View.extend({
 
 	initialize : function() {
@@ -115,6 +98,8 @@ bb.view.GearItemPage = Backbone.View.extend({
                                                                                 function(s){ console.log("tweet success"); }, 
                                                                                 function(e){ console.log("tweet failure: " + e); }, 
                                                                                 "I just tracked some of my studio gear (my "+this.model.attributes.name+" "+this.model.attributes.model+") on http://trackmygearfor.me! Track your gear! Keep it safe!");
+                                            
+                                            window.plugins.FlurryPlugin.logEvent('GEAR_PAGE_TWEETED')
 	},
 	edit : function() {
 		app.slidePage(new bb.view.EditGearItemPage({
@@ -138,6 +123,8 @@ bb.view.AddGearItemPage = Backbone.View.extend({
 		var self = this
 		_.bindAll(self)
 		self.items = tmgapp.model.items
+        window.plugins.FlurryPlugin.logEvent('ADDGEAR_PAGE_VISIT')
+        window.plugins.FlurryPlugin.pageView();
 	},
 
 	render : function(eventName) {
@@ -180,14 +167,17 @@ bb.view.AddGearItemPage = Backbone.View.extend({
 		// Just reverse the previous actions
 		console.log('tap #save - done!')
 		window.history.back();
+        window.plugins.FlurryPlugin.logEvent('ADDGEAR_PAGE_SAVE_DONE')
 	},
 	capture : function() {
 		console.log('tapped capture')
+        window.plugins.FlurryPlugin.logEvent('ADDGEAR_PAGE_CAPTURE_IMAGE_STARTED')
 		capturePhoto();
 	},
 	captureSerial : function() {
 		console.log('tapped capture serial')
 		app.capturingSerial = true;
+        window.plugins.FlurryPlugin.logEvent('ADDGEAR_PAGE_CAPTURE_SERIAL_STARTED')
 		capturePhoto();
 	}
 });

@@ -13,6 +13,17 @@
 	<input type="search" class="search-key" placeholder="Search" style="width:100%;font-size: 14px;padding-top:2px;padding-bottom:2px;margin-top:2px;margin-bottom:2px;border: solid 1px #777777;"/>
 </div>
 
-<div id="gearlist" class="scroll striped" style="top:84px;">
+<div id="gearlist" class="striped" style="top:84px;">
 	<ul id="myList" class="tableview tableview-links"></ul>
 </div>
+
+	<script type="text/javascript">
+		console.log("Initializing iScroll 4");
+		var myScroll;
+		function loaded() {
+			setTimeout(function() {
+				myScroll = new iScroll('gearlist');
+			}, 100);
+		}
+		window.addEventListener('DOMContentLoaded', loaded, false);
+	</script>

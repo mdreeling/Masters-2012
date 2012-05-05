@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE5B452315445B4D009E9B3D /* TwitterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5B452215445B4D009E9B3D /* TwitterPlugin.m */; };
 		CE5B452C15446688009E9B3D /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE5B452515445CE0009E9B3D /* Accounts.framework */; };
 		CE5B452D15446690009E9B3D /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE5B452715445CE8009E9B3D /* Twitter.framework */; };
+		CE9171411555B48E009E2662 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9171401555B48E009E2662 /* libFlurryAnalytics.a */; };
+		CE9171451555B637009E2662 /* FlurryPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9171441555B637009E2662 /* FlurryPlugin.m */; };
+		CE9171491555BA5C009E2662 /* TwitterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9171481555BA5C009E2662 /* TwitterPlugin.m */; };
 		CEE175AB154383A0008D4131 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE175AA154383A0008D4131 /* Foundation.framework */; };
 		CEE175AD154383A0008D4131 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE175AC154383A0008D4131 /* UIKit.framework */; };
 		CEE175AF154383A0008D4131 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE175AE154383A0008D4131 /* CoreGraphics.framework */; };
@@ -45,10 +47,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CE5B452115445B4D009E9B3D /* TwitterPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterPlugin.h; sourceTree = "<group>"; };
-		CE5B452215445B4D009E9B3D /* TwitterPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterPlugin.m; sourceTree = "<group>"; };
 		CE5B452515445CE0009E9B3D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		CE5B452715445CE8009E9B3D /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		CE91713F1555B48E009E2662 /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
+		CE9171401555B48E009E2662 /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
+		CE9171431555B637009E2662 /* FlurryPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlurryPlugin.h; path = Plugins/FlurryPlugin.h; sourceTree = "<group>"; };
+		CE9171441555B637009E2662 /* FlurryPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlurryPlugin.m; path = Plugins/FlurryPlugin.m; sourceTree = "<group>"; };
+		CE9171471555BA5C009E2662 /* TwitterPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterPlugin.h; path = Plugins/TwitterPlugin.h; sourceTree = "<group>"; };
+		CE9171481555BA5C009E2662 /* TwitterPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterPlugin.m; path = Plugins/TwitterPlugin.m; sourceTree = "<group>"; };
 		CEE175A6154383A0008D4131 /* TrackMyGearForMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackMyGearForMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE175AA154383A0008D4131 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CEE175AC154383A0008D4131 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -110,6 +116,7 @@
 				CEE175C1154383A0008D4131 /* MobileCoreServices.framework in Frameworks */,
 				CEE175C3154383A0008D4131 /* CoreMedia.framework in Frameworks */,
 				CEE175CE154383A0008D4131 /* Cordova.framework in Frameworks */,
+				CE9171411555B48E009E2662 /* libFlurryAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,15 +133,34 @@
 		CE5B452B1544652D009E9B3D /* TwitterPlugin */ = {
 			isa = PBXGroup;
 			children = (
-				CE5B452215445B4D009E9B3D /* TwitterPlugin.m */,
-				CE5B452115445B4D009E9B3D /* TwitterPlugin.h */,
+				CE9171471555BA5C009E2662 /* TwitterPlugin.h */,
+				CE9171481555BA5C009E2662 /* TwitterPlugin.m */,
 			);
 			name = TwitterPlugin;
+			sourceTree = "<group>";
+		};
+		CE91713E1555B48E009E2662 /* FlurryAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				CE91713F1555B48E009E2662 /* FlurryAnalytics.h */,
+				CE9171401555B48E009E2662 /* libFlurryAnalytics.a */,
+			);
+			path = FlurryAnalytics;
+			sourceTree = "<group>";
+		};
+		CE9171461555B63A009E2662 /* FlurryPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				CE9171431555B637009E2662 /* FlurryPlugin.h */,
+				CE9171441555B637009E2662 /* FlurryPlugin.m */,
+			);
+			name = FlurryPlugin;
 			sourceTree = "<group>";
 		};
 		CEE17598154383A0008D4131 = {
 			isa = PBXGroup;
 			children = (
+				CE91713E1555B48E009E2662 /* FlurryAnalytics */,
 				CEE1760215438486008D4131 /* www */,
 				CEE175C4154383A0008D4131 /* TrackMyGearForMe */,
 				CEE175A9154383A0008D4131 /* Frameworks */,
@@ -277,6 +303,7 @@
 		CEE175F9154383A1008D4131 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				CE9171461555B63A009E2662 /* FlurryPlugin */,
 				CE5B452B1544652D009E9B3D /* TwitterPlugin */,
 				CEE175FA154383A1008D4131 /* README */,
 			);
@@ -383,7 +410,8 @@
 				CEE175CB154383A0008D4131 /* main.m in Sources */,
 				CEE175F3154383A1008D4131 /* AppDelegate.m in Sources */,
 				CEE175F6154383A1008D4131 /* MainViewController.m in Sources */,
-				CE5B452315445B4D009E9B3D /* TwitterPlugin.m in Sources */,
+				CE9171451555B637009E2662 /* FlurryPlugin.m in Sources */,
+				CE9171491555BA5C009E2662 /* TwitterPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +535,10 @@
 					"CORDOVA_FRAMEWORK=1",
 				);
 				INFOPLIST_FILE = "TrackMyGearForMe/TrackMyGearForMe-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FlurryAnalytics\"",
+				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					UIKit,
@@ -537,6 +569,10 @@
 					"CORDOVA_FRAMEWORK=1",
 				);
 				INFOPLIST_FILE = "TrackMyGearForMe/TrackMyGearForMe-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FlurryAnalytics\"",
+				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					UIKit,

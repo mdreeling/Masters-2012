@@ -10,7 +10,7 @@
 	<h1>Add Gear</h1>
 </div>
 
-<div id="addgeardiv" class="scroll striped" style="top:44px;">
+<div id="addgeardiv" class="striped" style="top:44px;">
 	<ul class="tableview">
 		<li>
 			<div class="story">
@@ -81,3 +81,14 @@
 		</li>
 	</ul>
 </div>
+
+<script type="text/javascript">
+		console.log("Initializing iScroll 4 for Add");
+		var myScroll2;
+		function loaded() {
+			setTimeout(function() {
+				myScroll2 = new iScroll('addgeardiv');
+			}, 100);
+		}
+		window.addEventListener('DOMContentLoaded', loaded, false);
+	</script>
