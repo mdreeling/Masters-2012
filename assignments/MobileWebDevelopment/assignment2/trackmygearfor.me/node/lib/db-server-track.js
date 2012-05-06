@@ -5,8 +5,13 @@ var dispatch = common.dispatch
 var connect = common.connect
 var DataCapsule = common.DataCapsule
 var config = common.config
+var nodeconfig = require('config').TrackMyGear;
 
 var dc, authcap
+
+process.on('uncaughtException', function(err) {
+  console.log(err);
+});
 
 function init_datacapsule() {
 	dc = new DataCapsule({})
@@ -133,11 +138,11 @@ function init() {
 	server.use(router, null)
 
 	server.use(connect.static(__dirname + '/../../site/iphone'))
-
+    
 	api.connect({
-		name : 'inventorylist',
-		server : 'services.dreeling.com',
-		port : 27017
+		name : nodeconfig.dbName,
+		server : nodeconfig.dbHost,
+		port : nodeconfig.dbPort
 	}, function(err) {
 		if(err)
 			return console.log(err);

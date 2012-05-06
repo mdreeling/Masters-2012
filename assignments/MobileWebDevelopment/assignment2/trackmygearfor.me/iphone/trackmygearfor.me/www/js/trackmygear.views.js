@@ -76,6 +76,8 @@ bb.view.GearItemPage = Backbone.View.extend({
 	events : {
 		'click #tweetbutton' : 'tweet',
 		'tap #tweetbutton' : 'tweet',
+		'click #postmarkbutton' : 'postmarkit',
+		'tap #postmarkbutton' : 'postmarkit',
 		'click #editbutton' : 'edit'
 	},
 	initialize : function() {
@@ -100,6 +102,15 @@ bb.view.GearItemPage = Backbone.View.extend({
                                                                                 "I just tracked some of my studio gear (my "+this.model.attributes.name+" "+this.model.attributes.model+") on http://trackmygearfor.me! Track your gear! Keep it safe!");
                                             
                                             window.plugins.FlurryPlugin.logEvent('GEAR_PAGE_TWEETED')
+	},
+	postmarkit : function() {
+		var email = $('input[id=emailaddr]').val();
+		console.log('bb.view.GearItemPage - emailing...'+email)
+		var currentTime = new Date();
+		
+		http.post('http://www.trackmygearfor.me/sendmail/tmg@dreeling.com/'+email, this.model.attributes.imagedata, function(res) {
+			console.log(res.ok ? 'mail sent!' : 'Unable to send mail.')
+		})
 	},
 	edit : function() {
 		app.slidePage(new bb.view.EditGearItemPage({

@@ -234,8 +234,6 @@ tmgapp.init = function() {
 
 	tmgapp.model.state = new bb.model.State()
 	tmgapp.model.state.init()
-
-	//tmgapp.model.items = new bb.model.GearItemCollection();
 }
 
 $(tmgapp.init)

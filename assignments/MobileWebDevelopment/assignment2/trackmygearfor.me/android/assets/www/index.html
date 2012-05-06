@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>TrackMyGearFor.Me</title>
-<meta name="viewport"
-	content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<link rel="stylesheet" href="css/styles.css" />
-</head>
+	<head>
+		<title>TrackMyGearFor.Me</title>
+		<meta name="viewport"
+		content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<link rel="stylesheet" href="css/styles.css"/>
+	</head>
 
-<body>
+	<body>
 
-	<div id="content"></div>
+		<div id="content"></div>
 
-	<!-- Hardware Inegration Scripts -->
-	<script type="text/javascript" charset="utf-8"
+		<!-- Hardware Inegration Scripts -->
+		<script type="text/javascript" charset="utf-8"
 		src="libs/cordova-1.7.0.js"></script>
-	<!-- Non native -->
-	<script type="text/javascript" src="libs/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="libs/iscroll-4.1.9.js"></script>
-	<script type="text/javascript" src="libs/underscore-1.3.1.js"></script>
-	<script type="text/javascript" src="libs/backbone-0.9.1.js"></script>
-	<script type="text/javascript" src="js/trackmygear.main.js"></script>
-	<script type="text/javascript" src="js/trackmygear.models.js"></script>
-	<script type="text/javascript" src="js/trackmygear.views.js"></script>
-	<script type="text/javascript" src="js/trackmygear.utils.js"></script>
-	<script type="text/javascript"
+		<!-- Non native -->
+		<script type="text/javascript" src="libs/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="libs/iscroll-4.1.9.js"></script>
+		<script type="text/javascript" src="libs/underscore-1.3.1.js"></script>
+		<script type="text/javascript" src="libs/backbone-0.9.1.js"></script>
+		<script type="text/javascript" src="js/trackmygear.main.js"></script>
+		<script type="text/javascript" src="js/trackmygear.models.js"></script>
+		<script type="text/javascript" src="js/trackmygear.views.js"></script>
+		<script type="text/javascript" src="js/trackmygear.utils.js"></script>
+		<script type="text/javascript"
 		src="js/trackmygear.camera.intregration.js"></script>
-	<script type="text/javascript" src="js/detectmobilebrowser.js"></script>
-	<script type="text/javascript">
-		if (jQuery.browser.mobile) {
+		<script type="text/javascript" src="js/detectmobilebrowser.js"></script>
+		<script type="text/javascript">
+			if(jQuery.browser.mobile) {
 
-			var pictureSource;
-			// picture source
-			var destinationType;
-			// sets the format of returned value
+				var pictureSource;
+				// picture source
+				var destinationType;
+				// sets the format of returned value
 
-			// Wait for Cordova to connect with the device
-			//
-			document.addEventListener("deviceready", onDeviceReady, false);
+				// Wait for Cordova to connect with the device
+				//
+				document.addEventListener("deviceready", onDeviceReady, false);
 
-			// Cordova is ready to be used!
-			//
-			function onDeviceReady() {
-				console.log("Device ready");
-				pictureSource = navigator.camera.PictureSourceType;
-				destinationType = navigator.camera.DestinationType;
+				// Cordova is ready to be used!
+				//
+				function onDeviceReady() {
+					console.log("Device ready");
+					pictureSource = navigator.camera.PictureSourceType;
+					destinationType = navigator.camera.DestinationType;
+				}
+
 			}
-
-		}
-	</script>
-</body>
+		</script>
+	</body>
 </html>

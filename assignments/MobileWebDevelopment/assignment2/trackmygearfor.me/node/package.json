@@ -9,6 +9,7 @@
     "Michael Dreeling Rodger <mdreeling@gmail.com> (http://dreeling.com/)"
   ],
   "dependencies": {
+    "config": "git://github.com/lorenwest/node-config.git",
     "dispatch": "*",
     "mongodb": "*",
     "memcached": "*",

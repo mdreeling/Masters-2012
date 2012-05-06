@@ -40,23 +40,6 @@ bb.view.SearchPage = Backbone.View.extend({
 	}
 });
 
-bb.view.DirectReportPage = Backbone.View.extend({
-
-	initialize : function() {
-		this.template = _.template(tpl.get('report-page'));
-	},
-
-	render : function(eventName) {
-		$(this.el).html(this.template(this.model.toJSON()));
-		this.listView = new bb.view.GearItemListView({
-			el : $('ul', this.el),
-			model : this.model
-		});
-		this.listView.render();
-		return this;
-	}
-});
-
 bb.view.GearItemListView = Backbone.View.extend({
 
 	initialize : function() {
@@ -93,6 +76,8 @@ bb.view.GearItemPage = Backbone.View.extend({
 	events : {
 		'click #tweetbutton' : 'tweet',
 		'tap #tweetbutton' : 'tweet',
+		'click #postmarkbutton' : 'postmarkit',
+		'tap #postmarkbutton' : 'postmarkit',
 		'click #editbutton' : 'edit'
 	},
 	initialize : function() {
@@ -105,16 +90,20 @@ bb.view.GearItemPage = Backbone.View.extend({
 	}, // This toggles location for the current todo.
 	tweet : function() {
 		console.log('bb.view.GearItemPage - tweeting...'+this.model.attributes.name+' '+this.model.attributes.model)
-                                 
-                                            /*window.plugins.twitter.getTwitterUsername(function(r){
-                                                                                      console.log("twitter username is " + r);
-                                                                                      app.loggedinusername = r;
-                                                                                      }); 
-                                            
-                                            window.plugins.twitter.composeTweet(
-                                                                                function(s){ console.log("tweet success"); }, 
-                                                                                function(e){ console.log("tweet failure: " + e); }, 
-                                                                                "I just tracked some of my studio gear (my "+this.model.attributes.name+" "+this.model.attributes.model+") on http://trackmygearfor.me! Track your gear! Keep it safe!");*/
+		var currentTime = new Date();
+		
+		//http.post('/user/socialmsg/' + this.model.attributes.name+' '+this.model.attributes.model, {}, function(res) {
+		//	alert(res.ok ? 'Message sent!' : 'Unable to send message.')
+		//})
+	},
+	postmarkit : function() {
+		var email = $('input[id=emailaddr]').val();
+		console.log('bb.view.GearItemPage - emailing...'+email)
+		var currentTime = new Date();
+		
+		http.post('/sendmail/tmg@dreeling.com/'+email, this.model.attributes.imagedata, function(res) {
+			console.log(res.ok ? 'mail sent!' : 'Unable to send mail.')
+		})
 	},
 	edit : function() {
 		app.slidePage(new bb.view.EditGearItemPage({
