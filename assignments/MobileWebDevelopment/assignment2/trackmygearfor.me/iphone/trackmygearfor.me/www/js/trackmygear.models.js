@@ -1,5 +1,5 @@
 bb.model.GearItem = Backbone.Model.extend({
-	urlRoot : "http://www.trackmygearfor.me/api/rest/inventory",
+	urlRoot : modelurl,
 	initialize : function() {
 		this.reports = new bb.model.GearItemCollection();
 		this.reports.managerId = this.id;
@@ -7,7 +7,7 @@ bb.model.GearItem = Backbone.Model.extend({
 });
 
 bb.model.GearItemCollection = Backbone.Collection.extend({
-	url : 'http://www.trackmygearfor.me/api/rest/inventory',
+	url : modelurl,
 	model : bb.model.GearItem,
 	initialize : function() {
 		console.log('bb.model.GearItemCollection - initialize')
@@ -27,7 +27,7 @@ bb.model.GearItemCollection = Backbone.Collection.extend({
 		console.log('findByName: ' + key);
 		var self = this;
 		$.ajax({
-			url : 'http://www.trackmygearfor.me/api/rest/inventory',
+			url : modelurl,
 			dataType : "json",
 			success : function(data) {
 				console.log("search success: " + data.length);

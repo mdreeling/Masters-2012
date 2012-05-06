@@ -104,6 +104,8 @@ bb.view.GearItemPage = Backbone.View.extend({
 		http.post('/sendmail/tmg@dreeling.com/'+email, this.model.attributes.imagedata, function(res) {
 			console.log(res.ok ? 'mail sent!' : 'Unable to send mail.')
 		})
+		
+		alert('Mail sent!')
 	},
 	edit : function() {
 		app.slidePage(new bb.view.EditGearItemPage({

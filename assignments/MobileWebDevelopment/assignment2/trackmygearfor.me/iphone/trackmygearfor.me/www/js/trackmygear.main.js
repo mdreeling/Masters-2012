@@ -39,7 +39,7 @@ bb.init = function() {
 	var AppRouter = Backbone.Router.extend({
 
 		routes : {
-			"" : "list",
+			"" : initialscreen,
 			"list" : "list",
 			"gearitems/:id" : "gearitemDetails",
 			"addgear" : "addGear",
