@@ -101,7 +101,7 @@ bb.view.GearItemPage = Backbone.View.extend({
 		console.log('bb.view.GearItemPage - emailing...'+email)
 		var currentTime = new Date();
 		
-		http.post('/sendmail/tmg@dreeling.com/'+email, this.model.attributes.imagedata, function(res) {
+		http.post(sendmailurl+email, this.model.attributes.imagedata, function(res) {
 			console.log(res.ok ? 'mail sent!' : 'Unable to send mail.')
 		})
 		
