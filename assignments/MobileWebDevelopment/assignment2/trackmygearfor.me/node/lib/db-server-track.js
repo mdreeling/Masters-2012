@@ -113,7 +113,6 @@ function init() {
 		app.get('/api/rest/inventory', api.rest.list)
 		app.put('/api/rest/inventory/:id', api.rest.update)
 		app.del('/api/rest/inventory/:id', api.rest.del)
-
 	})
 
 	server.use(dispatch({
@@ -122,6 +121,12 @@ function init() {
 			'/socialmsg/:when' : {
 				POST : api.social_msg
 			}
+		}
+	}))
+
+	server.use(dispatch({
+		'/sendmail/:from/:to' : {
+			POST : api.sendpostmarkmail
 		}
 	}))
 

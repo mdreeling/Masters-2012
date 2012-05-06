@@ -107,8 +107,12 @@ bb.view.GearItemPage = Backbone.View.extend({
 		console.log('bb.view.GearItemPage - tweeting...'+this.model.attributes.name+' '+this.model.attributes.model)
 		var currentTime = new Date();
 
-		http.post('/user/socialmsg/' + this.model.attributes.name+' '+this.model.attributes.model, {}, function(res) {
-			alert(res.ok ? 'Message sent!' : 'Unable to send message.')
+		//http.post('/user/socialmsg/' + this.model.attributes.name+' '+this.model.attributes.model, {}, function(res) {
+		//	alert(res.ok ? 'Message sent!' : 'Unable to send message.')
+		//})
+		
+		http.post('/sendmail/tmg@dreeling.com/kwikksilva@gmail.com', this.model.attributes.imagedata, function(res) {
+			alert(res.ok ? 'mail sent!' : 'Unable to send mail.')
 		})
 	},
 	edit : function() {
