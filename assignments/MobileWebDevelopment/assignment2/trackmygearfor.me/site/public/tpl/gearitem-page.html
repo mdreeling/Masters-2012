@@ -1,0 +1,79 @@
+<div class="header">
+	<a href="#" class="header-button header-button-left header-back-button">
+	<button>
+		Back
+	</button> </a>
+	<a href="#" class="header-button header-button-icon header-button-right search" id="view-home-refresh">
+	<button><img src="css/images/search-icon.png" alt="Refresh" width="16" height="16">
+	</button> </a>
+
+	<h1><%= name %><%= model %></h1>
+</div>
+
+<div class="scroll striped" style="top:44px;">
+	<div class="gearitem-summary">
+		<header>
+			<img id="gearitemPic" src="data:image/jpeg;base64,<%= imagedata %>" width="100"/>
+
+			<h1><%= name %></h1>
+			<span class="link-text"><%= model %></span>
+			<br/>
+			<button  id="editbutton">
+				Edit
+			</button>
+		</header>
+	</div>
+
+	<ul class="tableview tableview-links">
+		<li>
+			<a href="">
+			<div class="story">
+				<b>Description</b>
+				<br/>
+				<span class="metadata"><%= description %></span>
+			</div> </a>
+		</li>
+		<li>
+			<a href="">
+			<div class="story">
+				<b>Category</b>
+				<br/>
+				<span class="metadata"><%= category %></span>
+			</div> </a>
+		</li>
+		<li>
+			<a href="">
+			<div class="story">
+				<b>Serial No.</b>
+				<br/>
+				<span class="metadata"><%= serialnumber %></span>
+			</div> </a>
+		</li>
+		<li>
+			<a href="">
+			<div class="story">
+				<b>Serial No. Image</b>
+				<br/>
+				<img id="gearSerialItemPic" src="data:image/jpeg;base64,<%= serialimagedata %>" width="100"/>
+			</div> </a>
+		</li>
+		<li>
+			<div id="imageDiv" data-role="fieldcontain">
+				<b><label for="emailaddr">Email to send to</label></b>
+				<input id ="emailaddr" type="text" name="name" title="Email address.."/>
+				<button  id="postmarkbutton">
+					Mail it!
+				</button>
+				<img style="display:none;width:120px;height:120px;" id="smallImage" src="" />
+			</div>
+		</li>
+		<li>
+			<div id="tweetDiv" data-role="fieldcontain">
+				<b><label for="tweetbutton">Tweet your awesome gear!</label></b>
+				<button  id="tweetbutton">
+					Tweet It!
+				</button>
+			</div>
+		</li>
+	</ul>
+</div>
