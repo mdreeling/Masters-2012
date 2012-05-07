@@ -12,12 +12,12 @@
 		<div id="content"></div>
 
 		<!-- Hardware Inegration Scripts -->
-        <script type="text/javascript" charset="utf-8" src="libs/cordova-1.6.1.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/trackmygear.native.ios.twitterintegration.js"></script>
-        <!-- Native Plugin API Integration Scripts -->
-        <script type="text/javascript" charset="utf-8" src="js/trackmygear.cordova.ios.twitterplugin.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/trackmygear.cordova.ios.flurryplugin.js"></script>
-        <!-- Non native -->
+		<script type="text/javascript" charset="utf-8" src="libs/cordova-1.6.1.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/trackmygear.native.ios.twitterintegration.js"></script>
+		<!-- Native Plugin API Integration Scripts -->
+		<script type="text/javascript" charset="utf-8" src="js/trackmygear.cordova.ios.twitterplugin.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/trackmygear.cordova.ios.flurryplugin.js"></script>
+		<!-- Non native -->
 		<script type="text/javascript" src="libs/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="libs/underscore-1.3.1.js"></script>
 		<script type="text/javascript" src="libs/backbone-0.9.1.js"></script>
@@ -47,8 +47,19 @@
 					console.log("Device ready");
 					pictureSource = navigator.camera.PictureSourceType;
 					destinationType = navigator.camera.DestinationType;
-                }
-                
+
+					console.log("Initializing Twitter");
+
+					window.plugins.twitter.getTwitterUsername(function(s) {
+						console.log("twitter username : " + JSON.stringify(s));
+						app.loggedinusername = s;
+                                                              window.location.href = "#list"
+                                                             // tmgapp.renderSearchScreen();
+					}, function(e) {
+						console.log("twitter username failure: " + e);
+					});
+				}
+
 			}
 		</script>
 

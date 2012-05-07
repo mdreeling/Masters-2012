@@ -15,18 +15,19 @@ bb.view.LoginPage = Backbone.View.extend({
 
 bb.view.SearchPage = Backbone.View.extend({
 
-	initialize : function() {
+	initialize : function() {                                         
 		this.template = _.template(tpl.get('search-page'));
 	},
 
 	render : function(eventName) {
+        console.log("Rendering search");
 		$(this.el).html(this.template(this.model.toJSON()));
 		this.listView = new bb.view.GearItemListView({
 			el : $('ul', this.el),
 			model : this.model
 		});
-		this.listView.render();
-		this.model.findByName(null);
+		this.listView.render();                                          
+		this.model.findByNameAndUser(null, app.loggedinusername);
 		return this;
 	},
 
@@ -36,7 +37,8 @@ bb.view.SearchPage = Backbone.View.extend({
 
 	search : function(event) {
 		var key = $('.search-key').val();
-		this.model.findByName(key);
+		console.log('Searching on ' + key)
+		this.model.findByNameAndUser(key, app.loggedinusername);
 	}
 });
 
@@ -91,11 +93,7 @@ bb.view.GearItemPage = Backbone.View.extend({
 	tweet : function() {
 		console.log('bb.view.GearItemPage - tweeting...'+this.model.attributes.name+' '+this.model.attributes.model)
                                  
-                                            window.plugins.twitter.getTwitterUsername(function(r){
-                                                                                      console.log("twitter username is " + r);
-                                                                                      app.loggedinusername = r;
-                                                                                      }); 
-                                            
+                                                                                   
                                             window.plugins.twitter.composeTweet(
                                                                                 function(s){ console.log("tweet success"); }, 
                                                                                 function(e){ console.log("tweet failure: " + e); }, 
@@ -105,10 +103,10 @@ bb.view.GearItemPage = Backbone.View.extend({
 	},
 	postmarkit : function() {
 		var email = $('input[id=emailaddr]').val();
-		console.log('bb.view.GearItemPage - emailing...'+email)
+		console.log('bb.view.GearItemPage - emailing...' + email)
 		var currentTime = new Date();
-		
-		http.post(sendmailurl+email, this.model.attributes.imagedata, function(res) {
+
+		http.post(sendmailurl + email, this.model.attributes.imagedata, function(res) {
 			console.log(res.ok ? 'mail sent!' : 'Unable to send mail.')
 		})
 		
@@ -116,8 +114,8 @@ bb.view.GearItemPage = Backbone.View.extend({
 	},
 	edit : function() {
 		app.slidePage(new bb.view.EditGearItemPage({
-				model : this.model
-			}).render());
+			model : this.model
+		}).render());
 	}
 });
 

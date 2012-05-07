@@ -26,7 +26,7 @@ bb.view.SearchPage = Backbone.View.extend({
 			model : this.model
 		});
 		this.listView.render();
-		this.model.findByName(null);
+		this.model.findByNameAndUser(null, app.loggedinusername);
 		return this;
 	},
 
@@ -36,7 +36,8 @@ bb.view.SearchPage = Backbone.View.extend({
 
 	search : function(event) {
 		var key = $('.search-key').val();
-		this.model.findByName(key);
+		console.log('Searching on ' + key)
+		this.model.findByNameAndUser(key, app.loggedinusername);
 	}
 });
 
@@ -98,19 +99,18 @@ bb.view.GearItemPage = Backbone.View.extend({
 	},
 	postmarkit : function() {
 		var email = $('input[id=emailaddr]').val();
-		console.log('bb.view.GearItemPage - emailing...'+email)
+		console.log('bb.view.GearItemPage - emailing...' + email)
 		var currentTime = new Date();
-		
-		http.post(sendmailurl+email, this.model.attributes.imagedata, function(res) {
+
+		http.post(sendmailurl + email, this.model.attributes.imagedata, function(res) {
 			console.log(res.ok ? 'mail sent!' : 'Unable to send mail.')
 		})
-		
 		alert('Mail sent!')
 	},
 	edit : function() {
 		app.slidePage(new bb.view.EditGearItemPage({
-				model : this.model
-			}).render());
+			model : this.model
+		}).render());
 	}
 });
 
@@ -244,11 +244,11 @@ bb.view.EditGearItemPage = Backbone.View.extend({
 	capture : function() {
 		console.log('tapped capture')
 		capturePhoto();
-        app.capturingSerial=false;
+		app.capturingSerial = false;
 	},
 	captureSerial : function() {
 		console.log('tapped capture serial')
-		app.capturingSerial=true;
+		app.capturingSerial = true;
 		capturePhoto();
 	}
 });

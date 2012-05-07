@@ -147,6 +147,8 @@
 }
 
 - (void) getTwitterUsername:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
+    
+    NSLog(@"Getting username");
     NSString *callbackId = [arguments objectAtIndex:0];
     ACAccountStore *accountStore = [[ACAccountStore alloc] init];
     ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
@@ -156,7 +158,11 @@
             NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
             ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
             NSString *username = twitterAccount.username;
-            [super writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:username] toSuccessCallbackString:callbackId]];
+            
+            NSString *jsResponse = [[CDVPluginResult resultWithStatus:CDVCommandStatus_OK 
+                                                      messageAsString:username] 
+                                    toSuccessCallbackString:callbackId];
+            [self performCallbackOnMainThreadforJS:jsResponse];
         }
     }];
     

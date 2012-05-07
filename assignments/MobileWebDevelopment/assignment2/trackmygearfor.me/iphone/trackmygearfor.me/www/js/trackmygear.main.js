@@ -42,12 +42,11 @@ bb.init = function() {
 			"" : initialscreen,
 			"list" : "list",
 			"gearitems/:id" : "gearitemDetails",
-			"addgear" : "addGear",
-			"gearitems/:id/reports" : "directReports"
+			"addgear" : "addGear"
 		},
 
 		initialize : function() {
-
+                                           
 			var self = this;
 
 			tmgapp.model.state.on('change:user', self.userChanged)

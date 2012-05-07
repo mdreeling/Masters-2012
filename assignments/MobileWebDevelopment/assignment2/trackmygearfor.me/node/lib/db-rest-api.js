@@ -156,6 +156,44 @@ exports.rest = {
 			}
 		}))
 	},
+	search : function(req, res) {
+
+
+
+		var input = req.query
+		var output = []
+		var query = null;
+		var regexpkey = "/^"+req.params.key+"/i"
+		var regexp2 = new RegExp(req.params.key, 'i');
+		// Only search by user
+		if(req.params.key == null || req.params.key == "null") {
+			query = {
+				"username" : req.params.userid
+			}
+		} else {
+			query = {
+				"username" : req.params.userid,
+				//"name" : "/^"+req.params.key+"/i"
+				"name" : regexp2
+			}
+		}
+
+		var options = {
+			sort : [['created', 'desc']]
+		}
+		
+		console.log('searching by user '+query.username+' and key '+query.name)
+				
+		todocoll.find(query, options, res.err$(function(cursor) {
+			cursor.toArray(res.err$(function(docs) {
+				output = docs
+				output.forEach(function(item) {
+					util.fixid(item)
+				})
+				res.sendjson$(output)
+			}))
+		}))
+	},
 	list : function(req, res) {
 
 		console.log('listing')

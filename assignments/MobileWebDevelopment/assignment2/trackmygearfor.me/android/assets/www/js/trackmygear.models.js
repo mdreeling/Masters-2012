@@ -22,12 +22,12 @@ bb.model.GearItemCollection = Backbone.Collection.extend({
 			//app.view.list.render();
 		})
 	},
-	findByName : function(key) {
-		var url = (key == '') ? 'http://www.trackmygearfor.me/api/rest/inventory' : "http://www.trackmygearfor.me/api/rest/inventory/search/" + key;
-		console.log('findByName: ' + key);
+	findByNameAndUser : function(key, user) {
+		var url = (key == '') ? modelurl + '/search/' + user : modelurl + '/search/' + user + '/' + key;
+		console.log('findByNameAndUser: ' + key + ', ' + user+' ('+url+')');
 		var self = this;
 		$.ajax({
-			url : modelurl,
+			url : url,
 			dataType : "json",
 			success : function(data) {
 				console.log("search success: " + data.length);

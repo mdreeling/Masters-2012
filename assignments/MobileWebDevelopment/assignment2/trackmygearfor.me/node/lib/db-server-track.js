@@ -116,6 +116,8 @@ function init() {
 		app.get('/api/rest/login/:id', api.rest.readlogin)
 		app.get('/api/rest/login', api.rest.readlogin)
 		app.get('/api/rest/inventory', api.rest.list)
+		app.get('/api/rest/inventory/search/:userid/:key', api.rest.search)
+		app.get('/api/rest/inventory/search/:userid', api.rest.search)
 		app.put('/api/rest/inventory/:id', api.rest.update)
 		app.del('/api/rest/inventory/:id', api.rest.del)
 	})
@@ -137,7 +139,7 @@ function init() {
 
 	server.use(router, null)
 
-	server.use(connect.static(__dirname + '/../../site/iphone'))
+	server.use(connect.static(__dirname + '/../../site/public'))
     
 	api.connect({
 		name : nodeconfig.dbName,
