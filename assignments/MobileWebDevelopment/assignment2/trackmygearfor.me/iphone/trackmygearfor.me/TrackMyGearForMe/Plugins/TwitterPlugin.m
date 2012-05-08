@@ -147,8 +147,6 @@
 }
 
 - (void) getTwitterUsername:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
-    
-    NSLog(@"Getting username");
     NSString *callbackId = [arguments objectAtIndex:0];
     ACAccountStore *accountStore = [[ACAccountStore alloc] init];
     ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
