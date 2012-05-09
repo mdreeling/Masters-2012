@@ -114,272 +114,58 @@
          </div>
          <div id="body">
             <div id="content" class="apiContent">
-               <h2 class="sifr page-title" id="subscribers">
+              <h2 class="sifr page-title" id="subscribers">
                   <cufon style="width: 151px; height: 30px;" alt="Track My Gear API Docs" class="cufon cufon-canvas">
-                     <canvas style="width: 176px; height: 33px; top: -3px; left: -2px;" height="33" width="176"></canvas>
+                    <canvas style="width: 176px; height: 33px; top: -3px; left: -2px;" height="33" width="176"></canvas>
                      <cufontext>Track My Gear API Docs</cufontext>
                   </cufon>
                </h2>
-               <p class="leader">The track my gear API allows you to integrate your application with our secure inventory system</p>
+               <p class="leader"><strong>W.I.T - 2012 Masters Program - Mobile Web Development</strong></p>
+               <p class="leader"><strong>Michael Dreeling - API Template courtesy of campaignmonitor.com</strong></p>
                <div id="getting_a_template" class="apiMethod">
-                  <h3>Retrieving complete inventory by twitter username</h3>
-                  <p>Returns all the basic details for an entire users inventory including the name, model and a thumbnail image as base64.</p>
-                  <div class="apiCodeGroup">
-                     <h5>Request:</h5>
-                     <div class="apiSection">
-                        <h6>GET</h6>
-                        <pre><code>http://trackmygearfor.me/api/rest/inventory/search/<a href="http://www.trackmygearfor.me/api/clients/#getting_client_templates">{twitterusername}</a></code></pre>
-                     </div>
-                  </div>
-                  <div class="apiGroup">
-                     <h5>Route Values:</h5>
-                     <div class="apiSection">
-                        <h6>{twitterusername}</h6>
-                        <p>The users twitter username (i.e @trackmygear = trackmygear)</p>
-                     </div>
-                  </div>
-                 <div class="subheader">
-                   <h4>Response:</h4>
-                    <p>Contains an array of items whose username attribute matches the twitterusername input parameter</p>
-                 </div>
-                  <div class="apiCodeGroup">
-                     <h5>Expected Response: 
-                        <span class="switchContainer">
-                        <a class="JSON toggleSwitch left active" href="javascript:void(0)">JSON</a>
-                        <a class="XML toggleSwitch right" href="javascript:void(0)">XML</a>
-                        </span>
-                     </h5>
-                     <div class="apiSectionCode JSON">
-                        <div>
-                           <div id="highlighter_46752" class="syntaxhighlighter  javascript">
-                              <div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-                              <table border="0" cellpadding="0" cellspacing="0">
-                                 <tbody>
-                                    <tr>
-                                       <td class="gutter">
-                                          <div class="line number1 index0 alt2">1</div>
-                                          <div class="line number2 index1 alt1">2</div>
-                                          <div class="line number3 index2 alt2">3</div>
-                                          <div class="line number4 index3 alt1">4</div>
-                                          <div class="line number5 index4 alt2">5</div>
-                                          <div class="line number6 index5 alt1">6</div>
-                                          <div class="line number7 index6 alt2">7</div>
-                                          <div class="line number8 index7 alt1">8</div>
-                                          <div class="line number9 index8 alt2">9</div>
-										  <div class="line number10 index9 alt1">10</div>
-										  <div class="line number11 index10 alt2">11</div>
-										  <div class="line number12 index11 alt1">12</div>
-										  <div class="line number13 index12 alt2">13</div>
-										  <div class="line number14 index13 alt1">14</div>
-										  <div class="line number15 index14 alt2">15</div>
-                                       </td>
-                                       <td class="code">
-                                          <div class="container">
-                                             <div class="line number1 index0 alt2"><code class="javascript plain">HTTP/1.1 200 OK</code></div>
-                                             <div class="line number2 index1 alt1"><code class="javascript plain">Content-Type: application/json; charset=utf-8</code></div>
-                                             <div class="line number3 index2 alt2">[&nbsp;</div>
-                                             <div class="line number4 index3 alt1"><code class="javascript plain"> {</code></div>
-                                             <div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"name"</code><code class="javascript plain">: </code><code class="javascript string">"Fender"</code><code class="javascript plain">,</code></div>
-                                             <div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"model"</code><code class="javascript plain">: </code><code class="javascript string">"Stratocaster"</code><code class="javascript plain">,</code></div>
-                                             <div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"description"</code><code class="javascript plain">: </code><code class="javascript string">"<a href="http://preview.createsend.com/templates/publicpreview/01AF532CD8889B33?d=r">Electric Guitar (Single Coils)</a>"</code><code class="javascript plain">,</code></div>
-                                             <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"category"</code><code class="javascript plain">: </code><code class="javascript string">"Guitars"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"serialnumber"</code><code class="javascript plain">: </code><code class="javascript string">"6T7H88UU7"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"username"</code><code class="javascript plain">: </code><code class="javascript string">"trackmygear"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"imagedata"</code><code class="javascript plain">: </code><code class="javascript string">"/9j/4AAQSkZJRgABAQAAAQABAADBASE642Q==...."</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"creatd"</code><code class="javascript plain">: </code><code class="javascript string">"1335728800550"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"id"</code><code class="javascript plain">: </code><code class="javascript string">"4f9d9aa09a61453a6d000003"</code></div>
-                                             <div class="line number9 index8 alt1"><code class="javascript plain"> }</code></div>
-                                             <div class="line number10 index9 alt2"><code class="javascript plain">]</code></div>
-                                          </div>
-                                       </td>
-                                    </tr>
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
-                     </div>
-                     <div style="display: none;" class="apiSectionCode XML">
-                        <div>
-                           <div id="highlighter_757266" class="syntaxhighlighter  xml">
-                              <div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-                              <table border="0" cellpadding="0" cellspacing="0">
-                                 <tbody>
-                                    <tr>
-                                       <td class="gutter">
-                                          <div class="line number1 index0 alt2">1</div>
-                                          <div class="line number2 index1 alt1">2</div>
-                                          <div class="line number3 index2 alt2">3</div>
-                                          <div class="line number4 index3 alt1">4</div>
-                                          <div class="line number5 index4 alt2">5</div>
-                                          <div class="line number6 index5 alt1">6</div>
-                                          <div class="line number7 index6 alt2">7</div>
-                                          <div class="line number8 index7 alt1">8</div>
-                                          <div class="line number9 index8 alt2">9</div>
-                                          <div class="line number10 index9 alt1">10</div>
-                                       </td>
-                                       <td class="code">
-                                          <div class="container">
-                                             <div class="line number1 index0 alt2"><code class="xml plain">HTTP/1.1 200 OK</code></div>
-                                             <div class="line number2 index1 alt1"><code class="xml plain">Content-Type: application/xml; charset=utf-8</code></div>
-                                             <div class="line number3 index2 alt2">&nbsp;</div>
-                                             <div class="line number4 index3 alt1"><code class="xml plain">&lt;?</code><code class="xml keyword">xml</code> <code class="xml color1">version</code><code class="xml plain">=</code><code class="xml string">"1.0"</code> <code class="xml color1">encoding</code><code class="xml plain">=</code><code class="xml string">"utf-8"</code><code class="xml plain">?&gt;</code></div>
-                                             <div class="line number5 index4 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">Template</code><code class="xml plain">&gt;</code></div>
-                                             <div class="line number6 index5 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">Name</code><code class="xml plain">&gt;Template One&lt;/</code><code class="xml keyword">Name</code><code class="xml plain">&gt;</code></div>
-                                             <div class="line number7 index6 alt2"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">PreviewURL</code><code class="xml plain">&gt;<a href="http://preview.createsend.com/templates/publicpreview/01AF532CD8889B33?d=r">http://preview.createsend.com/templates/publicpreview/01AF532CD8889B33?d=r</a>&lt;/</code><code class="xml keyword">PreviewURL</code><code class="xml plain">&gt;</code></div>
-                                             <div class="line number8 index7 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">ScreenshotURL</code><code class="xml plain">&gt;<a href="http://preview.createsend.com/ts/r/14/833/263/14833263.jpg?0318092600">http://preview.createsend.com/ts/r/14/833/263/14833263.jpg?0318092600</a>&lt;/</code><code class="xml keyword">ScreenshotURL</code><code class="xml plain">&gt;</code></div>
-                                             <div class="line number9 index8 alt2"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">TemplateID</code><code class="xml plain">&gt;5cac213cf061dd4e008de5a82b7a3621&lt;/</code><code class="xml keyword">TemplateID</code><code class="xml plain">&gt;</code></div>
-                                             <div class="line number10 index9 alt1"><code class="xml plain">&lt;/</code><code class="xml keyword">Template</code><code class="xml plain">&gt;</code></div>
-                                          </div>
-                                       </td>
-                                    </tr>
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="apiGroup">
-                     <h5>Error Responses:</h5>
-                     <div class="apiSection">
-                        <p>If you receive a <code>"400 Bad Request"</code> response for this request, these are the possible errors which may be included in the body of the response:</p>
-                        <div class="errorCodes">
-                          <h5>4002: Template Name Required</h5>
-                           <div class="apiSection">
-                              <p>The template name passed cannot be empty.</p>
-                           </div>
-                       </div>
+                 <h3>Architecture Diagrams</h3>
+                  <p> Architecture diagrams for both client and server.</p>
+				  <div class="apiCodeGroup">
+                    <h5>Overall</h5>
+					     <p><a href="tmg-api_files/Overall.png"><img src="tmg-api_files/Overall.png" width="694" height="466" alt="CLient Architecture" /></a>                         </p>
+				     <div class="apiSection">
+				       <pre>&nbsp;</pre>
                     </div>
                   </div>
-               </div>
-               <!-- .apiMethod -->
+                  <div class="apiCodeGroup">
+                    <h5>Client</h5>
+					     <p>&nbsp; </p>
+			        <p>The client side code consists of several Javascript Modules</p>
+                         <p>trackmygear<strong>.main</strong> - The main application<br />
+                         trackmygear.<strong>views</strong> - Backbone views<br />
+                         trackmygear.<strong>models</strong> - Backbone models<br />
+                         trackmygear.<strong>utils</strong> - Utility classes<br />
+                         trackmygear.<strong>config</strong> - Runtime configuration of REST urls and client side parameters</p>
+				     <div class="apiSection"><a href="tmg-api_files/Arch.png"><img src="tmg-api_files/Arch.png" width="684" height="430" alt="CLient Architecture" /></a>
+                       <pre>&nbsp;</pre>
+                     </div>
+                  </div>
+                  <div class="apiGroup">
+                     <h5>Server</h5>
+                     <p>&nbsp;</p>
+                    <p>The server side code consists of several Javascript Modules</p>
+                     <p><strong>dc-server-track</strong> - The main http server application <br />
+                       <strong>dc-server-api	</strong>- RESTful api to MongoDB Server<br />
+                       <strong>common</strong> - Utility classes<br />
+                    <strong>config.mine</strong> - Runtime configuration of twitter API integration                    </p>
+                     <div class="apiSection"><a href="tmg-api_files/Arch_-_Server.png"><img src="tmg-api_files/Arch_-_Server.png" width="686" height="420" alt="ArchServer" /></a>
+                       <p>&nbsp;</p>
+                    </div>
+                 </div>
+                 <div class="subheader"></div>
+                  <div class="apiCodeGroup"></div>
+              </div>
                <div id="creating_a_template" class="apiMethod">
-                  <h3 class="marginBottom">Search for inventory items by twitter username</h3>
-                  <p>Adds a new template for an existing client by providing the name 
-                     of the template and URLs for the HTML file and a zip of all other files.
-                  </p>
-                  <div class="apiCodeGroup">
-                     <h5>Request:</h5>
-                    <div class="apiSection">
-                      <h6>GET</h6>
-                       <pre><code>http://trackmygearfor.me/api/rest/inventory/search/<a href="http://www.trackmygearfor.me/api/clients/#getting_client_templates">{twitterusername}</a></code>/<code><a href="http://www.trackmygearfor.me/api/clients/#getting_client_templates">{keyword}</a></code></pre>
-                     </div>
-                  </div>
-                 <div class="apiGroup">
-                     <h5>Route Values:</h5>
-                   <div class="apiSection">
-                     <h6>{twitterusername}</h6>
-                       <p>The users twitter username (i.e @trackmygear = trackmygear)</p>
-                      <h6>{keyword}</h6>
-                       <p>The keyword to search on (Only the 'name' attribute of the gear is actually searched)</p>
-                     
-				    </div>
-                  </div>
-                  <div class="subheader">
-                    <h4>Response:</h4>
-                     <p>Contains an array of items whose 'name' contains the search string</p>
-                 </div>
-                  <div class="apiCodeGroup">
-                     <h5>Expected Response:
-                        <span class="switchContainer">
-                        <a class="JSON toggleSwitch left active" href="javascript:void(0)">JSON</a>
-                        <a class="XML toggleSwitch right" href="javascript:void(0)">XML</a>
-                        </span>
-                     </h5>
-                     <div class="apiSectionCode JSON">
-                        <div>
-                          <div id="highlighter_46752" class="syntaxhighlighter  javascript">
-                              <div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-                              <table border="0" cellpadding="0" cellspacing="0">
-                                 <tbody>
-                                    <tr>
-                                       <td class="gutter">
-                                          <div class="line number1 index0 alt2">1</div>
-                                          <div class="line number2 index1 alt1">2</div>
-                                          <div class="line number3 index2 alt2">3</div>
-                                          <div class="line number4 index3 alt1">4</div>
-                                          <div class="line number5 index4 alt2">5</div>
-                                          <div class="line number6 index5 alt1">6</div>
-                                          <div class="line number7 index6 alt2">7</div>
-                                          <div class="line number8 index7 alt1">8</div>
-                                          <div class="line number9 index8 alt2">9</div>
-										  <div class="line number10 index9 alt1">10</div>
-										  <div class="line number11 index10 alt2">11</div>
-										  <div class="line number12 index11 alt1">12</div>
-										  <div class="line number13 index12 alt2">13</div>
-										  <div class="line number14 index13 alt1">14</div>
-										  <div class="line number15 index14 alt2">15</div>
-                                       </td>
-                                       <td class="code">
-                                          <div class="container">
-                                             <div class="line number1 index0 alt2"><code class="javascript plain">HTTP/1.1 200 OK</code></div>
-                                             <div class="line number2 index1 alt1"><code class="javascript plain">Content-Type: application/json; charset=utf-8</code></div>
-                                             <div class="line number3 index2 alt2">[&nbsp;</div>
-                                             <div class="line number4 index3 alt1"><code class="javascript plain"> {</code></div>
-                                             <div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"name"</code><code class="javascript plain">: </code><code class="javascript string">"Fender"</code><code class="javascript plain">,</code></div>
-                                             <div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"model"</code><code class="javascript plain">: </code><code class="javascript string">"Stratocaster"</code><code class="javascript plain">,</code></div>
-                                             <div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"description"</code><code class="javascript plain">: </code><code class="javascript string">"<a href="http://preview.createsend.com/templates/publicpreview/01AF532CD8889B33?d=r">Electric Guitar (Single Coils)</a>"</code><code class="javascript plain">,</code></div>
-                                             <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"category"</code><code class="javascript plain">: </code><code class="javascript string">"Guitars"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"serialnumber"</code><code class="javascript plain">: </code><code class="javascript string">"6T7H88UU7"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"username"</code><code class="javascript plain">: </code><code class="javascript string">"trackmygear"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"imagedata"</code><code class="javascript plain">: </code><code class="javascript string">"/9j/4AAQSkZJRgABAQAAAQABAADBASE642Q==...."</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"creatd"</code><code class="javascript plain">: </code><code class="javascript string">"1335728800550"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"id"</code><code class="javascript plain">: </code><code class="javascript string">"4f9d9aa09a61453a6d000003"</code></div>
-                                             <div class="line number9 index8 alt1"><code class="javascript plain"> }</code></div>
-                                             <div class="line number10 index9 alt2"><code class="javascript plain">]</code></div>
-                                          </div>
-                                       </td>
-                                    </tr>
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
-                     </div>
-                     <div style="display: none;" class="apiSectionCode XML">
-                        <div>
-                           <div id="highlighter_511428" class="syntaxhighlighter  xml">
-                              <div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-                              <table border="0" cellpadding="0" cellspacing="0">
-                                 <tbody>
-                                    <tr>
-                                       <td class="gutter">
-                                          <div class="line number1 index0 alt2">1</div>
-                                          <div class="line number2 index1 alt1">2</div>
-                                          <div class="line number3 index2 alt2">3</div>
-                                          <div class="line number4 index3 alt1">4</div>
-                                          <div class="line number5 index4 alt2">5</div>
-                                       </td>
-                                       <td class="code">
-                                          <div class="container">
-                                             <div class="line number1 index0 alt2"><code class="xml plain">HTTP/1.1 201 Created</code></div>
-                                             <div class="line number2 index1 alt1"><code class="xml plain">Content-Type: application/xml; charset=utf-8</code></div>
-                                             <div class="line number3 index2 alt2">&nbsp;</div>
-                                             <div class="line number4 index3 alt1"><code class="xml plain">&lt;?</code><code class="xml keyword">xml</code> <code class="xml color1">version</code><code class="xml plain">=</code><code class="xml string">"1.0"</code> <code class="xml color1">encoding</code><code class="xml plain">=</code><code class="xml string">"utf-8"</code><code class="xml plain">?&gt;</code></div>
-                                             <div class="line number5 index4 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">string</code><code class="xml plain">&gt;aa164e9c8ab0471294fe6148fc9cf634&lt;/</code><code class="xml keyword">string</code><code class="xml plain">&gt;</code></div>
-                                          </div>
-                                       </td>
-                                    </tr>
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="apiGroup">
-                     <h5>Error Responses:</h5>
-                     <div class="apiSection">
-                        <p>If you receive a <code>"400 Bad Request"</code> response for this request, these are the possible errors which may be included in the body of the response:</p>
-                        <div class="errorCodes">
-                          <h5>4002: Template Name Required</h5>
-                           <div class="apiSection">
-                              <p>The template name passed cannot be empty.</p>
-                           </div>
-                       </div>
-                    </div>
-                  </div>
-               </div>
+                 <div class="apiGroup"> </div>
+             </div>
                <div id="deleting_a_template" class="apiMethod">
                   <div class="apiGroup">
-                     <div class="apiSection"> </div>
+                     <div class="apiSection"></div>
                   </div>
                </div>
                <!-- /.apiMethod -->

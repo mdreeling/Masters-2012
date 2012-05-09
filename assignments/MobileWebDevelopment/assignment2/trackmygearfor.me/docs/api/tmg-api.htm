@@ -245,10 +245,14 @@
                      <div class="apiSection">
                         <p>If you receive a <code>"400 Bad Request"</code> response for this request, these are the possible errors which may be included in the body of the response:</p>
                         <div class="errorCodes">
-                          <h5>4002: Template Name Required</h5>
+                          <h5>400: [Bad Request] - invalid search</h5>
                            <div class="apiSection">
-                              <p>The template name passed cannot be empty.</p>
+                              <p>The search parameters were malformed</p>
                            </div>
+						    <h5>404: [Not Found] - twitter user not found</h5>
+                           <div class="apiSection">
+                             <p>No twitter user in our database with that name</p>
+                          </div>
                        </div>
                     </div>
                   </div>
@@ -369,12 +373,11 @@
                   <div class="apiGroup">
                      <h5>Error Responses:</h5>
                      <div class="apiSection">
-                        <p>If you receive a <code>"400 Bad Request"</code> response for this request, these are the possible errors which may be included in the body of the response:</p>
                         <div class="errorCodes">
-                          <h5>4002: Template Name Required</h5>
+						    <h5>404: [Not Found] -  not found</h5>
                            <div class="apiSection">
-                              <p>The template name passed cannot be empty.</p>
-                           </div>
+                             <p>No inventory items for that user contain the 'keyword' passed</p>
+                          </div>
                        </div>
                     </div>
                   </div>

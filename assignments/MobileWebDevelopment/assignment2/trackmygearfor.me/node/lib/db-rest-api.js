@@ -37,6 +37,10 @@ util.err = function error(win) {
 	}
 }
 
+util.validatesearch = function(input) {
+	return input.params.userid
+}
+
 util.validate = function(input) {
 	return input.name
 }
@@ -157,9 +161,11 @@ exports.rest = {
 		}))
 	},
 	search : function(req, res) {
-
-
-
+		
+		if(!util.validatesearch(req)) {
+			return res.send$(400, 'invalid search')
+		}
+	
 		var input = req.query
 		var output = []
 		var query = null;
@@ -190,6 +196,10 @@ exports.rest = {
 				output.forEach(function(item) {
 					util.fixid(item)
 				})
+				
+				if(output.length ==0)
+				return res.send$(404, 'not found')
+				else
 				res.sendjson$(output)
 			}))
 		}))

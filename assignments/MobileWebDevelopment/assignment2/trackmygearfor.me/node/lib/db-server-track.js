@@ -9,9 +9,10 @@ var nodeconfig = require('config').TrackMyGear;
 
 var dc, authcap
 
-process.on('uncaughtException', function(err) {
-  console.log(err);
-});
+// REMOVED - SERVER DIES AND NEVER RECOVERS ON TWITTER BADNESS
+//process.on('uncaughtException', function(err) {
+//  console.log(err);
+//});
 
 function init_datacapsule() {
 	dc = new DataCapsule({})
@@ -112,12 +113,13 @@ function init() {
 		app.get('/api/echo', api.echo)
 		app.post('/api/echo', api.echo)
 		app.post('/api/rest/inventory', api.rest.create)
+		app.get('/api/rest/inventory/search', api.rest.search)
+		app.get('/api/rest/inventory/search/:userid/:key', api.rest.search)
+		app.get('/api/rest/inventory/search/:userid', api.rest.search)
 		app.get('/api/rest/inventory/:id', api.rest.read)
 		app.get('/api/rest/login/:id', api.rest.readlogin)
 		app.get('/api/rest/login', api.rest.readlogin)
 		app.get('/api/rest/inventory', api.rest.list)
-		app.get('/api/rest/inventory/search/:userid/:key', api.rest.search)
-		app.get('/api/rest/inventory/search/:userid', api.rest.search)
 		app.put('/api/rest/inventory/:id', api.rest.update)
 		app.del('/api/rest/inventory/:id', api.rest.del)
 	})

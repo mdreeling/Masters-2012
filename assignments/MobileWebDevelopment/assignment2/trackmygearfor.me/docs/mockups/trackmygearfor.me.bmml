@@ -1,59 +1,17 @@
-<mockup version="1.0" skin="sketch" measuredW="1011" measuredH="1119" mockupW="987" mockupH="1071">
+<mockup version="1.0" skin="sketch" measuredW="975" measuredH="1099" mockupW="944" mockupH="1051">
   <controls>
-    <control controlID="4" controlTypeID="__group__" x="377" y="49" w="282" h="510" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="-1">
-      <groupChildrenDescriptors>
-        <control controlID="0" controlTypeID="com.balsamiq.mockups::iPhone" x="0" y="0" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="4">
-          <controlProperties>
-            <bgPattern>topOnly</bgPattern>
-          </controlProperties>
-        </control>
-        <control controlID="1" controlTypeID="com.balsamiq.mockups::Button" x="51" y="225" w="-1" h="-1" measuredW="80" measuredH="27" zOrder="1" locked="false" isInGroup="4">
-          <controlProperties>
-            <text>Add%20Gear</text>
-          </controlProperties>
-        </control>
-        <control controlID="2" controlTypeID="com.balsamiq.mockups::Label" x="76" y="159" w="-1" h="-1" measuredW="124" measuredH="21" zOrder="2" locked="false" isInGroup="4">
-          <controlProperties>
-            <text>TrackMyGearFor.Me</text>
-          </controlProperties>
-        </control>
-        <control controlID="3" controlTypeID="com.balsamiq.mockups::Button" x="146" y="225" w="-1" h="-1" measuredW="78" measuredH="27" zOrder="3" locked="false" isInGroup="4">
-          <controlProperties>
-            <text>List%20Gear</text>
-          </controlProperties>
-        </control>
-        <control controlID="4" controlTypeID="com.balsamiq.mockups::Label" x="96" y="110" w="-1" h="-1" measuredW="91" measuredH="24" zOrder="4" locked="false" isInGroup="4">
-          <controlProperties>
-            <bold>true</bold>
-            <color>16777215</color>
-            <size>16</size>
-            <text>Track%20Gear</text>
-          </controlProperties>
-        </control>
-      </groupChildrenDescriptors>
-    </control>
-    <control controlID="5" controlTypeID="com.balsamiq.mockups::iPhone" x="31" y="48" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="1" locked="false" isInGroup="-1">
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::iPhone" x="31" y="48" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
         <bgPattern>topOnly</bgPattern>
         <orientation>portrait</orientation>
       </controlProperties>
     </control>
-    <control controlID="6" controlTypeID="com.balsamiq.mockups::Button" x="101" y="291" w="-1" h="-1" measuredW="139" measuredH="27" zOrder="2" locked="false" isInGroup="-1">
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Button" x="97" y="194" w="136" h="27" measuredW="119" measuredH="27" zOrder="1" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Login%20with%20Facebook</text>
+        <text>Login%20via%20Twitter</text>
       </controlProperties>
     </control>
-    <control controlID="7" controlTypeID="com.balsamiq.mockups::Button" x="101" y="348" w="136" h="27" measuredW="124" measuredH="27" zOrder="3" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>Login%20with%20Twitter</text>
-      </controlProperties>
-    </control>
-    <control controlID="8" controlTypeID="com.balsamiq.mockups::Label" x="110" y="211" w="-1" h="-1" measuredW="124" measuredH="21" zOrder="4" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>TrackMyGearFor.Me</text>
-      </controlProperties>
-    </control>
-    <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="143" y="155" w="-1" h="-1" measuredW="45" measuredH="24" zOrder="5" locked="false" isInGroup="-1">
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="143" y="155" w="-1" h="-1" measuredW="45" measuredH="24" zOrder="2" locked="false" isInGroup="-1">
       <controlProperties>
         <bold>true</bold>
         <color>16777215</color>
@@ -61,55 +19,55 @@
         <text>Login</text>
       </controlProperties>
     </control>
-    <control controlID="24" controlTypeID="com.balsamiq.mockups::iPhone" x="24" y="609" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="6" locked="false" isInGroup="-1">
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::iPhone" x="362" y="48" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="3" locked="false" isInGroup="-1">
       <controlProperties>
         <bgPattern>topOnly</bgPattern>
       </controlProperties>
     </control>
-    <control controlID="25" controlTypeID="com.balsamiq.mockups::Label" x="127" y="719" w="-1" h="-1" measuredW="76" measuredH="24" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::Label" x="84" y="719" w="-1" h="-1" measuredW="177" measuredH="24" zOrder="4" locked="false" isInGroup="-1">
       <controlProperties>
         <bold>true</bold>
         <color>16777215</color>
         <size>16</size>
-        <text>List%20Gear</text>
+        <text>My%20Gear%20%28%7Btwitteruser%7D%29</text>
       </controlProperties>
     </control>
-    <control controlID="30" controlTypeID="com.balsamiq.mockups::TextInput" x="53" y="750" w="221" h="-1" measuredW="219" measuredH="27" zOrder="8" locked="false" isInGroup="-1">
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::TextInput" x="392" y="194" w="221" h="-1" measuredW="219" measuredH="27" zOrder="5" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Sony%20%28HR-MP5%29%20-%20RackUnit%20%20%20%20%20%20%20%20%20%20%20%20%3E</text>
       </controlProperties>
     </control>
-    <control controlID="31" controlTypeID="com.balsamiq.mockups::TextInput" x="53" y="777" w="221" h="-1" measuredW="215" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::TextInput" x="392" y="221" w="221" h="-1" measuredW="215" measuredH="27" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Adam%20%28A7%29%20-%20Speakers%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3E</text>
       </controlProperties>
     </control>
-    <control controlID="32" controlTypeID="com.balsamiq.mockups::TextInput" x="55" y="804" w="221" h="-1" measuredW="213" measuredH="27" zOrder="10" locked="false" isInGroup="-1">
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::TextInput" x="394" y="248" w="221" h="-1" measuredW="213" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
         <text>M-Audio%20%28FW-410%29%20-%20Interface%20%20%20%20%20%20%3E</text>
       </controlProperties>
     </control>
-    <control controlID="33" controlTypeID="com.balsamiq.mockups::TextInput" x="53" y="831" w="221" h="-1" measuredW="213" measuredH="27" zOrder="11" locked="false" isInGroup="-1">
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::TextInput" x="392" y="275" w="221" h="-1" measuredW="213" measuredH="27" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Boss%20%28GX-700%29%20-%20Effects%20%20%20%20%20%20%20%20%20%20%20%20%20%3E</text>
       </controlProperties>
     </control>
-    <control controlID="34" controlTypeID="com.balsamiq.mockups::TextInput" x="55" y="858" w="221" h="-1" measuredW="210" measuredH="27" zOrder="12" locked="false" isInGroup="-1">
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::TextInput" x="394" y="302" w="221" h="-1" measuredW="210" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
       <controlProperties>
         <text>H%26K%20%28Cream%20Machine%29%20-%20Effects%20%3E</text>
       </controlProperties>
     </control>
-    <control controlID="36" controlTypeID="com.balsamiq.mockups::TextInput" x="53" y="885" w="221" h="-1" measuredW="211" measuredH="27" zOrder="13" locked="false" isInGroup="-1">
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::TextInput" x="392" y="329" w="221" h="-1" measuredW="211" measuredH="27" zOrder="10" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Marshall%20%28JMP-1%29%20-%20PreAmp%20%20%20%20%20%20%20%20%20%3E</text>
       </controlProperties>
     </control>
-    <control controlID="37" controlTypeID="com.balsamiq.mockups::TextInput" x="53" y="912" w="221" h="-1" measuredW="211" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::TextInput" x="392" y="356" w="221" h="-1" measuredW="211" measuredH="27" zOrder="11" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Line6%20%28Spider%20III%2015%29%20-%20Amp%20%20%20%20%20%20%20%20%20%3E</text>
       </controlProperties>
     </control>
-    <control controlID="46" controlTypeID="__group__" x="729" y="49" w="282" h="510" measuredW="282" measuredH="510" zOrder="15" locked="false" isInGroup="-1">
+    <control controlID="46" controlTypeID="__group__" x="693" y="48" w="282" h="510" measuredW="282" measuredH="510" zOrder="12" locked="false" isInGroup="-1">
       <groupChildrenDescriptors>
         <control controlID="0" controlTypeID="com.balsamiq.mockups::iPhone" x="0" y="0" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="46">
           <controlProperties>
@@ -186,7 +144,7 @@
         </control>
       </groupChildrenDescriptors>
     </control>
-    <control controlID="47" controlTypeID="__group__" x="377" y="609" w="282" h="510" measuredW="282" measuredH="510" zOrder="16" locked="false" isInGroup="-1">
+    <control controlID="47" controlTypeID="__group__" x="31" y="589" w="282" h="510" measuredW="282" measuredH="510" zOrder="13" locked="false" isInGroup="-1">
       <groupChildrenDescriptors>
         <control controlID="0" controlTypeID="com.balsamiq.mockups::iPhone" x="0" y="0" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="47">
           <controlProperties>
@@ -252,6 +210,24 @@
           </controlProperties>
         </control>
       </groupChildrenDescriptors>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::PointyButton" x="394" y="154" w="-1" h="-1" measuredW="44" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>center</direction>
+        <text>Add</text>
+      </controlProperties>
+    </control>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::PointyButton" x="541" y="154" w="-1" h="-1" measuredW="67" measuredH="27" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>center</direction>
+        <text>Refresh</text>
+      </controlProperties>
+    </control>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::PointyButton" x="732" y="154" w="-1" h="-1" measuredW="50" measuredH="27" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>left</direction>
+        <text>Back</text>
+      </controlProperties>
     </control>
   </controls>
 </mockup>
