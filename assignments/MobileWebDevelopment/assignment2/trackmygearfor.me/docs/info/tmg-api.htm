@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html class="js cufon-active cufon-ready wf-droidsans1droidsans2-n4-active wf-droidsansmono1droidsansmono2-n4-active wf-active" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
    <head>
-      <title>Templates - Track My Gear API Docs</title>
+      <title>Track My Gear API Docs</title>
       <meta name="description" content="The Track My Gear API allows you to interact and 'sync' with your Track My Gear account via simple web-based methods." />
       <meta name="robots" content="index,follow,archive" />
       <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
@@ -122,9 +122,43 @@
                </h2>
                <p class="leader"><strong>W.I.T - 2012 Masters Program - Mobile Web Development</strong>               </p>
                <div id="getting_a_template" class="apiMethod">
-                 <h3>Feature Matrix</h3>
-                  <p>&nbsp;</p>
+                 <h3>Concept - TrackMyGear</h3>
+                 <p>TrackMyGear is an application for creating an inventory of  musical studio equipment such as Guitars and Microphones ( tems which frequently go walkabout during and after recording sessions)</p>
+                 <p>With TrackMyGear you can categorise and take photographs of the gear itself as well as its serial number and upload it to the TrackMyGear site.</p>
+                 <p>The application is hosted on Amazon EC2 @ <a href="http://www.trackmygearfor.me">http://www.trackmygearfor.me</a></p>
+                 <h3>Login  - TrackMyGear</h3>
+				 <p>An example twitter login with data is provided below - this account has several items already tracked.</p>
+                 <p><strong>username : </strong>trackmygear<strong><br />
+                   password : </strong>masters</p>
+<h3>Feature Matrix</h3>
+                 <p>Track my gear covers all features asked in the assignment including</p>
+                 <p> Amazon Hosted (EC2 Ubuntu)<br />
+                   <a href="../mockups/tmg-api.htm">Wireframes</a><br />
+                   <a href="../api/tmg-api.htm">API Documentation</a><br />
+                   <a href="../usecase/tmg-api.htm">Use Case Analysis</a><br />
+                   <a href="../arch/tmg-api.htm">Architectural Diagrams</a><br />
+                   Mobile Web
+                   <br />
+                   Hybrid Single and Cross Platform<br />
+                   Service Provider Integration (Postmark - Mobile Web Only)<br />
+                   Configuration Management (node-config)<br />
+                   Social Media Integration (Twitter - Mobile Web and iOS)<br />
+                 Device Hardware Usage (Camera - iOS and Android)<br />
+                 Analytics
+                 (iOS only)</p>
+                 <p>You can see below that not all features are available on all platforms - but every feature is available on at least one.</p>
+                 <p>&nbsp;</p>
                   <a href="tmg-api_files/mwd-features-final_web.png"><img src="tmg-api_files/mwd-features-final_web.png" width="700" height="463" /></a>
+			     <h3>Source Code</h3>
+			     <p>Code is hosted on GItHub at the following location</p>
+			     <p><a href="https://github.com/mdreeling/Masters-2012/tree/master/assignments/MobileWebDevelopment/assignment2/trackmygearfor.me">https://github.com/mdreeling/Masters-2012/tree/master/assignments/MobileWebDevelopment/assignment2/trackmygearfor.me</a></p>
+<h3>Feature and Technical Notes</h3>
+                 <ol>
+                   <li>PostMark integration only operates in the Mobile Web version - but operates on all devices in this mode</li>
+                   <li>All images are stored as base64 encoded text in MongoDb</li>
+                   <li>Twitter Integration on the iPhone is handled by a native plugin. You need to have your twitter account setup on the Phone. I had to submit an Objective-C patch to the Twitter plugin. I added a getTwitterUsername call in order to make it usable for my application. This patch has <a href="https://github.com/phonegap/phonegap-plugins/pull/528">since been merged</a> to the TwitterPlugin master as it is quite useful.</li>
+                   <li>I also <a href="https://github.com/designerkamal/Phonegap-Flurry-Plugin/pull/2/files">submitted a pull request</a> for the Flurry plugin because it does not work with the latest version of Cordova</li>
+                 </ol>
               </div>
                <div id="deleting_a_template" class="apiMethod">
                  <div class="apiGroup"> </div>

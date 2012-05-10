@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html class="js cufon-active cufon-ready wf-droidsans1droidsans2-n4-active wf-droidsansmono1droidsansmono2-n4-active wf-active" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
    <head>
-      <title>Templates - Track My Gear API Docs</title>
+      <title>Track My Gear API Docs</title>
       <meta name="description" content="The Track My Gear API allows you to interact and 'sync' with your Track My Gear account via simple web-based methods." />
       <meta name="robots" content="index,follow,archive" />
       <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
@@ -113,41 +113,64 @@
             <h1 class="section-title" id="title-api_documentation"><a href="http://www.trackmygearfor.me/api/">API Documentation</a></h1>
          </div>
          <div id="body">
-            <div id="content" class="apiContent">
-               <h2 class="sifr page-title" id="subscribers">
+           <div id="content" class="apiContent">
+             <h2 class="sifr page-title" id="subscribers">
                   <cufon style="width: 151px; height: 30px;" alt="Track My Gear API Docs" class="cufon cufon-canvas">
                      <canvas style="width: 176px; height: 33px; top: -3px; left: -2px;" height="33" width="176"></canvas>
                      <cufontext>Track My Gear API Docs</cufontext>
                   </cufon>
-               </h2>
-               <p class="leader">Use cases</p>
-               <div id="getting_a_template" class="apiMethod">
-                  <h3>USC01 - Retrieving complete inventory by twitter username</h3>
-                  <p>Returns all the basic details for an entire users inventory including the name, model and a thumbnail image as base64.</p>
+              </h2>
+              <p class="leader">Use Case List</p>
+              
+                <p>1. USC01 - Login  (Mobile Web)<br />
+                2. USC02 - List Gear (Native and Mobile Web)<br />
+                3. USC03 - Add Gear (Native and Mobile Web)
+                </p>
+                <div id="getting_a_template" class="apiMethod">
+                <h3>USC01 - Login (Mobile Web)</h3>
+                  <p>Log the user into trackmygearfor.me using their twitter username and password</p>
                   <div class="apiCodeGroup">
-                     <h5>Request:</h5>
-                     <div class="apiSection">
-                        <h6>GET</h6>
-                        <pre><code>http://trackmygearfor.me/api/rest/inventory/search/<a href="http://www.trackmygearfor.me/api/clients/#getting_client_templates">{twitterusername}</a></code></pre>
-                     </div>
+                     <h5>Actors:</h5>
+                    <div class="apiSection">
+                        <h6>User</h6>
+                        <p>The user attempting to use TrackMyGear</p>
+                      <h6>Twitter</h6>
+                      <p>The twitter OAuth management system</p>
+                       <h6>TrackMyGear</h6>
+                       <p>The TrackMyGear inventory management system</p>
+                       <p>&nbsp;</p>
+                    </div>
+					 <h5>Triggers:</h5>
+                    <div class="apiSection">
+                        <h6>1</h6>
+                      <p>The user presses the &quot;Login to twitter&quot; link at the root of the site</p>
+</div>
                   </div>
                   <div class="apiGroup">
-                     <h5>Route Values:</h5>
+                     <h5>Preconditions:</h5>
                      <div class="apiSection">
-                        <h6>{twitterusername}</h6>
-                        <p>The users twitter username (i.e @trackmygear = trackmygear)</p>
+                        <h6>1</h6>
+                       <p>The user is using the application from the browser on their device (Not natively)</p>
+                       <h6>2</h6>
+                        <p>The user has browsed to http://www.trackmygearfor.me                     </p>
+                     </div>
+                  </div>
+				  <div class="apiGroup">
+                     <h5>Post-conditions:</h5>
+                     <div class="apiSection">
+                        <h6>1</h6>
+                       <p>The user is logged in and redirected to http://www.trackmygearfor.me#list</p>
+                       <h6>2</h6>
+                        <p>The users inventory is displayed as a list with images</p>
                      </div>
                   </div>
                  <div class="subheader">
-                   <h4>Response:</h4>
-                    <p>Contains an array of items whose username attribute matches the twitterusername input parameter</p>
+                   <h4>User Flows</h4>
+                    <p>The standard flow describes what happens if the user is successfully logged into twitter and hence TrackMyGear</p>
                  </div>
                   <div class="apiCodeGroup">
-                     <h5>Expected Response: 
-                        <span class="switchContainer">
-                        <a class="JSON toggleSwitch left active" href="javascript:void(0)">JSON</a>
-                        <a class="XML toggleSwitch right" href="javascript:void(0)">XML</a>
-                        </span>
+                     <h5>Standard Flow<span class="switchContainer">
+                     </span>
                      </h5>
                      <div class="apiSectionCode JSON">
                         <div>
@@ -165,31 +188,17 @@
                                           <div class="line number6 index5 alt1">6</div>
                                           <div class="line number7 index6 alt2">7</div>
                                           <div class="line number8 index7 alt1">8</div>
-                                          <div class="line number9 index8 alt2">9</div>
-										  <div class="line number10 index9 alt1">10</div>
-										  <div class="line number11 index10 alt2">11</div>
-										  <div class="line number12 index11 alt1">12</div>
-										  <div class="line number13 index12 alt2">13</div>
-										  <div class="line number14 index13 alt1">14</div>
-										  <div class="line number15 index14 alt2">15</div>
                                        </td>
                                        <td class="code">
                                           <div class="container">
-                                             <div class="line number1 index0 alt2"><code class="javascript plain">HTTP/1.1 200 OK</code></div>
-                                             <div class="line number2 index1 alt1"><code class="javascript plain">Content-Type: application/json; charset=utf-8</code></div>
-                                             <div class="line number3 index2 alt2">[&nbsp;</div>
-                                             <div class="line number4 index3 alt1"><code class="javascript plain"> {</code></div>
-                                             <div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"name"</code><code class="javascript plain">: </code><code class="javascript string">"Fender"</code><code class="javascript plain">,</code></div>
-                                             <div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"model"</code><code class="javascript plain">: </code><code class="javascript string">"Stratocaster"</code><code class="javascript plain">,</code></div>
-                                             <div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"description"</code><code class="javascript plain">: </code><code class="javascript string">"<a href="http://preview.createsend.com/templates/publicpreview/01AF532CD8889B33?d=r">Electric Guitar (Single Coils)</a>"</code><code class="javascript plain">,</code></div>
-                                             <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"category"</code><code class="javascript plain">: </code><code class="javascript string">"Guitars"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"serialnumber"</code><code class="javascript plain">: </code><code class="javascript string">"6T7H88UU7"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"username"</code><code class="javascript plain">: </code><code class="javascript string">"trackmygear"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"imagedata"</code><code class="javascript plain">: </code><code class="javascript string">"/9j/4AAQSkZJRgABAQAAAQABAADBASE642Q==...."</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"creatd"</code><code class="javascript plain">: </code><code class="javascript string">"1335728800550"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"id"</code><code class="javascript plain">: </code><code class="javascript string">"4f9d9aa09a61453a6d000003"</code></div>
-                                             <div class="line number9 index8 alt1"><code class="javascript plain"> }</code></div>
-                                             <div class="line number10 index9 alt2"><code class="javascript plain">]</code></div>
+                                             <div class="line number1 index0 alt2"><code class="javascript plain">The user browses to http://www.trackmygearfor.me on their mobile device</code></div>
+                                             <div class="line number2 index1 alt1"><code class="javascript plain">The landing page is displayed </code></div>
+                                             <div class="line number3 index2 alt2">The user clicks on &quot;Login to twitter&quot;&nbsp;</div>
+                                             <div class="line number4 index3 alt1"><code class="javascript plain">The user is redirected to the twitter login page</code> asking for permission for TrackMyGear</div>
+											 <div class="line number5 index3 alt1"><code class="javascript plain">The user enters a valid username and password for twitter and clicks &quot;Sign in&quot;</code></div>
+											 <div class="line number6 index3 alt1"><code class="javascript plain">Twitter redirects the user back to http://www.trackmygearfor.me/auth/twitter/callback</code></div>
+ 											 <div class="line number7 index3 alt1"><code class="javascript plain">TrackMyGear redirects the user to http://www.trackmygearfor.me/#list</code></div>
+											 <div class="line number8 index3 alt1"><code class="javascript plain">The inventory items are displayed for the user</code></div>
                                           </div>
                                        </td>
                                     </tr>
@@ -239,55 +248,94 @@
                      </div>
                   </div>
                   <div class="apiGroup">
-                     <h5>Error Responses:</h5>
+                     <h5>Alternate Flows</h5>
                      <div class="apiSection">
-                        <p>If you receive a <code>"400 Bad Request"</code> response for this request, these are the possible errors which may be included in the body of the response:</p>
-                        <div class="errorCodes">
-                          <h5>4002: Template Name Required</h5>
+                       <div class="errorCodes">
+                          <h5>1A: Invalid twitter username or password</h5>
                            <div class="apiSection">
-                              <p>The template name passed cannot be empty.</p>
-                           </div>
+                              <p>1. At step 5 of the normal flow the user enters invalid login data<br />
+                                2. 
+                              Twitter rejects the password and asks the user to re-enter<br />
+                              3. 
+                              Twitter moves the user back to step 1 of this flow or to step 6 of the normal flow</p>
+                          </div>
                        </div>
                     </div>
                   </div>
-               </div>
-               <!-- .apiMethod -->
-               <div id="creating_a_template" class="apiMethod">
-                  <h3 class="marginBottom">Search for inventory items by twitter username</h3>
-                  <p>Adds a new template for an existing client by providing the name 
-                     of the template and URLs for the HTML file and a zip of all other files.
-                  </p>
+             </div>
+			     <div id="getting_a_template" class="apiMethod">
+                  <h3>USC02 - List Gear (Native and Mobile Web)</h3>
+                  <p>Log the user into trackmygearfor.me using their twitter username and password</p>
                   <div class="apiCodeGroup">
-                     <h5>Request:</h5>
+                     <h5>Actors:</h5>
                     <div class="apiSection">
-                      <h6>GET</h6>
-                       <pre><code>http://trackmygearfor.me/api/rest/inventory/search/<a href="http://www.trackmygearfor.me/api/clients/#getting_client_templates">{twitterusername}</a></code>/<code><a href="http://www.trackmygearfor.me/api/clients/#getting_client_templates">{keyword}</a></code></pre>
+                      <h6>User</h6>
+                      <p>The user attempting to use TrackMyGear                      </p>
+                      <h6>TrackMyGear</h6>
+                       <p>The TrackMyGear inventory management system</p>
+                       <p>&nbsp;</p>
+                    </div>
+					 <h5>Triggers:</h5>
+                    <div class="apiSection">
+                      <h6>1</h6>
+                      <p>The user has been redirected to the #list screen after login</p>
+                      <h6>2</h6>
+                      <p>The user has been redirected to the #list screen on startup                    </p>
+                    </div>
+                  </div>
+                  <div class="apiGroup">
+                     <h5>Preconditions:</h5>
+                     <div class="apiSection">
+                        <h6>1</h6>
+                       <p>The user is logged in</p>
                      </div>
                   </div>
-                 <div class="apiGroup">
-                     <h5>Route Values:</h5>
-                   <div class="apiSection">
-                     <h6>{twitterusername}</h6>
-                       <p>The users twitter username (i.e @trackmygear = trackmygear)</p>
-                      <h6>{keyword}</h6>
-                       <p>The keyword to search on (Only the 'name' attribute of the gear is actually searched)</p>
-                     
-				    </div>
+				  <div class="apiGroup">
+                     <h5>Post-conditions:</h5>
+                     <div class="apiSection">
+                       <h6>1</h6>
+                        <p>The users inventory is displayed as a list with images</p>
+                    </div>
                   </div>
-                  <div class="subheader">
-                    <h4>Response:</h4>
-                     <p>Contains an array of items whose 'name' contains the search string</p>
+                 <div class="subheader">
+                   <h4>User Flows</h4>
+                    <p>The standard flow describes what happens if the user is successfully logged into twitter and hence TrackMyGear</p>
                  </div>
                   <div class="apiCodeGroup">
-                     <h5>Expected Response:
-                        <span class="switchContainer">
-                        <a class="JSON toggleSwitch left active" href="javascript:void(0)">JSON</a>
-                        <a class="XML toggleSwitch right" href="javascript:void(0)">XML</a>
-                        </span>
+                     <h5>Standard Flow<span class="switchContainer">
+                     </span>
                      </h5>
                      <div class="apiSectionCode JSON">
                         <div>
-                          <div id="highlighter_46752" class="syntaxhighlighter  javascript">
+                           <div id="highlighter_46752" class="syntaxhighlighter  javascript">
+                              <div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
+                              <table border="0" cellpadding="0" cellspacing="0">
+                                 <tbody>
+                                    <tr>
+                                       <td class="gutter">
+                                         <div class="line number1 index0 alt1">1</div>
+                                          <div class="line number2 index0 alt2">2</div>
+									     <div class="line number2 index0 alt2">3</div>
+										  <div class="line number3 index1 alt1">4</div>
+                                       </td>
+                                       <td class="code">
+                                          <div class="container">
+                                             <div class="line number7 index3 alt1"><code class="javascript plain">TrackMyGear detects the logged in user (Native) via the Objective-C api</code></div>
+                                             <div class="line number7 index3 alt1"><code class="javascript plain">TrackMyGear detects  their previous session (Mobile Web)</code></div>
+											  <div class="line number7 index3 alt1"><code class="javascript plain">TrackMyGear redirects the user to the #list route</code></div>
+										
+										    <div class="line number8 index3 alt2"><code class="javascript plain">The inventory items are displayed for the user</code></div>
+                                          </div>
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                     <div style="display: none;" class="apiSectionCode XML">
+                        <div>
+                           <div id="highlighter_757266" class="syntaxhighlighter  xml">
                               <div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
                               <table border="0" cellpadding="0" cellspacing="0">
                                  <tbody>
@@ -302,59 +350,20 @@
                                           <div class="line number7 index6 alt2">7</div>
                                           <div class="line number8 index7 alt1">8</div>
                                           <div class="line number9 index8 alt2">9</div>
-										  <div class="line number10 index9 alt1">10</div>
-										  <div class="line number11 index10 alt2">11</div>
-										  <div class="line number12 index11 alt1">12</div>
-										  <div class="line number13 index12 alt2">13</div>
-										  <div class="line number14 index13 alt1">14</div>
-										  <div class="line number15 index14 alt2">15</div>
+                                          <div class="line number10 index9 alt1">10</div>
                                        </td>
                                        <td class="code">
                                           <div class="container">
-                                             <div class="line number1 index0 alt2"><code class="javascript plain">HTTP/1.1 200 OK</code></div>
-                                             <div class="line number2 index1 alt1"><code class="javascript plain">Content-Type: application/json; charset=utf-8</code></div>
-                                             <div class="line number3 index2 alt2">[&nbsp;</div>
-                                             <div class="line number4 index3 alt1"><code class="javascript plain"> {</code></div>
-                                             <div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"name"</code><code class="javascript plain">: </code><code class="javascript string">"Fender"</code><code class="javascript plain">,</code></div>
-                                             <div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"model"</code><code class="javascript plain">: </code><code class="javascript string">"Stratocaster"</code><code class="javascript plain">,</code></div>
-                                             <div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"description"</code><code class="javascript plain">: </code><code class="javascript string">"<a href="http://preview.createsend.com/templates/publicpreview/01AF532CD8889B33?d=r">Electric Guitar (Single Coils)</a>"</code><code class="javascript plain">,</code></div>
-                                             <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"category"</code><code class="javascript plain">: </code><code class="javascript string">"Guitars"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"serialnumber"</code><code class="javascript plain">: </code><code class="javascript string">"6T7H88UU7"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"username"</code><code class="javascript plain">: </code><code class="javascript string">"trackmygear"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"imagedata"</code><code class="javascript plain">: </code><code class="javascript string">"/9j/4AAQSkZJRgABAQAAAQABAADBASE642Q==...."</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"creatd"</code><code class="javascript plain">: </code><code class="javascript string">"1335728800550"</code></div>
-											 <div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript string">"id"</code><code class="javascript plain">: </code><code class="javascript string">"4f9d9aa09a61453a6d000003"</code></div>
-                                             <div class="line number9 index8 alt1"><code class="javascript plain"> }</code></div>
-                                             <div class="line number10 index9 alt2"><code class="javascript plain">]</code></div>
-                                          </div>
-                                       </td>
-                                    </tr>
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
-                     </div>
-                     <div style="display: none;" class="apiSectionCode XML">
-                        <div>
-                           <div id="highlighter_511428" class="syntaxhighlighter  xml">
-                              <div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div>
-                              <table border="0" cellpadding="0" cellspacing="0">
-                                 <tbody>
-                                    <tr>
-                                       <td class="gutter">
-                                          <div class="line number1 index0 alt2">1</div>
-                                          <div class="line number2 index1 alt1">2</div>
-                                          <div class="line number3 index2 alt2">3</div>
-                                          <div class="line number4 index3 alt1">4</div>
-                                          <div class="line number5 index4 alt2">5</div>
-                                       </td>
-                                       <td class="code">
-                                          <div class="container">
-                                             <div class="line number1 index0 alt2"><code class="xml plain">HTTP/1.1 201 Created</code></div>
+                                             <div class="line number1 index0 alt2"><code class="xml plain">HTTP/1.1 200 OK</code></div>
                                              <div class="line number2 index1 alt1"><code class="xml plain">Content-Type: application/xml; charset=utf-8</code></div>
                                              <div class="line number3 index2 alt2">&nbsp;</div>
                                              <div class="line number4 index3 alt1"><code class="xml plain">&lt;?</code><code class="xml keyword">xml</code> <code class="xml color1">version</code><code class="xml plain">=</code><code class="xml string">"1.0"</code> <code class="xml color1">encoding</code><code class="xml plain">=</code><code class="xml string">"utf-8"</code><code class="xml plain">?&gt;</code></div>
-                                             <div class="line number5 index4 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">string</code><code class="xml plain">&gt;aa164e9c8ab0471294fe6148fc9cf634&lt;/</code><code class="xml keyword">string</code><code class="xml plain">&gt;</code></div>
+                                             <div class="line number5 index4 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">Template</code><code class="xml plain">&gt;</code></div>
+                                             <div class="line number6 index5 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">Name</code><code class="xml plain">&gt;Template One&lt;/</code><code class="xml keyword">Name</code><code class="xml plain">&gt;</code></div>
+                                             <div class="line number7 index6 alt2"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">PreviewURL</code><code class="xml plain">&gt;<a href="http://preview.createsend.com/templates/publicpreview/01AF532CD8889B33?d=r">http://preview.createsend.com/templates/publicpreview/01AF532CD8889B33?d=r</a>&lt;/</code><code class="xml keyword">PreviewURL</code><code class="xml plain">&gt;</code></div>
+                                             <div class="line number8 index7 alt1"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">ScreenshotURL</code><code class="xml plain">&gt;<a href="http://preview.createsend.com/ts/r/14/833/263/14833263.jpg?0318092600">http://preview.createsend.com/ts/r/14/833/263/14833263.jpg?0318092600</a>&lt;/</code><code class="xml keyword">ScreenshotURL</code><code class="xml plain">&gt;</code></div>
+                                             <div class="line number9 index8 alt2"><code class="xml spaces">&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">TemplateID</code><code class="xml plain">&gt;5cac213cf061dd4e008de5a82b7a3621&lt;/</code><code class="xml keyword">TemplateID</code><code class="xml plain">&gt;</code></div>
+                                             <div class="line number10 index9 alt1"><code class="xml plain">&lt;/</code><code class="xml keyword">Template</code><code class="xml plain">&gt;</code></div>
                                           </div>
                                        </td>
                                     </tr>
@@ -365,24 +374,93 @@
                      </div>
                   </div>
                   <div class="apiGroup">
-                     <h5>Error Responses:</h5>
+                     <h5>Alternate Flows</h5>
                      <div class="apiSection">
-                        <p>If you receive a <code>"400 Bad Request"</code> response for this request, these are the possible errors which may be included in the body of the response:</p>
-                        <div class="errorCodes">
-                          <h5>4002: Template Name Required</h5>
+                       <div class="errorCodes">
+                          <h5>1A: Invalid promise (Native or Mobile Web)</h5>
                            <div class="apiSection">
-                              <p>The template name passed cannot be empty.</p>
+                             <p>1. At step 1 of the normal flow the server reports a critical &quot;Twitter promise error&quot;<br />
+                                2. 
+                              The server restarts automatically via a Cron script after 60 seconds<br />
+                              3. The user tries again at step 1 of the normal flow
+                             </p>
                            </div>
                        </div>
                     </div>
                   </div>
                </div>
-               <div id="deleting_a_template" class="apiMethod">
-                  <div class="apiGroup">
-                     <div class="apiSection"> </div>
+			   <div id="getting_a_template" class="apiMethod">
+                <h3>USC03 - Add Gear (Native and Mobile Web)</h3>
+                  <p>The user adds some gear using TrackMyGear</p>
+                  <div class="apiCodeGroup">
+                     <h5>Actors:</h5>
+                    <div class="apiSection">
+                      <h6>User</h6>
+                      <p>The user attempting to use TrackMyGear                      </p>
+                      <h6>TrackMyGear</h6>
+                       <p>The TrackMyGear inventory management system</p>
+                       <p>&nbsp;</p>
+                    </div>
+					 <h5>Triggers:</h5>
+                    <div class="apiSection">
+                        <h6>1</h6>
+                      <p>The user presses the &quot;+&quot; button on the top left of the application</p>
+</div>
                   </div>
-               </div>
-               <!-- /.apiMethod -->
+                  <div class="apiGroup">
+                     <h5>Preconditions:</h5>
+                     <div class="apiSection">
+                       <h6>1</h6>
+                        <p>The user has browsed to http://www.trackmygearfor.me and is logged in                 </p>
+                    </div>
+                  </div>
+				  <div class="apiGroup">
+                     <h5>Post-conditions:</h5>
+                     <div class="apiSection">
+                        <h6>1</h6>
+                       <p>The user is redirected to http://www.trackmygearfor.me#list</p>
+                       <h6>2</h6>
+                        <p>The users inventory is displayed as a list with images <strong>including the new item</strong></p>
+                     </div>
+                  </div>
+                 <div class="subheader">
+                   <h4>User Flows</h4>
+                    <p>The standard flow describes what happens if the user is successfully logged into twitter and hence TrackMyGear</p>
+                 </div>
+                  <div class="apiCodeGroup">
+                     <h5>Standard Flow<span class="switchContainer">
+                     </span>
+                     </h5>
+                    <div class="apiSectionCode JSON">
+                       <div class="apiSection">
+                              <p>1. The user clicks the &quot;+&quot; button<br />
+                                2. 
+                              The Add Gear div slides in<br />
+                              3.                         The user adds Make, Model Serial Number and Category and Description (Mobile Web)<br />
+                              4.                         The user also adds a Serial Number and Equipment Image (Native)<br />
+                              5.
+                                                       The user presses save<br />
+                                                       6. The user is redirected to the #list div<br />
+                                                       7. The list is displayed including the newly added item
+                              </p></div>
+                     </div>
+                  </div>
+                  <div class="apiGroup">
+                     <h5>Alternate Flows</h5>
+                     <div class="apiSection">
+                       <div class="errorCodes">
+                          <h5>1A: (Native) No image selected</h5>
+                           <div class="apiSection">
+                              <p>1. At step 4 of the normal flow the user does not take a photograph<br />
+                                2. 
+                              An error message is displayed when the user returns to the application<br />
+                              3. 
+                              The users is returned to step 2 - however their entered data is still present</p>
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+             </div>
             </div>
             <!-- #content -->
          </div>
