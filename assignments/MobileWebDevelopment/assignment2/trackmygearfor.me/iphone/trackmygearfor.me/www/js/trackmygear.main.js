@@ -29,8 +29,8 @@ bb.init = function() {
 
 	// User location co-ordinates holder
 	var userlocation = 'Unknown'
-
-	var currentCapturedImageData = 'None'
+    var typeOfPhoto = 'None'
+    var currentCapturedImageData = 'None'
 	var currentCapturedSerialNoImageData = 'None'
 	var loggedin = false
 

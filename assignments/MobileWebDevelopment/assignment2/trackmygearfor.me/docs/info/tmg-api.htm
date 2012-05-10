@@ -126,6 +126,11 @@
                  <p>TrackMyGear is an application for creating an inventory of  musical studio equipment such as Guitars and Microphones ( tems which frequently go walkabout during and after recording sessions)</p>
                  <p>With TrackMyGear you can categorise and take photographs of the gear itself as well as its serial number and upload it to the TrackMyGear site.</p>
                  <p>The application is hosted on Amazon EC2 @ <a href="http://www.trackmygearfor.me">http://www.trackmygearfor.me</a></p>
+                 <h3>UI Inspiration - TrackMyGear</h3>
+                 <p>TrackMyGear is uses jquery standard features but does not use jquery-mobile.</p>
+                 <p>As part of a learning exercise i tried to move out of jquery-mobile and into standard css.</p>
+                 <p>I based all of my UI work on the following blog post which tries to emulate an iOS style interface.</p>
+                 <p><a href="http://cheeaun.com/blog/2012/03/how-i-built-hacker-news-mobile-web-app">http://cheeaun.com/blog/2012/03/how-i-built-hacker-news-mobile-web-app</a></p>
                  <h3>Login  - TrackMyGear</h3>
 				 <p>An example twitter login with data is provided below - this account has several items already tracked.</p>
                  <p><strong>username : </strong>trackmygear<strong><br />
@@ -149,7 +154,16 @@
                  <p>You can see below that not all features are available on all platforms - but every feature is available on at least one.</p>
                  <p>&nbsp;</p>
                   <a href="tmg-api_files/mwd-features-final_web.png"><img src="tmg-api_files/mwd-features-final_web.png" width="700" height="463" /></a>
-			     <h3>Source Code</h3>
+			     <h3>Videos</h3>
+			     <p><a href="http://www.youtube.com/watch?v=OShIX0Emm7Y"></a>1<a href="http://youtu.be/54odfgd-HZk">. Mobile Web - iPhone 4S</a></p>
+			     <p><a href="http://youtu.be/lYszEUCrjx8">2. Mobile Web - WebOS - HP TouchPad - Postmark</a></p>
+			     <p><a href="http://www.youtube.com/watch?v=UYHCD770Vwk">3. Mobile Web - WebOS - HP TouchPad - Twitter</a></p>
+<p><a href="http://youtu.be/Q6k_j1jk2Pk">4. Hybrid - iPhone 4S - Postmark and Native Tweeting</a></p>
+			     <p><a href="Adding an Item - Camera Integration">5. Hybrid - iPhone 4S - Adding an Item - Camera Integration</a></p>
+			     <p><a href="http://youtu.be/UsSV1H23SjI">6. Hybrid - iPhone 4S - Searching for Gear</a></p>
+			     <p><a href="http://www.youtube.com/watch?v=OShIX0Emm7Y">7. Mobile Web - Blackberry Torch - Slooooowwwww</a><br />
+		         </p>
+<h3>Source Code</h3>
 			     <p>Code is hosted on GItHub at the following location</p>
 			     <p><a href="https://github.com/mdreeling/Masters-2012/tree/master/assignments/MobileWebDevelopment/assignment2/trackmygearfor.me">https://github.com/mdreeling/Masters-2012/tree/master/assignments/MobileWebDevelopment/assignment2/trackmygearfor.me</a></p>
 <h3>Feature and Technical Notes</h3>
@@ -158,6 +172,12 @@
                    <li>All images are stored as base64 encoded text in MongoDb</li>
                    <li>Twitter Integration on the iPhone is handled by a native plugin. You need to have your twitter account setup on the Phone. I had to submit an Objective-C patch to the Twitter plugin. I added a getTwitterUsername call in order to make it usable for my application. This patch has <a href="https://github.com/phonegap/phonegap-plugins/pull/528">since been merged</a> to the TwitterPlugin master as it is quite useful.</li>
                    <li>I also <a href="https://github.com/designerkamal/Phonegap-Flurry-Plugin/pull/2/files">submitted a pull request</a> for the Flurry plugin because it does not work with the latest version of Cordova</li>
+                 </ol>
+				 <h3>Known issues</h3>
+                 <ol>
+                   <li>Android - <strong>Native</strong> and Web - Scrolling only works on Ice Cream Sandwich (4.0.1) upwards</li>
+                   <li>iOS - <strong>Native</strong> - Scrolling is sporadic - hence videos to show that it works - i think this is due to webkit-overflow</li>
+                   <li>Edit item - All Versions - Not implemented fully</li>
                  </ol>
               </div>
                <div id="deleting_a_template" class="apiMethod">

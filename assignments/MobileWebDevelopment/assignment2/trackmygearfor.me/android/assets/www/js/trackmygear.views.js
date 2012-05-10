@@ -243,8 +243,8 @@ bb.view.EditGearItemPage = Backbone.View.extend({
 	},
 	capture : function() {
 		console.log('tapped capture')
-		capturePhoto();
 		app.capturingSerial = false;
+		capturePhoto();
 	},
 	captureSerial : function() {
 		console.log('tapped capture serial')

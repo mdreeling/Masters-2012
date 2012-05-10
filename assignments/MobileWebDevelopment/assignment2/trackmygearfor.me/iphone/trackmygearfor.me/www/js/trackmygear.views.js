@@ -183,6 +183,7 @@ bb.view.AddGearItemPage = Backbone.View.extend({
 	capture : function() {
 		console.log('tapped capture')
         window.plugins.FlurryPlugin.logEvent('ADDGEAR_PAGE_CAPTURE_IMAGE_STARTED')
+        app.capturingSerial = false;
 		capturePhoto();
 	},
 	captureSerial : function() {
@@ -253,12 +254,12 @@ bb.view.EditGearItemPage = Backbone.View.extend({
 	},
 	capture : function() {
 		console.log('tapped capture')
+		app.capturingSerial = false;
 		capturePhoto();
-        app.capturingSerial=false;
 	},
 	captureSerial : function() {
 		console.log('tapped capture serial')
-		app.capturingSerial=true;
+		app.capturingSerial = true;
 		capturePhoto();
 	}
 });

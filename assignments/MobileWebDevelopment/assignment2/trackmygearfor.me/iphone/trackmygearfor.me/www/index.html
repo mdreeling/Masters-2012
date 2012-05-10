@@ -3,17 +3,15 @@
 	<head>
 		<title>TrackMyGearFor.Me</title>
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
-		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<!--<meta name="apple-mobile-web-app-capable" content="yes" />-->
 		<link rel="stylesheet" href="css/styles.css"/>
 	</head>
 
 	<body>
-
+        
 		<div id="content"></div>
-
-		<!-- Hardware Inegration Scripts -->
+				<!-- Hardware Inegration Scripts -->
 		<script type="text/javascript" charset="utf-8" src="libs/cordova-1.6.1.js"></script>
-		<script type="text/javascript" charset="utf-8" src="js/trackmygear.native.ios.twitterintegration.js"></script>
 		<!-- Native Plugin API Integration Scripts -->
 		<script type="text/javascript" charset="utf-8" src="js/trackmygear.cordova.ios.twitterplugin.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/trackmygear.cordova.ios.flurryplugin.js"></script>
@@ -26,8 +24,8 @@
 		<script type="text/javascript" src="js/trackmygear.models.js"></script>
 		<script type="text/javascript" src="js/trackmygear.views.js"></script>
 		<script type="text/javascript" src="js/trackmygear.utils.js"></script>
-		<script type="text/javascript" src="js/trackmygear.camera.intregration.js"></script>
 		<script type="text/javascript" src="js/detectmobilebrowser.js"></script>
+		<script type="text/javascript" src="js/trackmygear.camera.intregration.js"></script>
 		<script
 		type = "text/javascript" >
 			if(jQuery.browser.mobile) {
@@ -53,8 +51,8 @@
 					window.plugins.twitter.getTwitterUsername(function(s) {
 						console.log("twitter username : " + JSON.stringify(s));
 						app.loggedinusername = s;
-                                                              window.location.href = "#list"
-                                                             // tmgapp.renderSearchScreen();
+						window.location.href = "#list"
+						// tmgapp.renderSearchScreen();
 					}, function(e) {
 						console.log("twitter username failure: " + e);
 					});
@@ -62,6 +60,5 @@
 
 			}
 		</script>
-
 	</body>
 </html>
