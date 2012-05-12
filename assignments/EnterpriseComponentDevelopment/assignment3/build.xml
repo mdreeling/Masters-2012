@@ -1,0 +1,41 @@
+<project name="CaveatEmptor Native" default="" basedir=".">
+
+    <!-- Global properties for this build -->
+    <property name="database.dir"           value="data"/>
+    <property name="lib.dir"                value="lib"/>
+ 
+    <path id="hsqldb.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+            <include name="**/*.zip"/>
+        </fileset>
+    </path>
+
+    <!-- ################ HSQL DB ###################### -->
+
+    <!-- Start the HSQL DB server -->
+    <target name="startdbServer" description="Run HSQL database server with clean DB">
+        <java classname="org.hsqldb.Server"
+              fork="yes"
+              classpathref="hsqldb.classpath"
+              failonerror="true">
+            <arg value="-database.0"/>
+            <arg value="file:${database.dir}/test"/>
+        </java>
+    </target>
+
+    <!-- Start the HSQL DB browser tool -->
+    <target name="dbManager" description="Start HSQL DB manager">
+        <java
+            classname="org.hsqldb.util.DatabaseManagerSwing"
+            fork="yes"
+            classpathref="hsqldb.classpath"
+            failonerror="true">
+            <arg value="-url"/>
+            <arg value="jdbc:hsqldb:hsql://localhost:9001/"/>
+            <arg value="-driver"/>
+            <arg value="org.hsqldb.jdbcDriver"/>
+        </java>
+    </target>
+
+</project>
