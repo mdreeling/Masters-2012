@@ -9,11 +9,13 @@
     <beans:bean
         id="customUserDetailsService"
         class="com.dreeling.applications.travel.service.CustomUserDetailsService"
-        scope="prototype" />
+        scope="prototype" >
+    </beans:bean>
 
     <beans:bean
         id="customUserAuthenticationProvider"
         class="com.dreeling.applications.travel.security.providers.CustomUserAuthenticationProvider" >
+
         <beans:property
             name="userDetailsService"
             ref="customUserDetailsService" />

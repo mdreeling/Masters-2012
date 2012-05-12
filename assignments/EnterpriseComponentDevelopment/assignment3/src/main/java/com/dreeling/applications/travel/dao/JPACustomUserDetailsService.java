@@ -19,7 +19,8 @@ import com.dreeling.applications.travel.domain.User;
 @Repository
 public class JPACustomUserDetailsService {
 
-	private EntityManager em;
+	protected EntityManager em;
+
 
 	@PersistenceContext
 	public void setEntityManager(EntityManager em) {
@@ -38,7 +39,7 @@ public class JPACustomUserDetailsService {
 			if (username != null) {
 				User s = (User) em
 						.createQuery(
-								"select b from Customer b where b.username = :username")
+								"select b from CustomerSvc b where b.username = :username")
 						.setParameter("username", username).getSingleResult();
 
 				System.out.println("User = " + s);

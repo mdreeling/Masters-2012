@@ -21,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * A user who can book hotels.
  */
 @Entity
-@Table(name = "Customer")
+@Table(name = "CustomerSvc")
 public class User implements Serializable, UserDetails {
 
 	private String username;
