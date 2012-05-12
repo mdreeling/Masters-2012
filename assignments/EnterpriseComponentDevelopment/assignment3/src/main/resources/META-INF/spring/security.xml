@@ -6,6 +6,19 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd" >
 
+    <beans:bean
+        id="customUserDetailsService"
+        class="com.dreeling.applications.travel.service.CustomUserDetailsService"
+        scope="prototype" />
+
+    <beans:bean
+        id="customUserAuthenticationProvider"
+        class="com.dreeling.applications.travel.security.providers.CustomUserAuthenticationProvider" >
+        <beans:property
+            name="userDetailsService"
+            ref="customUserDetailsService" />
+    </beans:bean>
+
     <http
         pattern="/resources/**"
         security="none" />
@@ -43,6 +56,10 @@
     </http>
 
     <authentication-manager>
+
+        <authentication-provider user-service-ref="customUserDetailsService" />
+
+        <authentication-provider ref="customUserAuthenticationProvider" />
 
         <authentication-provider>
 

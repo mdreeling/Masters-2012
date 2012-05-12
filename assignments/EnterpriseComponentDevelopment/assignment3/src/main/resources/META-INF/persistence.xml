@@ -6,6 +6,7 @@
    <persistence-unit name="travelDatabase">
       <provider>org.hibernate.ejb.HibernatePersistence</provider>
       <class>com.dreeling.applications.travel.domain.User</class>
+      <class>com.dreeling.applications.travel.domain.Role</class>
       <class>com.dreeling.applications.travel.domain.Booking</class>
       <class>com.dreeling.applications.travel.domain.Hotel</class>
       <properties>

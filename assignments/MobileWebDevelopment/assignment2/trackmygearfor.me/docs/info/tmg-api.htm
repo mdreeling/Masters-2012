@@ -127,7 +127,7 @@
                  <p>With TrackMyGear you can categorise and take photographs of the gear itself as well as its serial number and upload it to the TrackMyGear site.</p>
                  <p>The application is hosted on Amazon EC2 @ <a href="http://www.trackmygearfor.me">http://www.trackmygearfor.me</a></p>
                  <h3>UI Inspiration - TrackMyGear</h3>
-                 <p>TrackMyGear is uses jquery standard features but does not use jquery-mobile.</p>
+                 <p>TrackMyGear uses the jquery standard library features but does not use jquery-mobile.</p>
                  <p>As part of a learning exercise i tried to move out of jquery-mobile and into standard css.</p>
                  <p>I based all of my UI work on the following blog post which tries to emulate an iOS style interface.</p>
                  <p><a href="http://cheeaun.com/blog/2012/03/how-i-built-hacker-news-mobile-web-app">http://cheeaun.com/blog/2012/03/how-i-built-hacker-news-mobile-web-app</a></p>
@@ -178,6 +178,7 @@
                    <li>Android - <strong>Native</strong> and Web - Scrolling only works on Ice Cream Sandwich (4.0.1) upwards</li>
                    <li>iOS - <strong>Native</strong> - Scrolling is sporadic - hence videos to show that it works - i think this is due to webkit-overflow</li>
                    <li>Edit item - All Versions - Not implemented fully</li>
+                   <li>Sometimes the Node.JS server on trackmygearfor.me will crash when checking the twitter promise. Webmin is configured to restart the Node.JS server after 60 seconds when this occurs. You can try again after this period.</li>
                  </ol>
               </div>
                <div id="deleting_a_template" class="apiMethod">

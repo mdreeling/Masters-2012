@@ -62,6 +62,8 @@
  */
 - (BOOL) application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {   
+    [NSClassFromString(@"WebView") _enableRemoteInspector];
+    			
     
     [FlurryAnalytics startSession:@"S1Q62YT34HRR2LPX85N5"];
     

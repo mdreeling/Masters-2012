@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,8 +23,8 @@ import com.dreeling.applications.travel.validation.BookingValidator;
 @RequestMapping("/booking")
 @SessionAttributes("booking")
 public class BookingController {
-	private BookingService bookingService;
-	private BookingValidator bookingValidator ;
+	private final BookingService bookingService;
+	private final BookingValidator bookingValidator ;
 
 	@Autowired
 	public BookingController(BookingService bookingService,
@@ -39,11 +38,11 @@ public class BookingController {
 		SearchCriteria sc = new SearchCriteria() ;
 		sc.setPageSize(100) ;
 	     return bookingService.findHotels(sc);
-	 }	
-	
+	 }
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String setupForm(ModelMap model,
-			@RequestParam( value = "hotelId") Long hid 
+			@RequestParam( value = "hotelId") Long hid
 			) {
 		Hotel hotel = bookingService.findHotelById(hid) ;
 		Booking command = new Booking() ;
@@ -51,7 +50,7 @@ public class BookingController {
         model.addAttribute("booking", command);
         return "enterBookingDetails";
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public String processSubmit( Principal principal,
 	            @ModelAttribute("booking") Booking command ,
@@ -61,12 +60,12 @@ public class BookingController {
 			  return "enterBookingDetails";
 		} else {
 			System.out.println (
-					"logged in = " + 
+					"logged in = " +
 					principal.getName());
 		   bookingService.createBooking(command,principal.getName()) ;
 		   status.setComplete() ;
 		   return "redirect:/hotels" ;
 		}
 	}
-	  
+
 }
