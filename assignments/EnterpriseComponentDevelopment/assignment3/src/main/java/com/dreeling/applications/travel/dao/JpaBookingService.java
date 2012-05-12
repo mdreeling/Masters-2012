@@ -1,4 +1,4 @@
-package com.dreeling.applications.travel;
+package com.dreeling.applications.travel.dao;
 
 import java.util.List;
 
@@ -9,6 +9,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import com.dreeling.applications.travel.SearchCriteria;
+import com.dreeling.applications.travel.domain.Booking;
+import com.dreeling.applications.travel.domain.Hotel;
+import com.dreeling.applications.travel.domain.User;
+import com.dreeling.applications.travel.service.BookingService;
 
 /**
  * A JPA-based implementation of the Booking Service. Delegates to a JPA entity

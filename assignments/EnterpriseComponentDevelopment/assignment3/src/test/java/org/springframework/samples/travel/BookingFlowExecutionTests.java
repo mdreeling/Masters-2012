@@ -9,10 +9,10 @@ import org.springframework.webflow.test.MockExternalContext;
 import org.springframework.webflow.test.MockFlowBuilderContext;
 import org.springframework.webflow.test.execution.AbstractXmlFlowExecutionTests;
 
-import com.dreeling.applications.travel.Booking;
-import com.dreeling.applications.travel.BookingService;
-import com.dreeling.applications.travel.Hotel;
-import com.dreeling.applications.travel.User;
+import com.dreeling.applications.travel.domain.Booking;
+import com.dreeling.applications.travel.domain.Hotel;
+import com.dreeling.applications.travel.domain.User;
+import com.dreeling.applications.travel.service.BookingService;
 
 public class BookingFlowExecutionTests extends AbstractXmlFlowExecutionTests {
 

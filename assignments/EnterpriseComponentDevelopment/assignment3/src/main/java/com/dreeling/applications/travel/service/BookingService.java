@@ -1,8 +1,12 @@
-package com.dreeling.applications.travel;
+package com.dreeling.applications.travel.service;
 
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+
+import com.dreeling.applications.travel.SearchCriteria;
+import com.dreeling.applications.travel.domain.Booking;
+import com.dreeling.applications.travel.domain.Hotel;
 
 /**
  * A service interface for retrieving hotels and bookings from a backing repository. Also supports the ability to cancel

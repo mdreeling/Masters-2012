@@ -1,4 +1,4 @@
-package com.dreeling.applications.travel;
+package com.dreeling.applications.travel.validation;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import com.dreeling.applications.travel.domain.Booking;
 
 @Component
 public class BookingValidator implements Validator {

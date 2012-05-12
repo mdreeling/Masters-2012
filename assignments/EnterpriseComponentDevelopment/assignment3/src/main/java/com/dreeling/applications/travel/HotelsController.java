@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dreeling.applications.travel.domain.Booking;
+import com.dreeling.applications.travel.domain.Hotel;
+import com.dreeling.applications.travel.service.BookingService;
+
 @Controller
 public class HotelsController {
 

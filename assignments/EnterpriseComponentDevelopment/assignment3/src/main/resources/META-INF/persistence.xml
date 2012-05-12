@@ -5,9 +5,9 @@
              version="1.0">
    <persistence-unit name="travelDatabase">
       <provider>org.hibernate.ejb.HibernatePersistence</provider>
-      <class>com.dreeling.applications.travel.User</class>
-      <class>com.dreeling.applications.travel.Booking</class>
-      <class>com.dreeling.applications.travel.Hotel</class>
+      <class>com.dreeling.applications.travel.domain.User</class>
+      <class>com.dreeling.applications.travel.domain.Booking</class>
+      <class>com.dreeling.applications.travel.domain.Hotel</class>
       <properties>
       	 <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
       	 <property name="hibernate.hbm2ddl.auto" value="update" />

@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.dreeling.applications.travel.domain.Booking;
+import com.dreeling.applications.travel.domain.Hotel;
+import com.dreeling.applications.travel.service.BookingService;
+import com.dreeling.applications.travel.validation.BookingValidator;
+
 @Controller
 @RequestMapping("/booking")
 @SessionAttributes("booking")

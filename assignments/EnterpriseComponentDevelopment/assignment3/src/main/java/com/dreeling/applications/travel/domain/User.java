@@ -1,4 +1,4 @@
-package com.dreeling.applications.travel;
+package com.dreeling.applications.travel.domain;
 
 import java.io.Serializable;
 
