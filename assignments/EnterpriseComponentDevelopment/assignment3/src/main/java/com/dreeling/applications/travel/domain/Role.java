@@ -11,16 +11,46 @@ import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
+/**
+ * A role for the user (either normal or admin).
+ * 
+ * <P>
+ * This class has been extended to cater for Custom Authentication. It now
+ * implements {@link org.springframework.security.core.GrantedAuthority} and is
+ * linked to the additional domain object {@link User} via a JPA mapping.
+ * 
+ * <P>
+ * The method getAuthority from {@link GrantedAuthority} is overridden so as to
+ * allow the Stirng value of the role to be returned.
+ * 
+ * @author Michael Dreeling
+ * @version 1.0
+ */
 @Entity
 @Table(name = "UserAuthority")
 public class Role implements Serializable, GrantedAuthority {
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+
+	/** The id. */
+	@Id
 	private long id;
-	@ManyToOne (fetch = FetchType.EAGER)
+
+	/** The user. */
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user", nullable = true)
 	private User user;
+
+	/** The authority. */
 	private String authority;
 
+	// @Override
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.springframework.security.core.GrantedAuthority#getAuthority()
+	 */
 	@Override
 	public String getAuthority() {
 		// TODO Auto-generated method stub
@@ -28,14 +58,17 @@ public class Role implements Serializable, GrantedAuthority {
 	}
 
 	/**
+	 * Gets the id.
+	 *
 	 * @return the id
 	 */
-	@Id
 	public long getId() {
 		return id;
 	}
 
 	/**
+	 * Gets the user.
+	 *
 	 * @return the user
 	 */
 	public User getUser() {
@@ -43,6 +76,8 @@ public class Role implements Serializable, GrantedAuthority {
 	}
 
 	/**
+	 * Sets the authority.
+	 *
 	 * @param authority
 	 *            the authority to set
 	 */
@@ -51,6 +86,8 @@ public class Role implements Serializable, GrantedAuthority {
 	}
 
 	/**
+	 * Sets the id.
+	 *
 	 * @param id
 	 *            the id to set
 	 */
@@ -59,6 +96,8 @@ public class Role implements Serializable, GrantedAuthority {
 	}
 
 	/**
+	 * Sets the user.
+	 *
 	 * @param user
 	 *            the user to set
 	 */

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.dreeling.applications.travel;
 
 import java.security.Principal;
@@ -19,52 +22,88 @@ import com.dreeling.applications.travel.domain.Hotel;
 import com.dreeling.applications.travel.service.BookingService;
 import com.dreeling.applications.travel.validation.BookingValidator;
 
+/**
+ * The Class BookingController.
+ */
 @Controller
 @RequestMapping("/booking")
 @SessionAttributes("booking")
 public class BookingController {
-	private final BookingService bookingService;
-	private final BookingValidator bookingValidator ;
 
+	/** The booking service. */
+	private final BookingService bookingService;
+
+	/** The booking validator. */
+	private final BookingValidator bookingValidator;
+
+	/**
+	 * Instantiates a new booking controller.
+	 * 
+	 * @param bookingService
+	 *            the booking service
+	 * @param bookingValidator
+	 *            the booking validator
+	 */
 	@Autowired
-	public BookingController(BookingService bookingService,
-			BookingValidator bookingValidator) {
+	public BookingController(BookingService bookingService, BookingValidator bookingValidator) {
 		this.bookingService = bookingService;
-		this.bookingValidator = bookingValidator ;
+		this.bookingValidator = bookingValidator;
 	}
 
+	/**
+	 * Populate hotels.
+	 * 
+	 * @return the list
+	 */
 	@ModelAttribute("hotels")
 	public List<Hotel> populateHotels() {
-		SearchCriteria sc = new SearchCriteria() ;
-		sc.setPageSize(100) ;
-	     return bookingService.findHotels(sc);
-	 }
-
-	@RequestMapping(method = RequestMethod.GET)
-	public String setupForm(ModelMap model,
-			@RequestParam( value = "hotelId") Long hid
-			) {
-		Hotel hotel = bookingService.findHotelById(hid) ;
-		Booking command = new Booking() ;
-		command.setHotel(hotel) ;
-        model.addAttribute("booking", command);
-        return "enterBookingDetails";
+		SearchCriteria sc = new SearchCriteria();
+		sc.setPageSize(100);
+		return bookingService.findHotels(sc);
 	}
 
+	/**
+	 * Setup form.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param hid
+	 *            the hid
+	 * @return the string
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	public String setupForm(ModelMap model, @RequestParam(value = "hotelId") Long hid) {
+		Hotel hotel = bookingService.findHotelById(hid);
+		Booking command = new Booking();
+		command.setHotel(hotel);
+		model.addAttribute("booking", command);
+		return "enterBookingDetails";
+	}
+
+	/**
+	 * Process submit.
+	 * 
+	 * @param principal
+	 *            the principal
+	 * @param command
+	 *            the command
+	 * @param result
+	 *            the result
+	 * @param status
+	 *            the status
+	 * @return the string
+	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit( Principal principal,
-	            @ModelAttribute("booking") Booking command ,
-	            BindingResult result, SessionStatus status) {
-		bookingValidator.validate(command, result) ;
+	public String processSubmit(Principal principal, @ModelAttribute("booking") Booking command, BindingResult result,
+			SessionStatus status) {
+		bookingValidator.validate(command, result);
 		if (result.hasErrors()) {
-			  return "enterBookingDetails";
+			return "enterBookingDetails";
 		} else {
-			System.out.println (
-					"logged in = " +
-					principal.getName());
-		   bookingService.createBooking(command,principal.getName()) ;
-		   status.setComplete() ;
-		   return "redirect:/hotels" ;
+			System.out.println("logged in = " + principal.getName());
+			bookingService.createBooking(command, principal.getName());
+			status.setComplete();
+			return "redirect:/hotels";
 		}
 	}
 

@@ -1,5 +1,17 @@
+/*
+ * 
+ */
 package com.dreeling.applications.travel.domain;
 
+/**
+ * The Enum Amenity.
+ */
 public enum Amenity {
-    OCEAN_VIEW, LATE_CHECKOUT, MINIBAR;
+
+	/** The OCEA n_ view. */
+	OCEAN_VIEW,
+	/** The LAT e_ checkout. */
+	LATE_CHECKOUT,
+	/** The MINIBAR. */
+	MINIBAR;
 }

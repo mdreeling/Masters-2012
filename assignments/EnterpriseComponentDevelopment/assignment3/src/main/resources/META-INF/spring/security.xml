@@ -10,6 +10,9 @@
         id="customUserDetailsService"
         class="com.dreeling.applications.travel.service.CustomUserDetailsService"
         scope="prototype" >
+        <beans:property
+            name="emf"
+            ref="entityManagerFactory" />
     </beans:bean>
 
     <beans:bean
@@ -58,8 +61,6 @@
     </http>
 
     <authentication-manager>
-
-        <authentication-provider user-service-ref="customUserDetailsService" />
 
         <authentication-provider ref="customUserAuthenticationProvider" />
 
