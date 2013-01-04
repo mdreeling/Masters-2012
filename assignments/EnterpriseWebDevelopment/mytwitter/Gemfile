@@ -43,4 +43,4 @@ gem 'bcrypt-ruby', '3.0.1'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
+#gem 'ruby-debug19', :require => 'ruby-debug'
