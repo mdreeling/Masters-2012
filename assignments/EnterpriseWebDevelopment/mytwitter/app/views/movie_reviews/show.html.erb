@@ -1,0 +1,19 @@
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+      </h1>
+    </section>
+  </aside>
+  <div class="span8">
+    <% if @user.movie_reviews.any? %>
+      <h3>MovieReviews for (<%= @movie_review.reviewcontent %>)</h3>
+      <ol class="movie_reviews">
+        <%= render @movie_review %>
+      </ol>
+    <% end %>
+  </div>
+</div> 

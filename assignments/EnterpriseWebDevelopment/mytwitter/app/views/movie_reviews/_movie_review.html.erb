@@ -3,7 +3,9 @@
   <span class="timestamp">
     Posted <%= time_ago_in_words(movie_review.created_at) %> ago.
   </span>
-   <!-- NEW DELETE LINK -->
+  
+  <%= link_to "view", movie_review, method: :get %>
+  
   <% if current_user?(movie_review.user) %>
     <%= link_to "delete", movie_review, method: :delete,
                                      data: { confirm: "You sure?" },

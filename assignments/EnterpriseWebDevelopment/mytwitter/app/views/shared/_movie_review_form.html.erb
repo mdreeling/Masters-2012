@@ -1,6 +1,27 @@
 <%= form_for(@movie_review) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
+    <%= f.text_field :reviewtitle, placeholder: "Compose new movie review..." %>
+  </div>
+  <div class="field">
+    <%= f.text_area :genre, placeholder: "Genre..." %>
+  </div>
+  <div class="field">
+    <%= f.text_area :movietitle, placeholder: "Compose new movie review..." %>
+  </div>
+  <div class="field">
+    <%= f.text_area :revieweddate, placeholder: "Compose new movie review..." %>
+  </div>
+  <div class="field">
+    <%= f.text_area :dvdreleasedate, placeholder: "Compose new movie review..." %>
+  </div>
+  <div class="field">
+    <%= f.text_area :mediatype, placeholder: "Compose new movie review..." %>
+  </div>
+  <div class="field">
+    <%= f.check_box :theaterrelease, placeholder: "Compose new movie review..." %>
+  </div>
+  <div class="field">
     <%= f.text_area :reviewcontent, placeholder: "Compose new movie review..." %>
   </div>
   <%= f.submit "Post Movie Review", class: "btn btn-large btn-primary" %>

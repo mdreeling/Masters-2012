@@ -1,6 +1,12 @@
 class MovieReviewsController < ApplicationController
   before_filter :signed_in_user, only: [:create, :destroy]
   before_filter :correct_user,   only: :destroy    # NEW LINE
+  
+  def show
+    @movie_review = MovieReview.find(params[:id])
+    @user = @movie_review.user
+  end
+  
   def create
     @movie_review = current_user.movie_reviews.build(params[:movie_review])
     if @movie_review.save
@@ -10,7 +16,16 @@ class MovieReviewsController < ApplicationController
       render 'static_pages/home'
     end
   end
-
+  
+  def index
+    if current_user.nil?
+      @movie_reviews = MovieReview.find(:all)
+    else
+    @user = current_user
+    @movie_reviews = @user.movie_reviews    # NEW LINE
+    end
+  end
+  
   # UPDATED IMPLEMENTATION
   def destroy
     @movie_review.destroy
