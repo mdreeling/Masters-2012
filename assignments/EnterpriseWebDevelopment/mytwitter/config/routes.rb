@@ -8,6 +8,8 @@ Mytwitter::Application.routes.draw do
 
   resources :sessions, only: [:new, :create, :destroy]  # NEW LINE
   resources :microposts, only: [:create, :destroy] # NEW LINE
+  resources :movie_reviews, only: [:create, :destroy] # NEW LINE
+  
   match '/signin',  to: 'sessions#new'                  # NEW LINE
   match '/signout', to: 'sessions#destroy', via: :delete    # NEW LINE
   # The priority is based upon order of creation:

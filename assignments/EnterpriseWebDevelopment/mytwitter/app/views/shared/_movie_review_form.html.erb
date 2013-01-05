@@ -1,0 +1,7 @@
+<%= form_for(@movie_review) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="field">
+    <%= f.text_area :reviewcontent, placeholder: "Compose new movie review..." %>
+  </div>
+  <%= f.submit "Post Movie Review", class: "btn btn-large btn-primary" %>
+<% end %>

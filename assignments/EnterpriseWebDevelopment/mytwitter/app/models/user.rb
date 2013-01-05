@@ -18,5 +18,5 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
   
   has_many :microposts, dependent: :destroy   #  CHANGED
-  
+  has_many :movie_reviews, dependent: :destroy   #  CHANGED
 end

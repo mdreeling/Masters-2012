@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121207045931) do
+ActiveRecord::Schema.define(:version => 20130104222638) do
 
   create_table "microposts", :force => true do |t|
     t.string   "content"
@@ -21,6 +21,27 @@ ActiveRecord::Schema.define(:version => 20121207045931) do
   end
 
   add_index "microposts", ["user_id", "created_at"], :name => "index_microposts_on_user_id_and_created_at"
+
+  create_table "movie_reviews", :force => true do |t|
+    t.text     "reviewcontent"
+    t.integer  "user_id"
+    t.string   "reviewtitle"
+    t.integer  "starrating"
+    t.string   "rtlink"
+    t.string   "genre"
+    t.string   "movietitle"
+    t.datetime "revieweddate"
+    t.datetime "dvdreleasedate"
+    t.string   "mediatype"
+    t.string   "mclink"
+    t.string   "mcratinginteger"
+    t.integer  "rtrating"
+    t.boolean  "theaterrelease"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "movie_reviews", ["user_id", "revieweddate"], :name => "index_movie_reviews_on_user_id_and_revieweddate"
 
   create_table "users", :force => true do |t|
     t.string   "name"

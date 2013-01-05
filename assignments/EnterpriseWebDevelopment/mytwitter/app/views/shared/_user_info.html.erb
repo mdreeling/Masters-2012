@@ -10,3 +10,9 @@
 <span>
   <%= pluralize(current_user.microposts.count, "micropost") %>
 </span>
+<span>
+  <%= link_to "view my entertainment reviews", current_user %>
+</span>
+<span>
+  <%= pluralize(current_user.movie_reviews.count, "entertainment review") %>
+</span>

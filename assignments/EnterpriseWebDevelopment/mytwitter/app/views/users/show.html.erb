@@ -16,4 +16,12 @@
       </ol>
     <% end %>
   </div>
+  <div class="span8">
+    <% if @user.movie_reviews.any? %>
+      <h3>MovieReviews (<%= @user.movie_reviews.count %>)</h3>
+      <ol class="movie_reviews">
+        <%= render @movie_reviews %>
+      </ol>
+    <% end %>
+  </div>
 </div> 
