@@ -1,11 +1,11 @@
 <li>
-  <span class="content"><%= movie_review.reviewcontent %></span>
+  <span class="content"><%= movie_review.reviewtitle %></span>
   <span class="timestamp">
     Posted <%= time_ago_in_words(movie_review.created_at) %> ago.
   </span>
   
   <%= link_to "view", movie_review, method: :get %>
-  
+  <%= link_to 'Edit', edit_movie_review_path(movie_review) %>
   <% if current_user?(movie_review.user) %>
     <%= link_to "delete", movie_review, method: :delete,
                                      data: { confirm: "You sure?" },

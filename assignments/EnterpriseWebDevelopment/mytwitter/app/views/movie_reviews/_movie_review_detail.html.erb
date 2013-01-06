@@ -1,0 +1,16 @@
+  <p>
+	<%= image_tag movie_review_detail.image %>
+  <p>
+  <span class="content"><%= movie_review_detail.reviewcontent %></span>
+  <p>
+  <span class="content"><b>Genre : </b><%= movie_review_detail.genre.name %></span>
+  <p>
+  	<span class="content"><b>Content Reviewed : </b><%= movie_review_detail.medium %></span>
+  <% if movie_review_detail.theaterrelease? %>
+  <p>
+  	<span class="content"><b>In theaters everywhere</b></span>
+  <p>
+  	<% end %>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(movie_review_detail.created_at) %> ago.
+  </span>

@@ -1,19 +1,20 @@
 <% provide(:title, @user.name) %>
 <div class="row">
-  <aside class="span4">
-    <section>
-      <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
-      </h1>
-    </section>
-  </aside>
-  <div class="span8">
-    <% if @user.movie_reviews.any? %>
-      <h3>MovieReviews for (<%= @movie_review.reviewcontent %>)</h3>
-      <ol class="movie_reviews">
-        <%= render @movie_review %>
-      </ol>
-    <% end %>
-  </div>
-</div> 
+	<aside class="span4">
+		<section>
+			Reviewed submitted by
+			<h1> <%= gravatar_for @user %>
+			<%= @user.name %> </h1>
+		</section>
+	</aside>
+	<div class="span8">
+		<h3><%= @movie_review.movietitle %></h3>
+		<p>
+			<h4><%= @movie_review.reviewtitle %></h4>
+		<p>
+			<%= render :partial => "movie_review_detail" ,:object => @movie_review %>
+			<div class="field">
+				Rating : <%= rating_for @movie_review, "starrating" %>
+			</div>
+	</div>
+</div>

@@ -1,8 +1,14 @@
 class MovieReview < ActiveRecord::Base
-  attr_accessible :reviewcontent
+  attr_accessible :reviewcontent,:genre, :reviewtitle, :genre_id, :movietitle, :revieweddate, :dvdreleasedate, :media_id, :theaterrelease, :starrating, :image
   belongs_to :user    # Indicates association with User
-
+    #This should go in your model
+  mount_uploader :image, ImageUploader
+  
   validates :user_id, presence: true
   validates :reviewcontent, presence: true, length: { maximum: 5000 }
   default_scope order: 'movie_reviews.created_at DESC'
+  belongs_to  :genre
+  belongs_to  :medium
+  letsrate_rateable "starrating"
+  letsrate_rater
 end

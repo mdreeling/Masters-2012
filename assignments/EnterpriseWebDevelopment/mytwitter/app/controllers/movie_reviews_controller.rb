@@ -1,7 +1,6 @@
 class MovieReviewsController < ApplicationController
   before_filter :signed_in_user, only: [:create, :destroy]
   before_filter :correct_user,   only: :destroy    # NEW LINE
-  
   def show
     @movie_review = MovieReview.find(params[:id])
     @user = @movie_review.user
@@ -26,6 +25,30 @@ class MovieReviewsController < ApplicationController
     end
   end
   
+  # GET /genres/1/edit
+  def edit
+    @genres = Genre.all 
+    @mediatypes = Medium.all 
+    @movie_review = MovieReview.find(params[:id])
+  end
+  
+  # PUT /genres/1
+  # PUT /genres/1.json
+  def update
+    @movie_review = MovieReview.find(params[:id])
+
+    respond_to do |format|
+      if @movie_review.update_attributes(params[:movie_review])
+        flash[:success] = "Movie Review updated"
+        redirect_to root_url
+      else
+        flash[:failure] = "Movie Review could not be updated"
+        render 'static_pages/home'
+      end
+    end
+  end
+
+
   # UPDATED IMPLEMENTATION
   def destroy
     @movie_review.destroy

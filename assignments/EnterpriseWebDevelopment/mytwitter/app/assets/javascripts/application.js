@@ -14,3 +14,16 @@
 //= require jquery_ujs
 //= require_tree .
 //= require bootstrap
+//= require bootstrap-datepicker
+$(function() {
+	$("#rev").datepicker({
+		format : 'mm-dd-yyyy'
+	}).on('changeDate', function(ev) {
+		$('#rev').datepicker('hide');
+	});
+	$("#dvd").datepicker({
+		format : 'mm-dd-yyyy'
+	}).on('changeDate', function(ev) {
+		$('#dvd').datepicker('hide');
+	});
+}); 
