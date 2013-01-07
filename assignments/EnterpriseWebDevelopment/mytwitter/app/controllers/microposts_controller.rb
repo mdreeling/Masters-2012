@@ -14,7 +14,7 @@ class MicropostsController < ApplicationController
   # UPDATED IMPLEMENTATION
   def destroy
     @micropost.destroy
-    redirect_to root_url
+    redirect_to root_path, :flash => { :success => "Micropost deleted!" }
   end
 
   # NEW PRIVATE METHOD

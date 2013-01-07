@@ -1,9 +1,14 @@
 Mytwitter::Application.routes.draw do
   match '/rate' => 'rater#create', :as => 'rate'
-
+	
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :media
-
   resources :genres
+	
 
   resources :users       # NEW LINE
   root to: 'static_pages#home'
@@ -15,7 +20,8 @@ Mytwitter::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]  # NEW LINE
   resources :microposts, only: [:create, :destroy] # NEW LINE
   resources :movie_reviews, only: [:create, :destroy, :index, :show, :edit, :update] # NEW LINE
-  
+  resources :relationships, :only => [:create, :destroy]
+
   match '/signin',  to: 'sessions#new'                  # NEW LINE
   match '/signout', to: 'sessions#destroy', via: :delete    # NEW LINE
   # The priority is based upon order of creation:
