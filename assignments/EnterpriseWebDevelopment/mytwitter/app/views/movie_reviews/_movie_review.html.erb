@@ -1,14 +1,45 @@
-<li>
-  <span class="content"><%= movie_review.reviewtitle %></span>
-  <span class="timestamp">
-    Posted <%= time_ago_in_words(movie_review.created_at) %> ago.
-  </span>
-  
-  <%= link_to "view", movie_review, method: :get %>
-  <%= link_to 'Edit', edit_movie_review_path(movie_review) %>
-  <% if current_user?(movie_review.user) %>
-    <%= link_to "delete", movie_review, method: :delete,
-                                     data: { confirm: "You sure?" },
-                                     title: movie_review.reviewcontent %>
-  <% end %>
-</li>
+<% if !movie_review.reviewcontent.nil? %>
+<div class="js-stream-item stream-item stream-item expanding-stream-item" data-item-id="288098988383666176" id="stream-item-tweet-288098988383666176" data-item-type="tweet">
+
+	<div class="tweet original-tweet js-stream-tweet js-actionable-tweet js-profile-popup-actionable js-original-tweet
+
+	has-cards
+
+	"
+	data-feedback-key="stream_status_288098988383666176"
+	data-tweet-id="288098988383666176"
+
+	data-item-id="288098988383666176"
+
+	data-screen-name="waaf" data-name="WAAF" data-user-id="17789365"
+
+	data-card-type="summary"
+
+	data-expanded-footer=""
+
+	>
+
+		<i class="dogear"></i>
+		<div class="content">
+
+			<div class="stream-item-header">
+				<small class="time"> <a href="/" class="tweet-timestamp js-permalink js-nav" title="7:45 PM - 6 Jan 13" ><span class="_timestamp js-short-timestamp js-relative-timestamp" data-time="1357523126"
+					data-long-form="true"><%= time_ago_in_words(movie_review.created_at) %> ago.</span></a> </small>
+			</div>
+			<u><%= movie_review.movietitle %></u>
+			<p class="js-tweet-text">
+				<%= movie_review.reviewtitle %>
+			</p>
+			
+			<!-- NEW DELETE LINK -->
+			<%= link_to 'read', movie_review_path(movie_review) %>
+			<% if current_user?(movie_review.user) %>
+			<%= link_to "delete", movie_review, method: :delete,
+			data: { confirm: "You sure?" },
+			title: movie_review.reviewcontent %>
+			<%= link_to 'edit', edit_movie_review_path(movie_review) %>
+			<% end %>
+		</div>
+	</div>
+</div>
+<% end %>

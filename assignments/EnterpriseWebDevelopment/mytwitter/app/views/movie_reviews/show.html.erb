@@ -1,20 +1,36 @@
-<% provide(:title, @user.name) %>
-<div class="row">
-	<aside class="span4">
-		<section>
-			Reviewed submitted by
-			<h1> <%= gravatar_for @user %>
-			<%= @user.name %> </h1>
-		</section>
-	</aside>
-	<div class="span8">
-		<h3><%= @movie_review.movietitle %></h3>
-		<p>
-			<h4><%= @movie_review.reviewtitle %></h4>
-		<p>
-			<%= render :partial => "movie_review_detail" ,:object => @movie_review %>
-			<div class="field">
-				Rating : <%= rating_for @movie_review, "starrating" %>
+<% if signed_in? %>
+<div id="page-container" class="wrapper wrapper-home white">
+	<div class="dashboard">
+		<div class="module mini-profile">
+			Reviewed by <%= render 'shared/user_info' %>
+		</div>
+	</div>
+
+	<div class="content-main" id="timeline">
+		<div class="content-header">
+			<div class="header-inner">
+				<h2 class="js-timeline-title"><%= @movie_review.movietitle %></h2>
 			</div>
+		</div>
+		<div class="content-header">
+			<div class="header-inner">
+				<h4><%= @movie_review.reviewtitle %></h4>
+			</div>
+			
+		<%= render :partial => "movie_review_detail" ,:object => @movie_review %>
+		</div>
 	</div>
 </div>
+</div>
+<% else %>
+<div class="center hero-unit">
+	<h1>Welcome to the Sample App</h1>
+
+	<h2> This is the home page for the <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a> sample application. </h2>
+
+	<%= link_to "Sign up now!", signup_path,
+	class: "btn btn-large btn-primary" %>
+</div>
+
+<%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
+<% end %> 

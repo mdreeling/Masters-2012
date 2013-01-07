@@ -1,7 +1,62 @@
-<%= form_for(@micropost) do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
-  <div class="field">
-    <%= f.text_area :content, placeholder: "Compose new micropost..." %>
-  </div>
-  <%= f.submit "Post", class: "btn btn-large btn-primary" %>
-<% end %>
+<div class="home-tweet-box tweet-box component tweet-user">
+	<div class="content-header">
+			<div class="header-inner">
+				<h2 class="js-timeline-title">Write something!</h2>
+			</div>
+		</div>
+
+	<form id="new_micropost" class="tweet-form condensed" method="post" action="/microposts" accept-charset="UTF-8">
+
+		<div class="tweet-content">
+
+			<label class="visuallyhidden" for="tweet-box-mini-home-profile">Tweet text</label>
+			<textarea id="micropost_content" class="tweet-box" id="tweet-box-mini-home-profile" name="micropost[content]" ></textarea>																																																											
+
+
+
+
+			<ul class="dropdown-menu autocomplete-results">
+				<li class="dropdown-link dropdown-account template-row autocomplete-item">
+					<img width="24" height="24" class="avatar size24">
+					<strong class="fullname"></strong><i class="verified hidden"></i>
+					<span class="pretty-link"><s>@</s><b class="username"></b></span>
+				</li>
+			</ul>
+			<textarea class="tweet-box-shadow" name="status"></textarea>																																																											
+	
+
+
+			<div class="thumbnail-container">
+				<div class="preview">
+					<a class="dismiss js-dismiss" href="#" tabindex="-1"><i class="dismiss-white"></i></a>
+					<span class="filename"></span>
+				</div>
+				<div class="preview-message">
+					Image will appear as a link
+				</div>
+			</div>
+
+		</div>
+
+		<div class="toolbar js-toolbar">
+			<div class="tweet-box-extras">
+
+				<div class="photo-selector">
+					<button aria-hidden="true" class="btn" type="button" tabindex="-1">
+						<i class="tweet-camera"></i>
+					</button>
+					<div class="image-selector">
+						<input type="hidden" name="media_data_empty" class="file-data">
+						<label> <span class="visuallyhidden">Add Photo</span>
+							<input type="file" name="media_empty" class="file-input" tabindex="-1">
+						</label>
+						<div class="swf-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="tweet-button">
+				<input class="btn btn-large btn-primary" type="submit" value="Post" name="commit">
+			</div>
+		</div>
+	</form>
+</div>

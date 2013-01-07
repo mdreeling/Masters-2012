@@ -1,31 +1,109 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="navbar-inner">
-    <div class="container">
-      <%= link_to "MovieTweet - Tweets & Reviews!", root_path, id: "logo" %>
-      <nav>
-        <ul class="nav pull-right">
-          <li><%= link_to "Home", root_path %></li>
-          <li><%= link_to "Help", help_path %></li>
-          <% if signed_in? %>
-            <li><%= link_to "Users", users_path %></li>
-            <li id="fat-menu" class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Account <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "Profile", current_user %></li>
-                <li><%= link_to "Settings", '#' %></li>
-                <li class="divider"></li>
-                <li>
-                  <%= link_to "Sign out", signout_path, method: "delete" %>
-                </li>
-              </ul>
-            </li>
-          <% else %>
-            <li><%= link_to "Sign in", signin_path %></li>
-          <% end %>
-        </ul>
-      </nav>
-    </div>
-  </div>
-</header>
+<div class="global-nav" data-section-term="top_nav">
+	<div class="global-nav-inner">
+		<div class="container">
+			<ul class="nav js-global-actions" id="global-actions">
+				<li id="global-nav-home" class="home active new" data-global-action="home">
+					<a class="js-nav" href="/" data-component-term="home_nav" data-nav="home" title="Home"> <span class="new-wrapper"><i class="nav-home"></i><i class="nav-new"></i></span> <span class="text">Home</span> </a>
+				</li>
+				<li class="people" data-global-action="connect">
+					<a class="js-nav" href="/movie_reviews" data-component-term="connect_nav" data-nav="connect" title="Movies"> <span class="new-wrapper"><i class="nav-people"></i><i class="nav-new"></i></span> <span class="text">Movies</span> </a>
+				</li>
+				<li class="topics" data-global-action="discover">
+					<a class="js-nav" href="/i/discover" data-component-term="discover_nav" data-nav="discover" title="Discover"> <span class="new-wrapper"><i class="nav-topics"></i><i class="nav-new"></i></span> <span class="text">Discover</span> </a>
+				</li>
+				<li class="profile" data-global-action="profile">
+					<a class="js-nav" href="/mdreeling" data-component-term="profile_nav" data-nav="profile" title="Me"> <span class="new-wrapper"><i class="nav-me"></i><i class="nav-new"></i></span> <span class="text">Me</span> </a>
+				</li>
+			</ul>
+			<i class="bird-topbar-etched"></i>
+
+			<div class="pull-right">
+				<form class="form-search js-search-form" action="/search" id="global-nav-search">
+					<label class="visuallyhidden" for="search-query">Search query</label>
+					<input class="search-input" type="text" id="search-query" placeholder="Search" name="q" autocomplete="off" spellcheck="false" data-focus="false">
+					<span class="search-icon js-search-action">
+						<button type="submit" class="icon nav-search" tabindex="-1">
+							<span class="visuallyhidden"> Search </span>
+						</button> </span>
+					<input disabled="disabled" class="search-input search-hinting-input" type="text" id="search-query-hint" autocomplete="off" spellcheck="false">
+					<div class="dropdown-menu typeahead" style="display: none;">
+						<div class="dropdown-caret">
+							<div class="caret-outer"></div>
+							<div class="caret-inner"></div>
+						</div>
+						<div class="dropdown-inner js-typeahead-results">
+							<ul class="typeahead-items saved-searches-list">
+
+								<li class="saved-search-item search-item">
+									<a class="js-nav" href="" data-search-query="" data-query-source="" data-ds="saved_search" tabindex="-1"><i class="generic-search"></i></a>
+								</li>
+							</ul>
+							<ul class="typeahead-items topics-list" style="display: none;">
+
+								<li class="topics-item search-item">
+									<a class="js-nav" href="" data-search-query="" data-query-source="typeahead_click" data-ds="topics" tabindex="-1"><i class="generic-search"></i></a>
+								</li>
+							</ul>
+							<div class="typeahead-accounts js-typeahead-accounts" style="display: none;">
+								<ul class="typeahead-items">
+
+									<li class="js-selectable typeahead-accounts-shortcut js-shortcut">
+										<a class="js-nav" href="" data-search-query="" data-query-source="typeahead_click" data-shortcut="true" data-ds="account_search"></a>
+									</li>
+								</ul>
+								<li data-user-id="" data-user-screenname="" data-remote="true" data-score="" class="typeahead-item typeahead-account-item js-selectable">
+
+									<a class="js-nav" data-query-source="typeahead_click" data-search-query="" data-ds="account"> <img width="24" height="24" class="avatar size24"> <span class="fullname"></span> <i class="verified hidden"></i> <span class="username"><s>@</s><b></b></span> </a>
+								</li>
+							</div>
+						</div>
+					</div>
+				</form>
+				<i class="topbar-divider"></i>
+				<ul class="nav">
+					<li class="me dropdown session js-session" data-global-action="t1me" id="user-dropdown">
+						<a class="dropdown-toggle js-dropdown-toggle" href="#" id="user-dropdown-toggle"> <span class="new-wrapper"><i class="nav-session"><span class="visuallyhidden">Settings and help</span></i><i class="nav-new"></i></span> <span class="caret"></span> </a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-caret">
+								<span class="caret-outer"></span>
+								<span class="caret-inner"></span>
+							</li>
+
+							<li class="current-user" data-name="profile">
+
+								<a href="/settings/profile" class="account-summary account-summary-small" data-nav="edit_profile">
+								<div class="content">
+									<div class="account-group js-mini-current-user" data-user-id="16120321" data-screen-name="mdreeling">
+										<img class="avatar size32" src="https://si0.twimg.com/profile_images/88315884/mik_normal.JPG" alt="mdreeling" data-user-id="16120321">
+										<b class="fullname">mdreeling</b>
+										<small class="metadata"> Edit profile </small>
+									</div>
+								</div> </a>
+							</li>
+
+							<li class="dropdown-divider"></li>
+
+							<li>
+								<a class="js-signout-button" id="signout-button" href="#" data-nav="logout">Sign out</a>
+								<form class="dropdown-link-form signout-form" id="signout-form" action="/signout" method="POST">
+									<input type="hidden" value="ee2b5f74cb1f25481de5b7bc2bd829143f58e0ce" name="authenticity_token" class="authenticity_token">
+									<input type="hidden" name="reliability_event" class="js-reliability-event">
+									<input type="hidden" name="scribe_log">
+								</form>
+							</li>
+
+						</ul>
+					</li>
+				</ul>
+				<i class="topbar-divider"></i>
+				<div class="well topbar-tweet-btn">
+					<button id="global-new-tweet-button" type="button" class="btn btn-tweet js-global-new-tweet js-tooltip" data-placement="bottom" data-component-term="new_tweet_button" data-original-title="Compose new Tweet">
+						<i class="nav-tweet"><span class="visuallyhidden">Compose new Tweet</span></i>
+					</button>
+				</div>
+			</div>
+
+			<a id="close-all-button" class="close-all-tweets js-close-all-tweets" href="#" title="Close all open Tweets" style="display: none;"> <i class="nav-breaker"></i> </a>
+		</div>
+	</div>
+</div>

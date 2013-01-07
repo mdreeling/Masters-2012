@@ -1,20 +1,133 @@
-<% if !@user.nil? %>
-	<% provide(:title, @user.name) %>
-<% end %>  
-<div class="row">
-  <div class="span8">
-  	<% if !@user.nil? %>
-    	<% if @user.movie_reviews.any? %>
-	      <h3>MovieReviews (<%= @user.movie_reviews.count %>)</h3>
-	      <ol class="movie_reviews">
-	        <%= render @movie_reviews %>
-	      </ol>
-	    <% end %>
-	<% else %>
-	      <h3>MovieReviews (<%= @movie_reviews.count %>)</h3>
-	      <ol class="movie_reviews">
-	        <%= render @movie_reviews %>
-	      </ol>
-	<% end %>    
-  </div>
-</div> 
+<div id="page-container" class="wrapper wrapper-home white">
+			<% if signed_in? %>
+	<div class="dashboard">
+
+		<div class="module mini-profile">
+
+			<%= render 'shared/user_info' %>
+
+			<%= render 'shared/stats' %>
+
+			<%= render 'shared/micropost_form' %>
+
+			<%= render 'shared/movie_review_form' %>
+		</div>
+		<div class="module wtf-module js-wtf-module ">
+
+			<div class="flex-module">
+
+				<div class="flex-module-header">
+					<h3>Who to follow</h3>
+					<small>&middot; <a class="js-refresh-suggestions" href="#">Refresh</a></small>
+					<small class="view-all">&middot; <a class="js-view-all-link" href="/who_to_follow/suggestions" data-element-term="view_all_link">View all</a></small>
+				</div>
+
+				<div class="js-recommended-followers dashboard-user-recommendations flex-module-inner" data-section-id="wtf"></div>
+
+				<div class="flex-module-footer">
+					<a href="/who_to_follow/interests" class="js-interests-link" data-element-term="interests_link">Browse categories</a> &middot; <a href="/who_to_follow/import" class="js-find-friends-link" data-element-term="import_link">Find friends</a>
+				</div>
+
+			</div>
+		</div>
+		<div class="module trends hidden">
+			<div class="flex-module trends-inner">
+				<div class="flex-module trends-container">
+					<div class="flex-module-header">
+
+						<h3><span class="js-trend-location"> Worldwide trends </span></h3>
+						<small>&middot; <a href="#" data-modal="change-trends" class="change-trends js-trend-toggle">Change</a></small>
+					</div>
+					<div class="flex-module-inner pre-rendered-stub">
+						<ul class="trend-items js-trends"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="module site-footer ">
+			<div class="flex-module">
+				<div class="flex-module-inner js-items-container">
+					<ul class="clearfix">
+						<li class="copyright">
+							&copy; 2013 Twitter
+						</li>
+						<li>
+							<a href="/about">About</a>
+						</li>
+						<li>
+							<a href="//support.twitter.com">Help</a>
+						</li>
+						<li>
+							<a href="/tos">Terms</a>
+						</li>
+						<li>
+							<a href="/privacy">Privacy</a>
+						</li>
+						<li>
+							<a href="http://blog.twitter.com">Blog</a>
+						</li>
+						<li>
+							<a href="http://status.twitter.com">Status</a>
+						</li>
+						<li>
+							<a href="/download">Apps</a>
+						</li>
+						<li>
+							<a href="/about/resources">Resources</a>
+						</li>
+						<li>
+							<a href="/jobs">Jobs</a>
+						</li>
+						<li>
+							<a href="//business.twitter.com/en/advertise/start">Advertisers</a>
+						</li>
+						<li>
+							<a href="//business.twitter.com/index_en.html">Businesses</a>
+						</li>
+						<li>
+							<a href="http://media.twitter.com">Media</a>
+						</li>
+						<li>
+							<a href="//dev.twitter.com">Developers</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+<% end %>
+	<div class="content-main" id="timeline">
+		<div class="content-header">
+			<div class="header-inner">
+				<h2 class="js-timeline-title">Movie Reviews</h2>
+			</div>
+		</div>
+		<div class="stream-container "
+		data-max-id="288081372772458495" data-since-id="288098988383666176"
+
+		>
+			<div class="stream home-stream">
+				<div class="stream-items" id="stream-items-id">
+					<% if !current_user.nil? %>
+						<% if current_user.movie_reviews.any? %>
+							<%= render @movie_reviews %>
+						<% end %>
+					<% else %>	
+							<%= render @movie_reviews %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<% else %>
+<div class="center hero-unit">
+	<h1>Welcome to the Sample App</h1>
+
+	<h2> This is the home page for the <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a> sample application. </h2>
+
+	<%= link_to "Sign up now!", signup_path,
+	class: "btn btn-large btn-primary" %>
+</div>
+
+<%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
