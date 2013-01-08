@@ -33,8 +33,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
+      user = @user
       flash[:success] = "Welcome to MovieTweet!"    # NEW LINE
-      redirect_to @user
+      sign_in user      # NEW LINE
+      redirect_to user      #  NEW LINE
     else
       render 'new'
     end

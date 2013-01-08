@@ -8,7 +8,7 @@
 			<%= render 'shared/stats' %>
 
 			<%= render 'shared/micropost_form' %>
-			
+
 			<%= render 'shared/movie_review_form' %>
 		</div>
 		<div class="module wtf-module js-wtf-module ">
@@ -116,14 +116,146 @@
 	</div>
 </div>
 <% else %>
-<div class="center hero-unit">
-	<h1>Welcome to the Sample App</h1>
+<div id="page-container" class=" wrapper-front white">
+	<div class="front-container front-container-full-signup" id="front-container">
+		<noscript>
+			<div class="front-warning">
+				<h3>Twitter.com makes heavy use of JavaScript</h3>
+				<p>
+					If you cannot enable it in your browser's preferences, you may have a better experience on our <a href="http://m.twitter.com">mobile site</a>.
+				</p>
+			</div>
+		</noscript>
 
-	<h2> This is the home page for the <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a> sample application. </h2>
+		<div class="front-warning" id="front-no-cookies-warn">
+			<h3>Twitter.com makes heavy use of browser cookies</h3>
+			<p>
+				Please enable cookies in your browser preferences before signing in.
+			</p>
+		</div>
 
-	<%= link_to "Sign up now!", signup_path,
-	class: "btn btn-large btn-primary" %>
+		<div class="front-bg">
+			<img class="front-image" src="assets/city-balcony2x.jpg">
+		</div>
+
+		<div class="front-card">
+			<div class="front-welcome">
+				<div class="front-welcome-text">
+					<h1>Welcome to MovieTweet.</h1>
+					<p>
+						Check out reviews of the movies you care about.
+					</p>
+				</div>
+
+			</div>
+
+			<div class="front-signin js-front-signin">
+				<form action="/sessions" class="signin" method="post">
+					<div class="placeholding-input username hasome">
+						<input value="mdreeling" id="signin-email" class="text-input email-input" name="session[email]" title="Username or email" autocomplete="on" tabindex="1" type="text">
+						<label for="signin-email" class="placeholder">Username or email</label>
+					</div>
+
+					<table class="flex-table password-signin">
+						<tbody>
+							<tr>
+								<td class="flex-table-primary">
+								<div class="placeholding-input password flex-table-form hasome">
+									<input id="signin-password" class="text-input flex-table-input" name="session[password]" title="Password" tabindex="2" type="password">
+									<label for="signin-password" class="placeholder">Password</label>
+								</div></td>
+								<td class="flex-table-secondary">
+								<button type="submit" name="commit" class="submit btn primary-btn flex-table-btn js-submit" tabindex="4">
+									Sign in
+								</button></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<input name="return_to_ssl" value="true" type="hidden">
+
+					<input name="scribe_log" type="hidden">
+					<input name="redirect_after_login" value="/" type="hidden">
+					<input value="47f10e1b2024274a3d4f335ef0bec5b79c72e475" name="authenticity_token" type="hidden">
+				</form>
+			</div>
+			<div class="front-signup js-front-signup">
+				<h2><strong>New to MovieTweet?</strong> Sign up</h2>
+
+				<form action="/users" class="signup" id="new_user" method="post">
+					<div class="placeholding-input">
+						<input id="signup-user-name" class="text-input" autocomplete="off" name="user[name]" maxlength="20" type="text">
+						<label for="signup-user-name" class="placeholder">Full name</label>
+					</div>
+					<div class="placeholding-input">
+						<input id="signup-user-email" class="text-input email-input" autocomplete="off" name="user[email]" type="text">
+						<label for="signup-user-email" class="placeholder">Email</label>
+					</div>
+					<div class="placeholding-input">
+						<input id="signup-user-password" class="text-input" name="user[password]" type="password">
+						<label for="signup-user-password" class="placeholder">Password</label>
+					</div>
+					<div class="placeholding-input">
+						<input id="signup-user-passwordc" class="text-input" name="user[password_confirmation]" type="password">
+						<label for="signup-user-passwordc" class="placeholder">Confirm</label>
+					</div>
+					<input value="" name="context" type="hidden">
+					<input value="47f10e1b2024274a3d4f335ef0bec5b79c72e475" name="authenticity_token" type="hidden">
+					<button type="submit" name="commit" class="btn signup-btn">
+						Sign up for MovieTweet!
+					</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="footer inline-list">
+			<ul>
+				<li>
+					<a href="https://twitter.com/about">About</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<a href="https://support.twitter.com/">Help</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<a href="http://blog.twitter.com/">Blog</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<a href="http://status.twitter.com/">Status</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<a href="https://twitter.com/jobs">Jobs</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<a href="https://twitter.com/tos">Terms</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<a href="https://twitter.com/privacy">Privacy</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<a href="https://business.twitter.com/en/advertise/start">Advertisers</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<a href="https://business.twitter.com/index_en.html">Businesses</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<a href="http://media.twitter.com/">Media</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<a href="https://dev.twitter.com/">Developers</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<a href="https://twitter.com/about/resources">Resources</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<a href="https://twitter.com/i/directory/profiles">Directory</a><span class="dot divider"> ·</span>
+				</li>
+				<li>
+					<span class="copyright">© 2013 Twitter</span>
+				</li>
+			</ul>
+		</div>
+
+	</div>
+
 </div>
-
-<%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
 <% end %> 

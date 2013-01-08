@@ -10,5 +10,4 @@ class MovieReview < ActiveRecord::Base
   belongs_to  :genre
   belongs_to  :medium
   letsrate_rateable "starrating"
-  letsrate_rater
 end

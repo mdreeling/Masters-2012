@@ -7,17 +7,29 @@
 </div>
 <div class="content-inner">
 	<p>
-		<span class="content"><b>Genre : </b><%= movie_review_detail.genre.name %></span>
+		<span class="content"><strong>Genre : </strong><%= movie_review_detail.genre.name %></span>
 	<p>
-		<span class="content"><b>Content Reviewed : </b><%= movie_review_detail.medium %></span>
+		<span class="content"><strong>Content Reviewed : </strong><%= movie_review_detail.medium %></span>
 		<% if movie_review_detail.theaterrelease? %>
 	<p>
-		<span class="content"><b>In theaters everywhere</b></span>
+		<span class="content"><font color="blue">
+				<p>
+					In theaters everywhere today
+				</p></font></span>
 	<p>
 		<% end %>
 		<span class="timestamp"> Posted <%= time_ago_in_words(movie_review_detail.created_at) %> ago. </span>
-
+<p>
+		<% if signed_in? %>
 		<div class="field">
-			Rating : <%= rating_for @movie_review, "starrating" %>
+			Average rating from all our users shown below! CLick to rate!
+		</div><p>
+		<% else %>
+		<div class="field">
+			Average rating from all our users shown below! You have to sign in to rate this movie!
+		</div><p>
+		<% end %>
+		<div class="field">
+			<strong>Rating : </strong><%= rating_for @movie_review, "starrating" %>
 		</div>
 </div>

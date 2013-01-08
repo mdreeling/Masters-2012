@@ -1,32 +1,43 @@
-<% provide(:title, @user.name) %>
-<div class="row">
-  <aside class="span4">
-    <section>
-      <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
-      </h1>
-    </section>
-    <section>
-      <%= render 'shared/stats' %>
-    </section>
-  </aside>
-   <div class="span8">
-   	<%= render 'follow_form' if signed_in? %>
-    <% if @user.microposts.any? %>
-      <h3>Microposts (<%= @user.microposts.count %>)</h3>
-      <ol class="microposts">
-        <%= render @microposts %>
-      </ol>
-      <%= will_paginate @microposts %>
-    <% end %>
-  </div>
-  <div class="span4">
-    <% if @user.movie_reviews.any? %>
-      <h3>MovieReviews (<%= @user.movie_reviews.count %>)</h3>
-      <ol class="movie_reviews">
-        <%= render @movie_reviews %>
-      </ol>
-    <% end %>
-  </div>
-</div> 
+<div id="page-container" class="wrapper wrapper-home white">
+	<div class="dashboard">
+		<div class="module mini-profile">
+
+			<%= render 'shared/user_info' %>
+
+			<%= render 'shared/stats' %>
+
+			<div class="stream-container "
+			data-max-id="288081372772458495" data-since-id="288098988383666176"
+
+			>
+				<div class="stream home-stream">
+					<div class="stream-items" id="stream-items-id">
+						<% if current_user.movie_reviews.any? %>
+						<%= render @movie_reviews %>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="content-main" id="timeline">
+		<div class="content-header">
+			<div class="header-inner">
+				<h2 class="js-timeline-title">Microposts</h2>
+			</div>
+		</div>
+		<div class="stream-container "
+		data-max-id="288081372772458495" data-since-id="288098988383666176"
+
+		>
+			<div class="stream home-stream">
+				<div class="stream-items" id="stream-items-id">
+					<% if current_user.microposts.any? %>
+					<%= render @microposts %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

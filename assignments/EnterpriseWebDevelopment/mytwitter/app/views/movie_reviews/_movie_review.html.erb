@@ -23,14 +23,15 @@
 		<div class="content">
 
 			<div class="stream-item-header">
-				<small class="time"> <a href="/" class="tweet-timestamp js-permalink js-nav" title="7:45 PM - 6 Jan 13" ><span class="_timestamp js-short-timestamp js-relative-timestamp" data-time="1357523126"
-					data-long-form="true"><%= time_ago_in_words(movie_review.created_at) %> ago.</span></a> </small>
+				<small class="time"> <a href="/users/<%= movie_review.user.id %>" class="tweet-timestamp js-permalink js-nav" title="7:45 PM - 6 Jan 13" > <span class="_timestamp js-short-timestamp js-relative-timestamp" data-time="1357523126"
+					data-long-form="true"><%= time_ago_in_words(movie_review.created_at) %> ago by <%= movie_review.user.name %>.</span></a> </small>
+				<img alt="Movie" class="avatar js-action-profile-avatar" src="assets/logo.jpg"> 
 			</div>
 			<u><%= movie_review.movietitle %></u>
 			<p class="js-tweet-text">
 				<%= movie_review.reviewtitle %>
 			</p>
-			
+
 			<!-- NEW DELETE LINK -->
 			<%= link_to 'read', movie_review_path(movie_review) %>
 			<% if current_user?(movie_review.user) %>

@@ -1,9 +1,46 @@
-<h1>All users</h1>
+<div id="page-container" class="wrapper wrapper-home white">
+	<div class="dashboard">
+		<div class="module mini-profile">
+			<div class="flex-module profile-summary js-profile-summary">
 
-<%= will_paginate %>
+				<a href="/movie_reviews"
+				class="account-summary account-summary-small js-nav"
+				data-nav="profile">
+				<div class="content">
+					<div class="account-group js-mini-current-user" data-user-id="16120321" data-screen-name="mdreeling">
+						<img class="avatar size32" src="assets/logo.jpg" alt="Mick">
+						<b class="fullname">All Users</b>
+						<small class="metadata"> Your movie tweet resource</small>
+						<small class="metadata"> (login or signup to post reviews!)</small>
+					</div>
+				</div> </a>
+			</div>
+			<div class="js-mini-profile-stats-container">
+				<ul class="stats js-mini-profile-stats" data-user-id="16120321">
+					<li>
+						<a class="js-nav" href="/user" data-element-term="tweet_stats" data-nav='profile'> <strong><%= @users.count %></strong> users</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="content-main" id="timeline">
+		<div class="content-header">
+			<div class="header-inner">
+				<h2 class="js-timeline-title">Users</h2>
+			</div>
+		</div>
+		<div class="stream-container "
+		data-max-id="288081372772458495" data-since-id="288098988383666176"
 
-<ul class="users">
-  <%= render @users %>
-</ul>
+		>
+			<div class="stream home-stream">
+				<div class="stream-items" id="stream-items-id">
+					<%= render @users %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <%= will_paginate %>

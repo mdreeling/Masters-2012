@@ -26,8 +26,8 @@
 				<small class="time"> <a href="/" class="tweet-timestamp js-permalink js-nav" title="7:45 PM - 6 Jan 13" ><span class="_timestamp js-short-timestamp js-relative-timestamp" data-time="1357523126" 
 					data-long-form="true"><%= time_ago_in_words(micropost.created_at) %> ago.</span></a> </small>	
 				<a  class="account-group js-account-group js-action-profile js-user-profile-link js-nav" href="/waaf" data-user-id="17789365"> 
-					<%= gravatar_for(current_user,52,'avatar js-action-profile-avatar')%>
-					<strong class="fullname js-action-profile-name show-popup-with-id"><%= current_user.name %></strong> <span>&rlm;</span><span class="username js-action-profile-name"><s>@</s><b><%= current_user.name %></b></span> </a>
+					<%= gravatar_for(micropost.user,52,'avatar js-action-profile-avatar')%>
+					<strong class="fullname js-action-profile-name show-popup-with-id"><%= micropost.user.name %></strong> <span>&rlm;</span><span class="username js-action-profile-name"><s>@</s><b><%= micropost.user.name %></b></span> </a>
 			</div>
 
 			<p class="js-tweet-text">

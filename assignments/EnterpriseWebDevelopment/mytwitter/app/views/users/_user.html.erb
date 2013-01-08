@@ -1,5 +1,32 @@
-<li>
-  <%= gravatar_for user, :size => 30 %>
-  <%= link_to user.name, user %>
-  Test
-</li>
+<div class="js-stream-item stream-item stream-item expanding-stream-item" data-item-id="288098988383666176" id="stream-item-tweet-288098988383666176" data-item-type="tweet">
+
+	<div class="tweet original-tweet js-stream-tweet js-actionable-tweet js-profile-popup-actionable js-original-tweet
+
+	has-cards
+
+	"
+	data-feedback-key="stream_status_288098988383666176"
+	data-tweet-id="288098988383666176"
+
+	data-item-id="288098988383666176"
+
+	data-screen-name="waaf" data-name="WAAF" data-user-id="17789365"
+
+	data-card-type="summary"
+
+	data-expanded-footer=""
+
+	>
+
+		<i class="dogear"></i>
+		<div class="content">
+
+			<div class="stream-item-header">
+				<small class="time"> <a href="/users/<%= user.id %>" class="tweet-timestamp js-permalink js-nav" title="7:45 PM - 6 Jan 13" > <span class="_timestamp js-short-timestamp js-relative-timestamp" data-time="1357523126"
+					data-long-form="true">view profile</span></a> </small>
+				<%= gravatar_for(user,52,'avatar size32')%> 
+				<%= user.name %>
+			</div>
+		</div>
+	</div>
+</div>

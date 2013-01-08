@@ -1,12 +1,12 @@
 <div class="flex-module profile-summary js-profile-summary">
 
-	<a href="users/<%= current_user.id %> "
+	<a href="/users/<%= @user.id %> "
 	class="account-summary account-summary-small js-nav"
 	data-nav="profile">
 	<div class="content">
 		<div class="account-group js-mini-current-user" data-user-id="16120321" data-screen-name="mdreeling">
-			<%= gravatar_for(current_user,52,'avatar size32')%>
-			<b class="fullname"><%= current_user.name %></b>
+			<%= gravatar_for(@user,52,'avatar size32')%>
+			<b class="fullname"><%= @user.name %></b>
 			<small class="metadata"> View my profile page </small>
 		</div>
 	</div> </a>

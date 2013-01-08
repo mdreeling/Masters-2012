@@ -5,6 +5,7 @@ class StaticPagesController < ApplicationController
     @movie_review = current_user.movie_reviews.build if signed_in?
     @genres = Genre.all if signed_in?
     @mediatypes = Medium.all if signed_in?
+    @user = current_user if signed_in?
   end
 
   def help
