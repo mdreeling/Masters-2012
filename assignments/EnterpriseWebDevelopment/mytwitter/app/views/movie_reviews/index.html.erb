@@ -5,10 +5,10 @@
 			<%= render 'shared/user_info' %>
 
 			<%= render 'shared/stats' %>
-
-			<%= render 'shared/micropost_form' %>
-
-			<%= render 'shared/movie_review_form' %>
+			<% if !current_user.nil? %>
+			<h2 class="js-timeline-title">All User Reviews</h2>
+			<%= render @movie_reviews_all %>
+			<% end %>
 		</div>
 	</div>
 	<% else %>
@@ -41,7 +41,13 @@
 	<div class="content-main" id="timeline">
 		<div class="content-header">
 			<div class="header-inner">
-				<h2 class="js-timeline-title">Movie Reviews</h2>
+
+				<% if !current_user.nil? %>
+				<h2 class="js-timeline-title">My Movie Reviews</h2>
+				<% else %>
+				<h2 class="js-timeline-title">All Users Movie Reviews</h2>
+				<% end %>
+
 			</div>
 		</div>
 		<div class="stream-container "

@@ -1,5 +1,7 @@
 <div class="flex-module profile-summary js-profile-summary">
-
+	<% if @user.nil? %>
+	<% @user = current_user %>
+	<% end %>
 	<a href="/users/<%= @user.id %> "
 	class="account-summary account-summary-small js-nav"
 	data-nav="profile">

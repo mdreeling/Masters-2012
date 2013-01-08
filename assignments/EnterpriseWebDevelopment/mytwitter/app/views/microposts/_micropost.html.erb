@@ -1,4 +1,4 @@
-<% if !micropost.content.nil? %>
+<% if !micropost.content.nil? && !micropost.created_at.nil? %>
 <div class="js-stream-item stream-item stream-item expanding-stream-item" data-item-id="288098988383666176" id="stream-item-tweet-288098988383666176" data-item-type="tweet">
 
 	<div class="tweet original-tweet js-stream-tweet js-actionable-tweet js-profile-popup-actionable js-original-tweet
@@ -33,12 +33,18 @@
 			<p class="js-tweet-text">
 				<%= micropost.content %>
 			</p>
+			<% if !micropost.image.blank? %>
+			<p class="js-tweet-text">
+				<%= image_tag micropost.image, :size => "120x120" %>
+			</p>
+			<% end %>
 			<!-- NEW DELETE LINK -->
 			<% if current_user?(micropost.user) %>
 			<%= link_to "delete", micropost, method: :delete,
 			data: { confirm: "You sure?" },
 			title: micropost.content %>
 			<% end %>
+			
 		</div>
 	</div>
 </div>

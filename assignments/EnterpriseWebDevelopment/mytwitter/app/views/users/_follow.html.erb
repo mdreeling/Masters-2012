@@ -1,7 +1,8 @@
 <%= form_for(current_user.relationships.
-                          build(:followed_id => @user.id),
-                          :remote => true) do |f| %>
-  <div><%= f.hidden_field :followed_id %></div>
-  <div class="actions"><%= f.submit "Follow this user", 
-                                class: "btn btn-large btn-primary" %></div>
+build(:followed_id => @user.id)) do |f| %>
+
+	<%= f.hidden_field :followed_id %>
+
+
+	<input class="submit btn primary-btn flex-table-btn js-submit" type ="submit" name="commit" onclick="document.getElementById('new_relationship').submit(); " value="Follow this user">
 <% end %>

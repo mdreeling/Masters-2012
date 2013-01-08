@@ -12,7 +12,7 @@ class MovieReviewsController < ApplicationController
       flash[:success] = "Movie Review created!"
       redirect_to root_url
     else
-      render 'static_pages/home'
+      render 'static_pages/home' , :object => @movie_review
     end
   end
   
@@ -22,6 +22,7 @@ class MovieReviewsController < ApplicationController
     else
     @user = current_user
     @movie_reviews = @user.movie_reviews    # NEW LINE
+    @movie_reviews_all =  MovieReview.find(:all)
     @microposts = current_user.microposts if signed_in?
     @micropost = current_user.microposts.build if signed_in?
     @movie_review = current_user.movie_reviews.build if signed_in?

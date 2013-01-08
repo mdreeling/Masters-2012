@@ -3,32 +3,26 @@
 		<div class="container">
 			<ul class="nav js-global-actions" id="global-actions">
 				<li id="global-nav-home" class="home active new" data-global-action="home">
-					<a class="js-nav" href="/" data-component-term="home_nav" data-nav="home" title="Home"> <span class="new-wrapper"><i class="nav-home"></i><i class="nav-new"></i></span> <span class="text">Home</span> </a>
+					<a class="js-nav" href="/" data-component-term="home_nav" data-nav="home" title="Home">Home</a>
 				</li>
 				<li class="people" data-global-action="connect">
-					<a class="js-nav" href="/movie_reviews" data-component-term="connect_nav" data-nav="connect" title="Movies"> <span class="new-wrapper"><i class="nav-people"></i><i class="nav-new"></i></span> <span class="text">Movies</span> </a>
+					<a class="js-nav" href="/movie_reviews" data-component-term="connect_nav" data-nav="connect" title="Movies">Movies</a>
 				</li>
 				<li class="topics" data-global-action="discover">
-					<a class="js-nav" href="/users" data-component-term="discover_nav" data-nav="discover" title="Discover"> <span class="new-wrapper"><i class="nav-topics"></i><i class="nav-new"></i></span> <span class="text">All Users</span> </a>
+					<a class="js-nav" href="/users" data-component-term="discover_nav" data-nav="discover" title="Discover">All Users</a>
 				</li>
 				<% if signed_in? %>
 				<li class="profile" data-global-action="profile">
-					<a class="js-nav" href="/users/<%= current_user.id %>" data-component-term="profile_nav" data-nav="profile" title="Me"> <span class="new-wrapper"><i class="nav-me"></i><i class="nav-new"></i></span> <span class="text">Me</span> </a>
+					<a class="js-nav" href="/users/<%= current_user.id %>" data-component-term="profile_nav" data-nav="profile" title="Me">Me</a>
 				</li>
 				<% end %>
 			</ul>
-			<i class="bird-topbar-etched"></i>
-
 			<div class="pull-right">
 				<i class="topbar-divider"></i>
 				<ul class="nav">
 					<% if signed_in? %>
 					<li>
 						<%= link_to "Sign out", signout_path, method: "delete" %>
-					</li>
-					<% else %>
-					<li>
-						<%= link_to "Sign in", signin_path %>
 					</li>
 					<% end %>
 				</ul>

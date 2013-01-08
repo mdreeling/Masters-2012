@@ -22,8 +22,9 @@
 		<div class="content">
 
 			<div class="stream-item-header">
-				<small class="time"> <a href="/users/<%= user.id %>" class="tweet-timestamp js-permalink js-nav" title="7:45 PM - 6 Jan 13" > <span class="_timestamp js-short-timestamp js-relative-timestamp" data-time="1357523126"
-					data-long-form="true">view profile</span></a> </small>
+				<small class="time"> 
+					<a href="/users/<%= user.id %>" class="tweet-timestamp js-permalink js-nav" title="7:45 PM - 6 Jan 13" >view profile</a> 
+					</small>
 				<%= gravatar_for(user,52,'avatar size32')%> 
 				<%= user.name %>
 			</div>

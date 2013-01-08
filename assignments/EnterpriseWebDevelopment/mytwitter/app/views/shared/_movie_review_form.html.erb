@@ -4,7 +4,11 @@
 			<h2 class="js-timeline-title">Review something!</h2>
 		</div>
 	</div>
-
+	<% if @movie_review.nil? %>
+	<% @movie_review = current_user.movie_reviews.build %>
+	<% @genres = Genre.all if signed_in?%>
+    <% @mediatypes = Medium.all if signed_in?%>
+	<% end %>
 	<%= form_for @movie_review, html: { multipart: true, class:'class="tweet-form condensed'} do |f| %>
 	<%= render 'shared/error_messages', object: f.object %>
 	<div class="tweet-content">
@@ -58,7 +62,7 @@
 
 	<div class="toolbar js-toolbar">
 		<div class="tweet-button">
-			<input class="btn btn-large btn-primary" type="submit" value="Post" name="commit">
+			<input class="btn btn-large btn-primary" type="submit" value="Post" onclick="document.getElementById('new_movie_review').submit();" name="commit">
 		</div>
 	</div>
 	<% end %>

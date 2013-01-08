@@ -1,4 +1,5 @@
 <div id="page-container" class="wrapper wrapper-home white">
+			
 	<div class="dashboard">
 		<div class="module mini-profile">
 
@@ -6,35 +7,49 @@
 
 			<%= render 'shared/stats' %>
 
+			<% if @user.movie_reviews.any? %>
+			My Movie Reviews
 			<div class="stream-container "
 			data-max-id="288081372772458495" data-since-id="288098988383666176"
 
 			>
 				<div class="stream home-stream">
 					<div class="stream-items" id="stream-items-id">
-						<% if current_user.movie_reviews.any? %>
-						<%= render @movie_reviews %>
-						<% end %>
+
+						<%= render @user.movie_reviews %>
+
 					</div>
 				</div>
 			</div>
+			<% end %>
 		</div>
 	</div>
 
 	<div class="content-main" id="timeline">
+									
 		<div class="content-header">
+			
 			<div class="header-inner">
+				<%= render 'follow_form' if signed_in? %>
 				<h2 class="js-timeline-title">Microposts</h2>
+				
 			</div>
 		</div>
 		<div class="stream-container "
 		data-max-id="288081372772458495" data-since-id="288098988383666176"
 
-		>
+		>	
+					
 			<div class="stream home-stream">
+				
 				<div class="stream-items" id="stream-items-id">
-					<% if current_user.microposts.any? %>
-					<%= render @microposts %>
+					<% if @user.microposts.any? %>
+					<%= render @user.microposts %>
+					<% else %>
+					<div class="js-stream-item stream-item stream-item expanding-stream-item" data-item-id="288098988383666176" id="stream-item-tweet-288098988383666176" data-item-type="tweet">
+
+					This person has not posted anything yet
+					</div>
 					<% end %>
 				</div>
 			</div>

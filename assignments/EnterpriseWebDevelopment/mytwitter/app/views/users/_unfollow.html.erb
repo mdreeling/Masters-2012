@@ -1,6 +1,4 @@
 <%= form_for(current_user.relationships.find_by_followed_id(@user),
-             :html => { :method => :delete },
-             :remote => true) do |f| %>
-  <div class="actions"><%= f.submit "Unfollow" , 
-                                class: "btn btn-large btn-primary" %></div>
+             :html => { :method => :delete,:id => 'edit_relationship'}) do |f| %>
+<input class="submit btn primary-btn flex-table-btn js-submit" name="commit" type="submit" onclick="document.getElementById('edit_relationship').submit();" value="Unfollow">
 <% end %>
