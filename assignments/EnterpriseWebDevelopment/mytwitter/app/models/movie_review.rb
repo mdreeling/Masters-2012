@@ -1,5 +1,5 @@
 class MovieReview < ActiveRecord::Base
-  attr_accessible :reviewcontent,:genre, :reviewtitle, :genre_id, :movietitle, :revieweddate, :dvdreleasedate, :media_id, :theaterrelease, :starrating, :image
+  attr_accessible :reviewcontent,:genre, :reviewtitle, :genre_id, :movietitle, :revieweddate, :dvdreleasedate,:medium, :media_id, :theaterrelease, :starrating, :image
   belongs_to :user    # Indicates association with User
     #This should go in your model
   mount_uploader :image, ImageUploader

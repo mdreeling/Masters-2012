@@ -45,11 +45,9 @@ class MovieReviewsController < ApplicationController
 
     respond_to do |format|
       if @movie_review.update_attributes(params[:movie_review])
-        flash[:success] = "Movie Review updated"
-        redirect_to root_url
+        format.html { redirect_to @movie_review, notice: 'Movie was successfully updated.' }
       else
-        flash[:failure] = "Movie Review could not be updated"
-        render 'static_pages/home'
+        format.html { render action: "edit" }
       end
     end
   end

@@ -4,12 +4,17 @@
 	<p>
 		<span class="content"><%= movie_review_detail.reviewcontent %></span>
 	<p>
-</div>
+</div>	
 <div class="content-inner">
 	<p>
 		<span class="content"><strong>Genre : </strong><%= movie_review_detail.genre.name %></span>
 	<p>
-		<span class="content"><strong>Content Reviewed : </strong><%= movie_review_detail.medium %></span>
+		<span class="content"><strong>Content Reviewed : </strong><%= Medium.find(movie_review_detail.media_id).name %></span>
+		<p>
+		<span class="content"><strong>Reviewed : </strong><%= movie_review_detail.revieweddate %></span>
+	    <p>
+		<span class="content"><strong>DVD Release : </strong><%= movie_review_detail.dvdreleasedate %></span>
+		
 		<% if movie_review_detail.theaterrelease? %>
 	<p>
 		<span class="content"><font color="blue">

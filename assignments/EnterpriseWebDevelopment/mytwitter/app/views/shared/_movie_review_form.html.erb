@@ -6,10 +6,10 @@
 	</div>
 	<% if @movie_review.nil? %>
 	<% @movie_review = current_user.movie_reviews.build %>
-	<% @genres = Genre.all if signed_in?%>
-    <% @mediatypes = Medium.all if signed_in?%>
 	<% end %>
-	<%= form_for @movie_review, html: { multipart: true, class:'class="tweet-form condensed'} do |f| %>
+	<% @genres = Genre.all if signed_in?%>
+	<% @mediatypes = Medium.all if signed_in?%>
+	<%= form_for @movie_review, html: { id:"new_movie_review",multipart: true, class:'class="tweet-form condensed'} do |f| %>
 	<%= render 'shared/error_messages', object: f.object %>
 	<div class="tweet-content">
 		<fieldset id="11" class="control-group">
