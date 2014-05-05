@@ -9,7 +9,6 @@ class MovieReview < ActiveRecord::Base
   validates :movietitle, presence: true, length: { maximum: 100 }
   validates :revieweddate, presence: true
   validates :dvdreleasedate, presence: true
-  validates :media_id, presence: true
   validates :theaterrelease, presence: true
   validates :reviewcontent, presence: true, length: { maximum: 5000 }
   default_scope order: 'movie_reviews.created_at DESC'

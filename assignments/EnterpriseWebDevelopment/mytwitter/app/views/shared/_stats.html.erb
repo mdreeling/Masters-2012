@@ -2,7 +2,7 @@
 <div class="js-mini-profile-stats-container">
 	<ul class="stats js-mini-profile-stats" data-user-id="16120321">
 		<li>
-			<a class="js-nav" href="/users/<%= current_user.id %>" data-element-term="tweet_stats" data-nav='profile'> <strong><%= @user.microposts.count %></strong> Microposts </a>
+			<a class="js-nav" href="/users/<%= @user.id %>" data-element-term="tweet_stats" data-nav='profile'> <strong><%= @user.microposts.count %></strong> Microposts </a>
 		</li>
 		<li>
 			<a class="js-nav" href="<%= following_user_path(@user) %>" data-element-term="following_stats" data-nav='following'> <strong><%= @user.following.count %></strong> Following </a>
