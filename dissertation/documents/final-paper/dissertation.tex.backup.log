@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.7.27)  24 AUG 2014 19:08
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.7.27)  25 AUG 2014 09:29
 entering extended mode
 **E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/final-paper/dis
-sertation.tex
+sertation.tex.backup.tex
 
 (E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/final-paper/diss
-ertation.tex
+ertation.tex.backup.tex
 LaTeX2e <2014/05/01>
 Babel <3.9k> and hyphenation patterns for 68 languages loaded.
 
@@ -277,7 +277,7 @@ File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 \Gin@req@width=\dimen130
 )
 (E:\DropBox\Dropbox\mick\masters\github\dissertation\documents\final-paper\diss
-ertation.aux
+ertation.tex.backup.aux
 
 LaTeX Warning: Label `fig:ocelli_dm' multiply defined.
 
@@ -338,11 +338,12 @@ LaTeX Info: Redefining \pageref on input line 9.
 LaTeX Info: Redefining \nameref on input line 9.
 
 (E:\DropBox\Dropbox\mick\masters\github\dissertation\documents\final-paper\diss
-ertation.out)
+ertation.tex.backup.out)
 (E:\DropBox\Dropbox\mick\masters\github\dissertation\documents\final-paper\diss
-ertation.out)
+ertation.tex.backup.out)
 \@outlinefile=\write3
- ("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count128
 \scratchdimen=\dimen131
@@ -357,7 +358,7 @@ ertation.out)
 \everyMPtoPDFconversion=\toks20
 )
 (E:\DropBox\Dropbox\mick\masters\github\dissertation\documents\final-paper\diss
-ertation.toc
+ertation.tex.backup.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -377,8 +378,7 @@ Missing character: There is no ù in font cmr10!
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ì in font cmr10!
-
-[3]
+ [3]
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ô in font cmr10!
@@ -579,7 +579,7 @@ Overfull \hbox (35.49713pt too wide) in paragraph at lines 264--273
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no É in font cmr10!
- [12] [13] <ocelli.png, id=238, 991.705pt x 1266.7325pt>
+ [12] [13] <ocelli.png, id=249, 991.705pt x 1266.7325pt>
 File: ocelli.png Graphic file (type png)
  <use ocelli.png>
 Package pdftex.def Info: ocelli.png used on input line 368.
@@ -593,98 +593,100 @@ Overfull \hbox (99.1396pt too wide) in paragraph at lines 368--369
 LaTeX Warning: Float too large for page by 43.6361pt on input line 371.
 
 [14] [15 <E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/final-p
-aper/ocelli.png>] <app1.png, id=253, 748.29562pt x 487.8225pt>
+aper/ocelli.png>] <app1.png, id=263, 748.29562pt x 487.8225pt>
 File: app1.png Graphic file (type png)
  <use app1.png>
-Package pdftex.def Info: app1.png used on input line 456.
+Package pdftex.def Info: app1.png used on input line 453.
 (pdftex.def)             Requested size: 374.1469pt x 243.91064pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 455--457
+Underfull \hbox (badness 10000) in paragraph at lines 452--454
 
  []
 
 
-Overfull \hbox (27.02336pt too wide) in paragraph at lines 455--457
+Overfull \hbox (27.02336pt too wide) in paragraph at lines 452--454
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 455--457
+Underfull \hbox (badness 10000) in paragraph at lines 452--454
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 455--457
+Underfull \hbox (badness 10000) in paragraph at lines 452--454
 
  []
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 458--459
+Underfull \hbox (badness 10000) in paragraph at lines 455--456
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 458--459
+Underfull \hbox (badness 10000) in paragraph at lines 455--456
 
  []
 
-<app2.png, id=260, 747.54282pt x 486.31688pt>
+<app2.png, id=271, 747.54282pt x 486.31688pt>
 File: app2.png Graphic file (type png)
  <use app2.png>
-Package pdftex.def Info: app2.png used on input line 468.
+Package pdftex.def Info: app2.png used on input line 465.
 (pdftex.def)             Requested size: 411.14983pt x 267.47511pt.
 
-<app3.png, id=261, 563.85657pt x 99.37125pt>
+<app3.png, id=272, 563.85657pt x 99.37125pt>
 File: app3.png Graphic file (type png)
  <use app3.png>
-Package pdftex.def Info: app3.png used on input line 470.
+Package pdftex.def Info: app3.png used on input line 467.
 (pdftex.def)             Requested size: 422.89139pt x 74.52824pt.
 
-Overfull \hbox (79.02629pt too wide) in paragraph at lines 468--471
+Overfull \hbox (79.02629pt too wide) in paragraph at lines 465--468
 [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 468--471
+Underfull \hbox (badness 10000) in paragraph at lines 465--468
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 468--471
+Underfull \hbox (badness 10000) in paragraph at lines 465--468
 
  []
 
 
-Overfull \hbox (75.76785pt too wide) in paragraph at lines 468--471
+Overfull \hbox (75.76785pt too wide) in paragraph at lines 465--468
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 468--471
+Underfull \hbox (badness 10000) in paragraph at lines 465--468
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 468--471
+Underfull \hbox (badness 10000) in paragraph at lines 465--468
 
  []
 
-[17 <E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/final-paper/
-app1.png>] [18 <E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/f
-inal-paper/app2.png> <E:/DropBox/Dropbox/mick/masters/github/dissertation/docum
-ents/final-paper/app3.png>] <app4.png, id=273, 604.50844pt x 463.7325pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [17 <E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/final-paper
+/app1.png>] [18 <E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/
+final-paper/app2.png> <E:/DropBox/Dropbox/mick/masters/github/dissertation/docu
+ments/final-paper/app3.png>] <app4.png, id=283, 604.50844pt x 463.7325pt>
 File: app4.png Graphic file (type png)
-
-<use app4.png>
-Package pdftex.def Info: app4.png used on input line 483.
+ <use app4.png>
+Package pdftex.def Info: app4.png used on input line 480.
 (pdftex.def)             Requested size: 423.15302pt x 324.61052pt.
 
-Overfull \hbox (76.02948pt too wide) in paragraph at lines 483--484
+Overfull \hbox (76.02948pt too wide) in paragraph at lines 480--481
  [][] 
  []
 
 
-Overfull \hbox (30.39377pt too wide) in paragraph at lines 491--509
+Overfull \hbox (30.39377pt too wide) in paragraph at lines 488--506
 []  
  []
 
@@ -693,13 +695,13 @@ Underfull \vbox (badness 2744) has occurred while \output is active []
 
  [19 <E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/final-paper
 /app4.png>]
-<app6.png, id=280, 601.4972pt x 463.7325pt>
+<app6.png, id=290, 601.4972pt x 463.7325pt>
 File: app6.png Graphic file (type png)
  <use app6.png>
-Package pdftex.def Info: app6.png used on input line 517.
+Package pdftex.def Info: app6.png used on input line 514.
 (pdftex.def)             Requested size: 421.04517pt x 324.61052pt.
 
-Overfull \hbox (73.92163pt too wide) in paragraph at lines 517--518
+Overfull \hbox (73.92163pt too wide) in paragraph at lines 514--515
  [][] 
  []
 
@@ -707,17 +709,17 @@ Overfull \hbox (73.92163pt too wide) in paragraph at lines 517--518
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (30.39377pt too wide) in paragraph at lines 530--550
+Overfull \hbox (30.39377pt too wide) in paragraph at lines 527--547
 []  
  []
 
-<app7.png, id=281, 603.75563pt x 301.125pt>
+<app7.png, id=291, 603.75563pt x 301.125pt>
 File: app7.png Graphic file (type png)
  <use app7.png>
-Package pdftex.def Info: app7.png used on input line 556.
+Package pdftex.def Info: app7.png used on input line 553.
 (pdftex.def)             Requested size: 422.62605pt x 210.78606pt.
 
-Overfull \hbox (75.50252pt too wide) in paragraph at lines 556--557
+Overfull \hbox (75.50252pt too wide) in paragraph at lines 553--554
  [][] 
  []
 
@@ -725,10 +727,10 @@ Overfull \hbox (75.50252pt too wide) in paragraph at lines 556--557
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<app8.png, id=286, 438.8897pt x 142.28156pt>
+<app8.png, id=296, 438.8897pt x 142.28156pt>
 File: app8.png Graphic file (type png)
  <use app8.png>
-Package pdftex.def Info: app8.png used on input line 567.
+Package pdftex.def Info: app8.png used on input line 564.
 (pdftex.def)             Requested size: 307.22069pt x 99.5964pt.
 
 
@@ -736,7 +738,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [21 <E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/final-paper/
 app6.png>]
-Overfull \hbox (30.39377pt too wide) in paragraph at lines 575--595
+Overfull \hbox (30.39377pt too wide) in paragraph at lines 572--592
 []  
  []
 
@@ -745,39 +747,39 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [22 <E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/final-paper
 /app7.png> <E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/final
--paper/app8.png>] <app9.png, id=298, 584.1825pt x 536.0025pt>
+-paper/app8.png>] <app9.png, id=308, 584.1825pt x 536.0025pt>
 File: app9.png Graphic file (type png)
  <use app9.png>
-Package pdftex.def Info: app9.png used on input line 601.
+Package pdftex.def Info: app9.png used on input line 598.
 (pdftex.def)             Requested size: 408.92496pt x 375.19919pt.
 
-Overfull \hbox (61.80142pt too wide) in paragraph at lines 601--602
+Overfull \hbox (61.80142pt too wide) in paragraph at lines 598--599
  [][] 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<app10.png, id=299, 383.93437pt x 173.89969pt>
+<app10.png, id=309, 383.93437pt x 173.89969pt>
 File: app10.png Graphic file (type png)
  <use app10.png>
-Package pdftex.def Info: app10.png used on input line 610.
+Package pdftex.def Info: app10.png used on input line 607.
 (pdftex.def)             Requested size: 268.75221pt x 121.72893pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<app11.png, id=300, 331.99031pt x 138.5175pt>
+<app11.png, id=310, 331.99031pt x 138.5175pt>
 File: app11.png Graphic file (type png)
  <use app11.png>
-Package pdftex.def Info: app11.png used on input line 617.
+Package pdftex.def Info: app11.png used on input line 614.
 (pdftex.def)             Requested size: 232.39162pt x 96.96158pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (40.3938pt too wide) in paragraph at lines 623--643
+Overfull \hbox (40.3938pt too wide) in paragraph at lines 620--640
 []  
  []
 
@@ -785,69 +787,79 @@ Overfull \hbox (40.3938pt too wide) in paragraph at lines 623--643
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [23]
-[24] <app12.png, id=309, 491.58656pt x 140.77594pt>
+[24] <app12.png, id=319, 491.58656pt x 140.77594pt>
 File: app12.png Graphic file (type png)
  <use app12.png>
-Package pdftex.def Info: app12.png used on input line 676.
+Package pdftex.def Info: app12.png used on input line 673.
 (pdftex.def)             Requested size: 344.10825pt x 98.54247pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<app13.png, id=310, 381.67593pt x 180.675pt>
+<app13.png, id=320, 381.67593pt x 180.675pt>
 File: app13.png Graphic file (type png)
  <use app13.png>
-Package pdftex.def Info: app13.png used on input line 683.
+Package pdftex.def Info: app13.png used on input line 680.
 (pdftex.def)             Requested size: 267.17133pt x 126.47162pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (40.3938pt too wide) in paragraph at lines 689--709
+Overfull \hbox (40.3938pt too wide) in paragraph at lines 686--706
 []  
  []
 
-<app15.png, id=311, 488.57532pt x 143.03438pt>
+<app15.png, id=321, 488.57532pt x 143.03438pt>
 File: app15.png Graphic file (type png)
  <use app15.png>
-Package pdftex.def Info: app15.png used on input line 719.
+Package pdftex.def Info: app15.png used on input line 716.
 (pdftex.def)             Requested size: 342.0004pt x 100.12337pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[25]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 743.
- [26] [27 <E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/final-
-paper/app9.png>] [28 <E:/DropBox/Dropbox/mick/masters/github/dissertation/docum
+
+Overfull \hbox (40.3938pt too wide) in paragraph at lines 722--742
+[]  
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [25]
+[26] [27]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 775.
+ [28] [29 <E:/DropBox/Dropbox/mick/masters/github/dissertation/documents/final-
+paper/app9.png>] [30 <E:/DropBox/Dropbox/mick/masters/github/dissertation/docum
 ents/final-paper/app10.png> <E:/DropBox/Dropbox/mick/masters/github/dissertatio
 n/documents/final-paper/app11.png> <E:/DropBox/Dropbox/mick/masters/github/diss
-ertation/documents/final-paper/app12.png>] [29 <E:/DropBox/Dropbox/mick/masters
+ertation/documents/final-paper/app12.png>] [31 <E:/DropBox/Dropbox/mick/masters
 /github/dissertation/documents/final-paper/app13.png> <E:/DropBox/Dropbox/mick/
 masters/github/dissertation/documents/final-paper/app15.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 743.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 775.
 
 (E:\DropBox\Dropbox\mick\masters\github\dissertation\documents\final-paper\diss
-ertation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 743.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 743.
-Package rerunfilecheck Info: File `dissertation.out' has not changed.
-(rerunfilecheck)             Checksum: 682F0C76612C99B259D9EBA3E43F39DC;2178.
+ertation.tex.backup.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 775.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 775.
+Package rerunfilecheck Info: File `dissertation.tex.backup.out' has not changed
+.
+(rerunfilecheck)             Checksum: 4158859BE60E901A15DB3C687B60CDC1;2442.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 743.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 775.
  ) 
 Here is how much of TeX's memory you used:
- 5536 strings out of 493706
- 81451 string characters out of 3142171
- 173076 words of memory out of 3000000
- 8730 multiletter control sequences out of 15000+200000
+ 5541 strings out of 493706
+ 81698 string characters out of 3142171
+ 174098 words of memory out of 3000000
+ 8732 multiletter control sequences out of 15000+200000
  6279 words of font info for 23 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 29i,9n,28p,1151b,414s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 29i,9n,28p,1162b,414s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C
 :/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/P
@@ -856,9 +868,9 @@ gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Progra
 m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Fi
 les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program File
 s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on dissertation.pdf (29 pages, 575627 bytes).
+Output written on dissertation.tex.backup.pdf (31 pages, 582125 bytes).
 PDF statistics:
- 389 PDF objects out of 1000 (max. 8388607)
- 100 named destinations out of 1000 (max. 500000)
- 287 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 409 PDF objects out of 1000 (max. 8388607)
+ 103 named destinations out of 1000 (max. 500000)
+ 303 words of extra memory for PDF output out of 10000 (max. 10000000)
 

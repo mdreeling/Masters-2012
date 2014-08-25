@@ -372,21 +372,18 @@ Each User has a Profile where they store Applications of interest. These Profile
 
 \section{Experimental Testbed}
 
-In order to determine the viaibility of ingesting and processing data into a single server, tests will be performed in two seperate environments
+In order to determine the viaibility of ingesting and processing data into a single server, tests will be performed using various instance types in Amazon's EC2 infrastructure.
 
 \begin{itemize}
-\item A physical non virtualized network consisting of machines co-located in the same data center.
-\item A virtualized network in Amazon's EC2 infrastructure
+\item Virtualized network consisting of shared tenancy machines with 40 Mb to 1GB Networking
+\item Virtualized network consisting of dedicated tenancy machines with 10GB Networking
 \end{itemize}
 
 \subsection{Simulation Environments}
-\subsubsection{Data Center}
-
-The data center test environment consists of 2 physical locations in Los Angeles and 10 physical nodes. These nodes are all Dell R420  rack mounted servers with the standard specifications connected via a 100MB network. In each data center they are in the same rack. We will refer to the Eastern and Western locations as Alpha and Bravo respectively. The data centers are conneceted via an 800Mpbs link.
 
 \subsubsection{Amazon EC2}
 
-The Amazon EC2 test will be at a much larger scale as there are more nodes available in the EC2 environment. The test environment consists of 100 m1.xlarge nodes, using Amazon's first generation M1 platform. The M3 generation would have provided better performance at a lower price point, however these nodes were unavailable in the test environment.
+The test environment consists of 100 m1.xlarge nodes, using Amazon's first generation M1 platform. The M3 generation would have provided better performance at a lower price point, however these nodes were unavailable in the test environment.
 
 Specifications for the m1.xlarge are listed below
 
