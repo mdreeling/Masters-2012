@@ -5,17 +5,19 @@
 \usepackage{llncsdoc}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{fixltx2e}
 %
 \begin{document}
 %
 \newpage
 \tableofcontents
 \newpage
+
 %
 \title{A Lightweight System for Just-In-Time Aggregation of Machine Generated Data in a Distributed Network}
 
-\author{Student : Michael Dreeling}
-
+\author {Student: Michael Dreeling\\{ Supervisor: Eric Robson}}
 \institute{Waterford Institute of Technology, Ireland.}
 
 \maketitle
@@ -370,6 +372,17 @@ Each User has a Profile where they store Applications of interest. These Profile
     \label{fig:ocelli_dm}
 \end{figure}
 
+\section{Research Questions}
+
+The research questions we are attempting to answer as part of this research paper are the following,
+
+\begin{itemize}
+\item Is it possible to build a completely passive machine generated data collector which can scale on all resources (cpu, network and memory) when centrally connected to, and reading data from a number of servers?
+\item What is the impact such a system would have on the monitoring and monitored servers (cpu, memory) and on the network bandwidth between them.
+
+Essentially, we wish to determine if a central server could provide the functionality required to support the real-time acquistation of data such that it can be examined and used by a human operator during an error event on any one of a large number of servers.
+\end{itemize}
+
 \section{Experimental Testbed}
 
 In order to determine the viaibility of ingesting and processing data into a single server, tests will be performed using various instance types in Amazon's EC2 infrastructure.
@@ -379,21 +392,21 @@ In order to determine the viaibility of ingesting and processing data into a sin
 \item Virtualized network consisting of dedicated tenancy machines with 10GB Networking
 \end{itemize}
 
-\subsection{Simulation Environments}
+\subsection{Simulation Environment}
 
 \subsubsection{Amazon EC2}
 
-The test environment consists of 100 m1.xlarge nodes, using Amazon's first generation M1 platform. The M3 generation would have provided better performance at a lower price point, however these nodes were unavailable in the test environment.
+The intial test environment consists an Ocelli Server, an Elastic Search server and 98 t2.micro nodes, using Amazon's first generation M1 platform. The M3 generation would have provided better performance at a lower price point, however these nodes were unavailable in the test environment.
 
-Specifications for the m1.xlarge are listed below
+Specifications for the t2.micro are listed below [http://aws.amazon.com/ec2/instance-types/]
 
 \begin{flushleft}
     \begin{tabular}{ | l | l |}
     \hline
   Attrubute & Value  \\ \hline
 Max Network Bandwidth &  40 Mb/s	\\ \hline
-CPU's &  2 Core (6.5 ECU)	\\ \hline
-Memory &  7.5 GB	\\ 
+CPU's &  1 vCpu	\\ \hline
+Memory &  1 GB	\\ 
     \hline
     \end{tabular}
 \end{flushleft}
@@ -411,6 +424,14 @@ Each test will consist of the following steps
 
 After these steps have been taken Ocelli Server will connect to every node containing the artifiact, begin reading from the end of the file, and then start pushing the data to the Elastic Search cluster. The data will then be available for inspection.
 
+Ocelli will connect to each of the nodes and issue the following command
+\\
+tail -f -c 1000000000 /home/ec2-user/logs/access.log
+\\
+This will start a download of the last 1GB of the log file over ssh. 
+\\
+The average line size in the log is 120 Bytes.
+
 \subsubsection{Requirements and Test Setup}
 
 The following are pre-requisites to performing a test run
@@ -421,7 +442,7 @@ The following are pre-requisites to performing a test run
 \item The User has added an Application to their Profile
 \item All Nodes to be Monitored are registered with Ocelli Server (This will be performed via an SQL Script)
 \item An Artifact exists on all Nodes and is registered with Ocelli Server (This will be performed via an SQL Script)
-\item Each Artifact is a 2 GB Log File in /var/log/test.log
+\item Each Artifact is a 1.6 GB Log File in /home/ec2-user/logs/access.log
 \item The Elastic Search Cluster is empty and Indexes have been cleared
  \end{itemize}
 
@@ -462,14 +483,13 @@ For all of the tests the following will hold true
 \item Each test will run for 5 minutes with a 5 minute warm up period occurring first
 \end{itemize}
 
-\includegraphics[scale=0.55]{app2}\newline\newline
+\includegraphics[scale=0.5]{app2}\newline\newline
 There is also serverside setup for the simulation in the configuration of the Ocelli SSH Server. The ocelli.yml configuration file is modified to activate simulation mode and to add two additional variables, tpsCheckInterval and simulationRunTimeMillis\newline\newline
 \includegraphics[scale=0.75]{app3}\newline\newline
-
 tpsCheckInterval checks the number of transactions per second that Ocelli is able to process downstream to the ElasticSearch server, whilst simulationRunTimeMillis stops Ocelli from streaming after a certain amount of time has passed. This allows for timeboxed tests to be performed very easily.
-\subsubsection{Warm Up Phase}
-
-To warm up the JVM, the application is switched to "simulationMode: true" in ocelli.yml and the simulation is set to run for 5 minutes only. In the warm up phase Ocelli is also only connected connected to a single server on which it is streaming a single log from /var/log/access.log.
+\\
+\\
+Also, to warm up the JVM, the application is switched to "simulationMode: true" in ocelli.yml and the simulation is set to run for 5 minutes only. In the warm up phase Ocelli is also only connected connected to a single server on which it is streaming a single log from /var/log/access.log.
 \pagebreak
 \section{Results and Analysis}
 \subsection{Warmup}
@@ -499,7 +519,7 @@ Average and Peak Network Usage on Ocelli Server &	10 Mbps 	 \\ \hline
 Peak Disk Usage on Ocelli Server &	2 IOPS (0.1\%) 		 \\ \hline
 Average and Peak CPU Load on a Monitored Node& 	1\% 	 \\ \hline
   Average and Peak Memory Usage on a Monitored Node &	50MB / 55MB	 \\ \hline
-Average and Peak Network Usage on a Monitored Node &	2 Mbps / 5 Mbps		 \\ \hline
+Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.0 Mbps		 \\ \hline
   Average and Peak Disk Usage on a Monitored Node &  1\%	\\ 
     \hline
     \end{tabular}
@@ -540,13 +560,19 @@ Peak Disk Usage on Ocelli Server &	2 IOPS (0.1\%)		 \\ \hline
 Peak Disk Usage on Elastic Search Server &	80 IOPS (4.6\%)		 \\ \hline
 Average and Peak CPU Load on a Monitored Node& 	1\% 	 \\ \hline
   Average and Peak Memory Usage on a Monitored Node &	50MB / 55MB	 \\ \hline
-Average and Peak Network Usage on a Monitored Node &	2 Mbps / 5 Mbps		 \\ \hline
+Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.0 Mbps		 \\ \hline
   Average and Peak Disk Usage on a Monitored Node &  1\%	\\ 
     \hline
     \end{tabular}
 \end{flushleft}
 
 One additional point of note was a slight delay in pickup from one of the SSH servers, which was roughly 10,000 transactions behind the rest of the streams. Once it was streaming, it kept up with the rest of the servers.
+
+\subsection{Test 2 - 20 Servers and 98 Servers}
+
+During the test at 20 servers it appears that we have reached the limit of the chosen instance trypes, from both a networking and CPU perspective. From the chart below we can see that we were unable to obtain any more bandwidth from Amazon between the first and second tests. Ocelli Server peaked at 5564 tps and ingested 1,635,360 transactions to elasticsearch over exactly 300 seconds
+
+However, we were still bale to obtain a slight increase in peak TPS @ 5564 showing that doubling the amount of attached nodes still allows for an ingest rate of 278 transactions per server. This may still be enough to debug issues in real time during a crisis event. The slight increase can be attributed to further work performed by Elastic Search server which was not completely topped out on bandwith, allowing it to write additional transactions to disk, the increase in IOPS for Elastic Search shows it was still forced to make more writes in this test.
 
 \begin{figure}[h]
     \centering
@@ -555,18 +581,12 @@ One additional point of note was a slight delay in pickup from one of the SSH se
     \label{fig:ocelli_dm}
 \end{figure}
 
-\subsection{Test 2 - 20 Servers and 98 Servers}
-
-During the test at 20 servers it appears that we have reached the limit of the chosen instance trypes, from both a networking and CPU perspective. From the chart below we can see that we were unable to obtain any more bandwidth from Amazon between the first and second tests. Ocelli Server peaked at 5564 tps and ingested 1,635,360 transactions to elasticsearch over exactly 300 seconds
-
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.7]{app8}
     \caption{Comparison of network bandwidth for Ocelli Server between Test 1 and Test 2}
     \label{fig:ocelli_dm}
 \end{figure}
-
-However, we were still bale to obtain a slight increase in peak TPS @ 5564 showing that doubling the amount of attached nodes still allows for an ingest rate of 278 transactions per server. This may still be enough to debug issues in real time during a crisis event. The slight increase can be attributed to further work performed by Elastic Search server which was not completely topped out on bandwith, allowing it to write additional transactions to disk, the increase in IOPS for Elastic Search shows it was still forced to make more writes in this test.
 
 \begin{flushleft}
     \begin{tabular}{ | l | l |}
@@ -585,17 +605,17 @@ Peak Disk Usage on Ocelli Server &	2 IOPS (0.1\%)		 \\ \hline
 Peak Disk Usage on Elastic Search Server &	114 IOPS (4.6\%)		 \\ \hline
 Average and Peak CPU Load on a Monitored Node& 	1\% 	 \\ \hline
   Average and Peak Memory Usage on a Monitored Node &	50MB / 55MB	 \\ \hline
-Average and Peak Network Usage on a Monitored Node &	2 Mbps / 5 Mbps		 \\ \hline
+Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.0 Mbps		 \\ \hline
   Average and Peak Disk Usage on a Monitored Node &  1\%	\\ 
     \hline
     \end{tabular}
 \end{flushleft}
-
-Before upgrading the Ocelli and Elastic Search servers, a test was performed at 98 nodes with the same configuration, Ocelli Server peaked at 5836 tps and ingested 1,750,863 transactions to elasticsearch over exactly 300 seconds. This is a 4\% performance improvement. One interesting result from this test was that although we did not manage to increase the throughput, the distribution of data collected per server was extremely even, to within +- 1\%. This means that there was no lag in connecting to the servers or collecting the data in the 98 node test, indicating that the outlier in Test 1 may have been just an anomaly. This can be seen below
+\pagebreak
+Before upgrading the Ocelli and Elastic Search servers, a test was performed at 98 nodes with the same configuration, Ocelli Server peaked at 5836 tps and ingested 1,750,863 transactions to elasticsearch over exactly 300 seconds. This is a 4\% performance improvement. One interesting result from this test was that although we did not manage to increase the throughput, the distribution of data collected per server was extremely even, to within +- 1\%. This means that there was no lag in connecting to the servers or collecting the data in the 98 node test, indicating that the outlier in Test 1 may have been just an anomaly. This can be seen below in Figure 6.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.7]{app9}
+    \includegraphics[scale=0.6]{app9}
     \caption{Kibana showing even distribution of data collected across nodes (~18.4k transactions per node)}
     \label{fig:ocelli_dm}
 \end{figure}
@@ -604,14 +624,14 @@ However, we can see that we have completely exhausted the resources on the Elast
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.7]{app10}
+    \includegraphics[scale=0.6]{app10}
     \caption{Elastic Search Server CPU ingesting data from 20 and 100 nodes respectively}
     \label{fig:ocelli_dm}
 \end{figure}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.7]{app11}
+    \includegraphics[scale=0.6]{app11}
     \caption{Network bandwidth usage at 20 and 100 nodes respectively for Ocelli Server}
     \label{fig:ocelli_dm}
 \end{figure}
@@ -633,7 +653,7 @@ Peak Disk Usage on Ocelli Server &	2 IOPS (0.1\%)		 \\ \hline
 Peak Disk Usage on Elastic Search Server &	107 IOPS (4.4\%)		 \\ \hline
 Average and Peak CPU Load on a Monitored Node& 	1\% 	 \\ \hline
   Average and Peak Memory Usage on a Monitored Node &	50MB / 55MB	 \\ \hline
-Average and Peak Network Usage on a Monitored Node &	2 Mbps / 5 Mbps		 \\ \hline
+Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.0 Mbps		 \\ \hline
   Average and Peak Disk Usage on a Monitored Node &  1\%	\\ 
     \hline
     \end{tabular}
@@ -699,7 +719,7 @@ Peak Disk Usage on Ocelli Server &	2 IOPS (0.1\%)		 \\ \hline
 Peak Disk Usage on Elastic Search Server &	145 IOPS (4.4\%)		 \\ \hline
 Average and Peak CPU Load on a Monitored Node& 	1\% 	 \\ \hline
   Average and Peak Memory Usage on a Monitored Node &	50MB / 55MB	 \\ \hline
-Average and Peak Network Usage on a Monitored Node &	2 Mbps / 5 Mbps		 \\ \hline
+Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.0 Mbps		 \\ \hline
   Average and Peak Disk Usage on a Monitored Node &  1\%	\\ 
     \hline
     \end{tabular}
@@ -735,40 +755,154 @@ Peak Disk Usage on Ocelli Server &	2 IOPS (0.1\%)		 \\ \hline
 Peak Disk Usage on Elastic Search Server &	159 IOPS (4.4\%)		 \\ \hline
 Average and Peak CPU Load on a Monitored Node& 	1\% 	 \\ \hline
   Average and Peak Memory Usage on a Monitored Node &	50MB / 55MB	 \\ \hline
-Average and Peak Network Usage on a Monitored Node &	2 Mbps / 5 Mbps		 \\ \hline
+Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.0 Mbps		 \\ \hline
   Average and Peak Disk Usage on a Monitored Node &  1\%	\\ 
     \hline
     \end{tabular}
 \end{flushleft}
 
-\subsection{Test 5 - 98 Servers, Dedicated Hardware on 10GB Network}
+\subsection{Test 5 - 98 Servers, Dedicated Hardware on 10GB Network for Ocelli Server and Elastic Search }
 
-For this test, dedicated hardware was requested in AWS on c3.8xlarge instances with 10GB networking. The results of this test were deemed a failure. Ocelli Server peaked at 27562 tps and ingested 8,268,840 transactions to elasticsearch over exactly 300 seconds. This is an increase of only 19\% even though the hardware and networking have been drastically upgraded. Monitoring showed that networking was drastically underused. Total bandwidth used by ES was 138 Mb/s, only a 30 MB increase over Test 4 even though bandwidth is now 10GB/s (or 1000 MB/s). Ocelli Server Bandwidth stayed at 299 MB/s, only a 4 MB/s increase from non-dedicated hardware.
+For this test, dedicated hardware was requested in AWS on c3.8xlarge instances with 10GB networking for the Ocelli and the Elastic Search Server. The results of this test were deemed a failure as we could not obtain a performance improvement which was an order of magnitude greater (> 60\%) than Test 4. Ocelli Server peaked at 27562 tps and ingested 8,268,840 transactions to elasticsearch over exactly 300 seconds. This is an increase of only 19\% even though the hardware and networking have been drastically upgraded. Monitoring showed that networking was drastically underused. Total bandwidth used by ES was 138 Mb/s, only a 30 MB increase over Test 4 even though bandwidth is now 10GB/s (or 1000 MB/s). Ocelli Server Bandwidth stayed at 299 MB/s, only a 4 MB/s increase from non-dedicated hardware.
 
 At this point, the t1.micro nodes containing the logs are analyzed, and it is determined that their network throughput is actually the bottle neck as data cannot be pulled from them at greater than 500-700Kb/s. 
 
-After upgrading these to m3.medium class, Test 5 was rereun. The results of this test were also deemed a failure. However, Ocelli had an increased ingest bandwidth of 400 Mb/s suggesting that network bandwidth was indeed the bottleneck. Ocelli Server peaked at 31614 tps and ingested 9,484,338 transactions to elasticsearch over exactly 300 seconds. 
+\begin{flushleft}
+    \begin{tabular}{ | l | l |}
+    \hline
+  Attrubute & Value  \\ \hline
+  Peak TPS & 27562  \\ \hline
+  Average and Peak CPU Load on Ocelli Server &2\% / 3\%  \\ \hline
+  Average and Peak CPU Usage of Ocelli Java Server Process & 2.0\% / 4.5\% \\ \hline
+ Average and Peak CPU Usage of Elastic Search Server Process & 14.1\%/15.7\%	  \\ \hline
+  Average and Peak Memory Usage on Ocelli Server & 2100 MB / 2100 MB	 \\ \hline
+  Average and Peak Memory Usage of Ocelli Java Server Process &	2000 MB / 2000 MB		 \\ \hline
+ Average and Peak Memory Usage of Elastic Search Server Process &	900 MB / 900 MB		 \\ \hline
+Average and Peak Network Usage on Ocelli Server &	355.5 Mb/s 	 \\ \hline
+Average and Peak Network Usage on Elastic Search Server & 122 Mb/s 	 \\ \hline
+Peak Disk Usage on Ocelli Server &	2 IOPS (0.1\%)		 \\ \hline
+Peak Disk Usage on Elastic Search Server &	190 IOPS (4.4\%)		 \\ \hline
+Average and Peak CPU Load on a Monitored Node& 	1\% 	 \\ \hline
+  Average and Peak Memory Usage on a Monitored Node &	50MB / 55MB	 \\ \hline
+Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.0 Mbps		 \\ \hline
+  Average and Peak Disk Usage on a Monitored Node &  1\%	\\ 
+    \hline
+    \end{tabular}
+\end{flushleft}
 
-\subsection{Test 6 - Final - 98 Servers, Dedicated Hardware on 10GB Network, Log Server Nodes w/ 1GB Networking}
+After upgrading these to m3.medium class, Test 5 was rereun. The results of this test were also deemed a failure as we only achieved a performance increase of 37\%. However, Ocelli had an increased ingest bandwidth of 400 Mb/s suggesting that network bandwidth was indeed the bottleneck. Ocelli Server peaked at 31614 tps and ingested 9,484,338 transactions to elasticsearch over exactly 300 seconds. The difference from the table above was negligible.
 
-In order to try and drastically increase throughput, a final test was performed using 98 m3.xlarge nodes with 1GB networking.
+At this point, it seems that it is not possible to increase the throughput of the system any further. Around 31,000 transactions per second is the maximum ingestion rate even when all bottlenecks have been removed. 
+
+The only remaining area of examination is the performance of OpenSSH Server and the JSch java library itself.
+
+\subsection{Test 6 - 98 Servers, HPN-SSH Server installed on App Servers}
+
+HPN-SSH [x] is a variant of OpenSSH developed at the Pittsburg Super Computing Center. It patches OpenSSH in order to allow for tuning of internal flow control buffers. According to the documentation "These buffers often end up acting as a bottleneck for network throughput of SCP, especially on long and high bandwith network links. Modifying the ssh code to allow the buffers to be defined at run time eliminates this bottleneck".
+
+The following configuration is applied to each app server node on /etc/ssh d\_config
+
+\begin{itemize}
+\item TcpRcvBufPoll yes
+\item \#NoneEnabled no
+\item \#HPNDisabled no
+\item HPNBufferSize 16384
+\end{itemize}
+
+The results of this test were deemed a success.  Ocelli Server peaked at 42,369 tps and ingested 12,710,760 transactions to elasticsearch over exactly 300 seconds. This is a 84\% increase from Test 4 and represents performance which comes close to doubling our scale.
+
+Also it was noted that the installation of a more performant SSH library did not adversly affect resource usage on monitored nodes.
+
+\begin{flushleft}
+    \begin{tabular}{ | l | l |}
+    \hline
+  Attrubute & Value  \\ \hline
+  Peak TPS & 42369  \\ \hline
+  Average and Peak CPU Load on Ocelli Server &3\% / 4\%  \\ \hline
+  Average and Peak CPU Usage of Ocelli Java Server Process & 2.0\% / 3.5\% \\ \hline
+ Average and Peak CPU Usage of Elastic Search Server Process & 15.1\%/15.7\%	  \\ \hline
+  Average and Peak Memory Usage on Ocelli Server & 3450 MB / 3450 MB	 \\ \hline
+  Average and Peak Memory Usage of Ocelli Java Server Process &	3000 MB / 3000 MB		 \\ \hline
+ Average and Peak Memory Usage of Elastic Search Server Process &	1360 MB / 1360 MB		 \\ \hline
+Average and Peak Network Usage on Ocelli Server &	295.5 Mb/s 	 \\ \hline
+Average and Peak Network Usage on Elastic Search Server & 210 Mb/s 	 \\ \hline
+Peak Disk Usage on Ocelli Server &	2 IOPS (0.1\%)		 \\ \hline
+Peak Disk Usage on Elastic Search Server &	322 IOPS (4.4\%)		 \\ \hline
+Average and Peak CPU Load on a Monitored Node& 	1\% 	 \\ \hline
+  Average and Peak Memory Usage on a Monitored Node &	50MB / 55MB	 \\ \hline
+Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.5 Mbps		 \\ \hline
+  Average and Peak Disk Usage on a Monitored Node &  1\%	\\ 
+    \hline
+    \end{tabular}
+\end{flushleft}
 
 \section{Summary and Conclusions}
-\section{Nomenclature}
-\newpage
-\begin{verbatim}
-\begin{thebibliography}{}  % (do not forget {})
-.
-.
-\bibitem[1982]{clar:eke}
-Clarke, F., Ekeland, I.:
-Nonlinear oscillations and boundary-value problems for
-Hamiltonian systems.
-Arch. Rat. Mech. Anal. 78, 315--333 (1982)
-.
-.
+
+The data obtained from running these simulations shows that indeed, it is possible to ingest data from a large number of servers into a single machine whilst maintaing performance across all nodes. The bottleneck for these simulations started out with CPU and networking, but once servers were upgraded, it becomes clear that actual bottleneck is the SSH protocol itself. During the final test each node had data extracted at around 0.9 Mb/s to 1.5 Mb/s, an increase from all previous tests, showing that HPN-SSH was able to increase the throughput significantly. 
+
+The bandwidth for the final test on the Ocelli Server is 10 GB/s, meaning each of the 98 connected nodes has a theoretical maximum throughput of 10.2 MB/s into Ocelli Server. However, each node only achieves less than 10\% of its potential. This is due to the fact that Ocelli can not pull from each server at greater than 1.5 MB/s, indicating that it is in fact the SSH Server and/or SSH library which is causing the problem.
+
+In the final test, a global TPS of 42,369 at 98 nodes (M\textsubscript{nodes}) indicated that we achieved a global 432 TPS per server (G\textsubscript{tps}). This is a drop of 48\% from our single server simulation in Test 1 (O\textsubscript{tps}) indicating that each server introduces a 0.49\% overhead or reduces G\textsubscript{tps} by 3.94 (C\textsubscript{loss}). Using the conditions in Test 6, the theoretical maximum amount of servers (S\textsubscript{cap}) that could be supported by this configuration, whilst still allowing for 29 TPS (R\textsubscript{tps}) per server would be an additional 102 servers, for a total of 200. The formula for this calculation is below
+\\
+\begin{align}
+\dfrac{ (G\textsubscript{tps} - R\textsubscript{tps}) / C\textsubscript{loss}}{ (O\textsubscript{tps} - G\textsubscript{tps}) / M\textsubscript{nodes}} = S\textsubscript{cap}
+\end{align}
+
+In order to improve throughput, we must find a method with which to expand the throughput obtained from each app server node. As we know there are no longer any networking bottlenecks, there are 3 theories as to why performance dropped off, even with improved networking
+
+\begin{itemize}
+\item 
+\item The 'tail' command is unable to deliver data to the OpenSSH server faster than 1.5 MB/s
+\item The OpenSSH server is unable to allow download speeds of greater than 1.5 MB/s
+\item The JSch client is unable to download data at faster than 1.5 MB/s
+\end{itemize}
+
+A quick test using
+\\
+\\
+tail -f -c 1000000000 /logs/access.log \textgreater  test2.log
+\\
+\\
+shows that the 1GB is written in 25 seconds, or 40MB/s on a t2.micro instance, so the issue is clearly with OpenSSH Server or JSch. Extending this to a quick remote test shows that when the same file is downloaded via the standard SSH client on the Ocelli Server, the transfer is much faster :
+\\
+\\
+ssh -i app.pem ec2-user@server  "tail -f -c 1000000000 /logs/access.log" \textgreater  test2.log
+\\
+\\
+The above comand produces a 1GB file on the Ocelli Server in 48 seconds, or 20 MB/s. It is therefore conclusive that the JSch library itself is the source of the performance issue, and as such further research could be conducted to improve transfer rates within the library for standard SSH connections. It is possible that a standard SCP command from JSch would improve performance, however this would be outside of the scope of this paper, and would only allow for the download of the file at regular intervals, therefore stifling the real time aspect of the research.
+\pagebreak
+\begin{thebibliography}{}  % (do not forget {})\bibitem{bib:one_book}8+ Splunk Alternatives | DevOpsANGLE. [online] Available at: \textless http://devopsangle.com/2012/04/19/8-splunk-alternatives/\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book}Build your own profiling tool. [online] Available at: \textless http://www.ibm.com/developerworks/library/j-jip/\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book}CouchDB for access log aggregation and analysis - User Primary. [online] Available at: \textless http://userprimary.net/posts/2009/06/13/couchdb-for-access-log-aggregation-and-analysis/\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book}CUED SSH2 - how to use it. [online] Available at: \textless http://www-h.eng.cam.ac.uk/help/jpmg/SSH2/adv-use.html\#compress\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book}Enterprise Information Management Software EIM | Technology | SAP. [online] Available at: \textless http://www54.sap.com/solutions/tech/enterprise-information-management.html\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book}Hierarchical In-Network Data Aggregation with Quality Guarantees - Springer. [online] Available at: \textless http://link.springer.com/chapter/10.1007\%2F978-3-540-24741-8\_38?LI=true\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book}Java Concurrency (\&c): Profiling with JVMTI/JVMPI, SIGPROF and AsyncGetCallTrace. [online] Available at: \textless http://jeremymanson.blogspot.com/2007/05/profiling-with-jvmtijvmpi-sigprof-and.html\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book} Java Tip 92: Use the JVM Profiler Interface for accurate timing - JavaWorld. [online] Available at: \textless http://www.javaworld.com/javaworld/javatips/jw-javatip92.html?page=2\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book}JSTOR: The American Economic Review, Vol. 58, No. 4 (Sep., 1968), pp. 773-787. [online] Available at: \textless http://www.jstor.org/discover/10.2307/1815532?uid=3739696\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book}Machine-generated data - Wikipedia, the free encyclopedia. [online] Available at: \textless http://en.wikipedia.org/wiki/Machine-generated\_data\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book} Matt Casters on Data Integration » Real-time streaming data aggregation. [online] Available at:
+\textless http://www.ibridge.be/?p=204\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book}Splunking the JVM (Java Virtual Machine). [online] Available at: \textless http://www.slideshare.net/damiendallimore/splunking-the-jvm-java-virtual-machine\#btnNext\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book} syslog - Splunk is fantastically expensive: What are the alternatives? - Server Fault. [online] Available at: \textless http://serverfault.com/questions/239401/splunk-is-fantastically-expensive-what-are-the-alternatives\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book} valz - Scalable and robust distributed data aggregation, as easy as logging - Google Project Hosting. [online] Available at: \textless http://code.google.com/p/valz/\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book}Wireless sensor network - Wikipedia, the free encyclopedia. [online] Available at: \textless http://en.wikipedia.org/wiki/Wireless\_sensor\_network\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book} Examples of machine-generated data | DBMS 2 : DataBase Management System Services. [online] Available at: \textless http://www.dbms2.com/2010/04/08/machine-generated-data-example/\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book} Examples and definition of machine-generated data | DBMS 2 : DataBase Management System Services. [online] Available at: \textless http://www.dbms2.com/2010/12/30/examples-and-definition-of-machine-generated-data/\textgreater [Accessed 1 Jan. 2013].
+\bibitem{bib:one_book} Page 10 - Chromium Renderserver: Scalable and Open Source Remote Rendering Infrastructure [eScholarship]. [online] Available at: \textless http://escholarship.ucop.edu/uc/item/08t699fr\textgreater [Accessed 2 Jan. 2013].
+\bibitem{bib:one_book} JSch - Java Secure Channel. [online] Available at: \textless http://www.jcraft.com/jsch/\textgreater [Accessed 2 Jan. 2013].
+\bibitem{bib:one_book} The Java Virtual Machine Profiler Interface | Dr Dobb’s. [online] Available at: \textless http://www.drdobbs.com/jvm/the-java-virtual-machine-profiler-interf/184405722\textgreater [Accessed 2 Jan. 2013].
+\bibitem{bib:one_book} The Java Virtual Machine Profiler Interface (JVMPI). [online] Available at: \textless http://docs.oracle.com/javase/1.4.2/docs/guide/jvmpi/jvmpi.html\textgreater [Accessed 2 Jan. 2013].
+\bibitem{bib:one_book} Bloom Filters by Example. [online] Available at: \textless http://billmill.org/bloomfilter-tutorial/\textgreater [Accessed 4 Jan. 2013].
+\bibitem{bib:one_book} View the latest version that the requested documentation is available in. - Splunk Knowledgebase. [online] Available at:
+\textless http://docs.splunk.com/Special:SpecialLatestDoc?t=Documentation/Splunk/latest/Admin/Bloomfilters\textgreater [Accessed 4 Jan. 2013].
+\bibitem{bib:one_book} Splunk Breakthrough Recognized with Grant of U.S. Patent for Organizing and Understanding Massive Machine Data. [online] Available at: \textless http://www.splunk.com/view/SP-CAAAF8J\textgreater [Accessed 4 Jan. 2013].
+\bibitem{bib:one_book} Platform Monitoring and Management Using JMX. [online] Available at: \textless http://docs.oracle.com/javase/1.5.0/docs/guide/management/agent.html\textgreater [Accessed 4 Jan. 2013].
+\bibitem{bib:one_book} JDK 5.0 Java Virtual Machine Tool Interface (JVMTI)-related APIs \& Developer Guides -- from Sun Microsystems. [online] Available at: \textless http://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/\textgreater [Accessed 4 Jan. 2013].
+\bibitem{bib:one_book} Enterprise information management - Wikipedia, the free encyclopedia. [online] Available at: \textless http://en.wikipedia.org/wiki/Enterprise\_information\_management\textgreater [Accessed 4 Jan. 2013].
+\bibitem{bib:one_book} Enterprise Information Management Software EIM | Technology | SAP. [online] Available at: \textless http://www54.sap.com/solutions/tech/enterprise-information-management.html\textgreater [Accessed 4 Jan. 2013].
 \end{thebibliography}
-\end{verbatim}
+
 {\itshape Sample Output}
 \bibauthoryear
 %

@@ -1,6 +1,6 @@
 \contentsline {title}{A Lightweight System for Just-In-Time Aggregation of Machine Generated Data in a Distributed Network}{2}{chapter.1}
 \authcount {1}
-\contentsline {author}{Student : Michael Dreeling}{2}{chapter.1}
+\contentsline {author}{Student: Michael Dreeling\unskip \ \ignorespaces { Supervisor: Eric Robson}}{2}{chapter.1}
 \contentsline {section}{\numberline {1}Introduction}{2}{section.1.1}
 \contentsline {section}{\numberline {2}Background and related work}{3}{section.1.2}
 \contentsline {subsection}{\numberline {2.1}Distributed Data Collection methods}{3}{subsection.1.2.1}
@@ -27,23 +27,22 @@
 \contentsline {subsubsection}{Application}{14}{section*.12}
 \contentsline {subsubsection}{User}{14}{section*.13}
 \contentsline {subsubsection}{Profile}{14}{section*.14}
-\contentsline {section}{\numberline {5}Experimental Testbed}{14}{section.1.5}
-\contentsline {subsection}{\numberline {5.1}Simulation Environments}{14}{subsection.1.5.1}
+\contentsline {section}{\numberline {5}Research Questions}{14}{section.1.5}
+\contentsline {section}{\numberline {6}Experimental Testbed}{14}{section.1.6}
+\contentsline {subsection}{\numberline {6.1}Simulation Environment}{14}{subsection.1.6.1}
 \contentsline {subsubsection}{Amazon EC2}{14}{section*.15}
-\contentsline {subsection}{\numberline {5.2}Simulation Approach and Setup}{14}{subsection.1.5.2}
+\contentsline {subsection}{\numberline {6.2}Simulation Approach and Setup}{16}{subsection.1.6.2}
 \contentsline {subsubsection}{Requirements and Test Setup}{16}{section*.16}
 \contentsline {subsubsection}{Key Analysis Areas}{16}{section*.17}
-\contentsline {subsection}{\numberline {5.3}Running the simulation}{16}{subsection.1.5.3}
-\contentsline {subsubsection}{Application Setup}{16}{section*.18}
+\contentsline {subsection}{\numberline {6.3}Running the simulation}{17}{subsection.1.6.3}
+\contentsline {subsubsection}{Application Setup}{17}{section*.18}
 \contentsline {subsubsection}{Streaming Setup}{17}{section*.19}
-\contentsline {subsubsection}{Warm Up Phase}{18}{section*.20}
-\contentsline {section}{\numberline {6}Results and Analysis}{19}{section.1.6}
-\contentsline {subsection}{\numberline {6.1}Warmup}{19}{subsection.1.6.1}
-\contentsline {subsection}{\numberline {6.2}Test 1 - 10 Servers}{20}{subsection.1.6.2}
-\contentsline {subsection}{\numberline {6.3}Test 2 - 20 Servers and 98 Servers}{21}{subsection.1.6.3}
-\contentsline {subsection}{\numberline {6.4}Test 3 - 100 Servers, Upgraded Elastic Search}{24}{subsection.1.6.4}
-\contentsline {subsection}{\numberline {6.5}Test 4 - 98 Servers, Upgraded Ocelli Server}{25}{subsection.1.6.5}
-\contentsline {subsection}{\numberline {6.6}Test 5 - 98 Servers, Dedicated Hardware on 10GB Network}{26}{subsection.1.6.6}
-\contentsline {subsection}{\numberline {6.7}Test 6 - Final - 98 Servers, Dedicated Hardware on 10GB Network, Log Server Nodes w/ 1GB Networking}{26}{subsection.1.6.7}
-\contentsline {section}{\numberline {7}Summary and Conclusions}{27}{section.1.7}
-\contentsline {section}{\numberline {8}Nomenclature}{27}{section.1.8}
+\contentsline {section}{\numberline {7}Results and Analysis}{20}{section.1.7}
+\contentsline {subsection}{\numberline {7.1}Warmup}{20}{subsection.1.7.1}
+\contentsline {subsection}{\numberline {7.2}Test 1 - 10 Servers}{21}{subsection.1.7.2}
+\contentsline {subsection}{\numberline {7.3}Test 2 - 20 Servers and 98 Servers}{22}{subsection.1.7.3}
+\contentsline {subsection}{\numberline {7.4}Test 3 - 100 Servers, Upgraded Elastic Search}{27}{subsection.1.7.4}
+\contentsline {subsection}{\numberline {7.5}Test 4 - 98 Servers, Upgraded Ocelli Server}{28}{subsection.1.7.5}
+\contentsline {subsection}{\numberline {7.6}Test 5 - 98 Servers, Dedicated Hardware on 10GB Network for Ocelli Server and Elastic Search }{29}{subsection.1.7.6}
+\contentsline {subsection}{\numberline {7.7}Test 6 - 98 Servers, HPN-SSH Server installed on App Servers}{30}{subsection.1.7.7}
+\contentsline {section}{\numberline {8}Summary and Conclusions}{31}{section.1.8}
