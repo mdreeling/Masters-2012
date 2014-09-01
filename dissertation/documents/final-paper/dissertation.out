@@ -12,7 +12,7 @@
 \BOOKMARK [1][-]{section.1.4}{Passive MGD Collector Design}{chapter.1}% 12
 \BOOKMARK [2][-]{subsection.1.4.1}{General Architecture and Problem Domain Model}{section.1.4}% 13
 \BOOKMARK [2][-]{subsection.1.4.2}{Data Siphon Server Component}{section.1.4}% 14
-\BOOKMARK [2][-]{subsection.1.4.3}{Data Siphon Server Data Model}{section.1.4}% 15
+\BOOKMARK [2][-]{subsection.1.4.3}{Ocelli Server Data Model}{section.1.4}% 15
 \BOOKMARK [1][-]{section.1.5}{Research Questions}{chapter.1}% 16
 \BOOKMARK [1][-]{section.1.6}{Experimental Testbed}{chapter.1}% 17
 \BOOKMARK [2][-]{subsection.1.6.1}{Simulation Environment}{section.1.6}% 18
@@ -22,7 +22,7 @@
 \BOOKMARK [2][-]{subsection.1.7.1}{Warmup}{section.1.7}% 22
 \BOOKMARK [2][-]{subsection.1.7.2}{Test 1 - 10 Servers}{section.1.7}% 23
 \BOOKMARK [2][-]{subsection.1.7.3}{Test 2 - 20 Servers and 98 Servers}{section.1.7}% 24
-\BOOKMARK [2][-]{subsection.1.7.4}{Test 3 - 100 Servers, Upgraded Elastic Search}{section.1.7}% 25
+\BOOKMARK [2][-]{subsection.1.7.4}{Test 3 - 98 Servers, Upgraded Elastic Search}{section.1.7}% 25
 \BOOKMARK [2][-]{subsection.1.7.5}{Test 4 - 98 Servers, Upgraded Ocelli Server}{section.1.7}% 26
 \BOOKMARK [2][-]{subsection.1.7.6}{Test 5 - 98 Servers, Dedicated Hardware on 10GB Network for Ocelli Server and Elastic Search }{section.1.7}% 27
 \BOOKMARK [2][-]{subsection.1.7.7}{Test 6 - 98 Servers, HPN-SSH Server installed on App Servers}{section.1.7}% 28

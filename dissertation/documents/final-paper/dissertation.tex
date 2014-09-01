@@ -11,13 +11,11 @@
 \begin{document}
 %
 \newpage
-\tableofcontents
-\newpage
 
 %
 \title{A Lightweight System for Just-In-Time Aggregation of Machine Generated Data in a Distributed Network}
 
-\author {Student: Michael Dreeling\\{ Supervisor: Eric Robson}}
+\author {Student: Michael Dreeling\\{ Supervisor: Eric Robson}\\{ Sept 1st 2014}}
 \institute{Waterford Institute of Technology, Ireland.}
 
 \maketitle
@@ -28,9 +26,7 @@ Application Data Management or ADM is a research area concerned with the aggrega
 %
 \section{Introduction}
 %
-Application Data Management or ADM is a research area concerned with the aggregation, storage and presentation of information typically emitted from Enterprise Applications. ADM is a subset of Enterprise Information Management or EIM [27]. EIM usually joins together Business Intelligence and raw Application Data. Large scale commercial EIM systems started to appear in 2003, and since then many of the larger software vendors such as Tibco, Oracle and SAP [28] have created their own systems. The goal of each system is to present the Machine Generated Data [17] or MGD being emitted from applications and servers. Over the past few years, there has been a focus in EIM on dealing with the challenge of Big-Data as companies such as Amazon, Facebook and Zynga generate terabytes of application information per day. This data, when organized, can be used in the analysis of system problems, user behavior and security threats.
-
-Most EIM software solutions work in either an Active, Passive or Combined operation mode. An Active system requires installation of modules or agents (sometimes called collectors) on servers which are being monitored. The agents usually run with a relatively high level of access and feed information back to a central aggregator. The agents can very efficiently pass the information back to the server and have extremely fast access to the data. A Passive system on the other hand operates entirely remotely and must work harder to retrieve and analyze the data. Typically, file and directory access will need to be granted to the host system by an Administrator over a particular protocol but software is not required to be installed once access has been granted. For the purposes of this dissertation we will focus on the Passive style. The major challenges for all EIM systems are 
+Most EIM software solutions work in either an Active, Passive or Combined operation mode. An Active system requires installation of modules or agents (sometimes called collectors) on servers which are being monitored. The agents usually run with a relatively high level of access and feed information back to a central aggregator. The agents can very efficiently pass the information back to the server and have extremely fast access to the data. A Passive system on the other hand operates entirely remotely and must work harder to retrieve and analyze the data. Typically, file and directory access will need to be granted to the host system by an Administrator over a particular protocol although software is not required to be installed once access has been granted. For the purposes of this dissertation we will focus on the Passive style. The major challenges for all EIM systems are 
 
 \begin{enumerate}
   \item Accessing and Transmitting Data 
@@ -43,8 +39,7 @@ Data access is the most straight forward issue to solve in both the Passive and 
 This system would have several advantages over existing software
 
 \begin{enumerate}
-  \item A Light installation foot print (1 server)
-  \item Low overall network utilization
+  \item A Light installation foot print (1 or 2 servers)
   \item Low overall CPU usage on server and monitored host
 \end{enumerate}
 
@@ -147,10 +142,9 @@ The proposed system would have the following characteristics
 \item 	No real historical data – Only real-time (plus or minus X hours)
 \item 	Crisis Event export features (i.e a Snapshot of what was logged and how systems were performing during the event)
 \item 	The system would operate in a ‘standby’ or ‘active’ mode
-\item 	Standby mode is where the system is connected via SSH2 to all servers within a particular Applications’ profile but is not pulling data.
+\item 	Standby mode is where the system is running but not connected to all servers within a particular Applications’ profile and is not pulling data.
 \item 	Active mode is where data is being pulled into memory for analysis and indexing, and as such the dashboard can now be connected to view data.
-\item 	The system would have large heap (or general memory requirements) but low disk space or archiving requirements (i.e up to 2GB overflow to disk)
-\item 	Disk access would only be required if the user shifts to a window which is no longer in memory.
+\item 	The system would have large heap (or general memory requirements) but low disk space or archiving requirements (i.e up to 20GB overflow to disk)
 \end{itemize}
 \newpage
 \section{Passive MGD Collector Design}
@@ -175,18 +169,21 @@ Before this can be achieved, the hosts, applications and logs must all be predef
 The Architecture consists of the following components
 
 \begin{itemize}
-\item	Data Siphon Server :: input-filter
-\item	Data Siphon Server :: multi-ssh-client
-\item	Data Siphon Server :: output-filter
-\item	Data Siphon Server :: queueing-system
-\item	Data Siphon Server :: app-database
-\item	Data Siphon Server :: profile-manager
+\item	Ocelli Server :: input-filter
+\item	Ocelli Server :: multi-ssh-client
+\item	Ocelli Server :: output-filter
+\item	Ocelli Server :: indexing-system
+\item	Ocelli Server :: app-database
+\item	Ocelli Server :: profile-manager
 \end{itemize}
 
 \begin{itemize}
-\item	UI Server :: rest-data-access
-\item	UI Server :: queue-reader
-\item	UI Server :: ui-dashboard
+\item	Ocelli UI Server :: rest-data-access
+\item	Ocelli UI Server :: ui-admin-dashboard
+\end{itemize}
+
+\begin{itemize}
+\item	Data Access :: ui-dashboard
 \end{itemize}
 
 The problem domain consists of the following entities.
@@ -276,7 +273,7 @@ Python Libraries
 
 Most libraries do not inherent cater for the management and retrieval of data across multiple connections at once, although Dancers Shell, Fabric and Rye do. 
 
-Library Selection
+\subsubsection{Library Selection}
 
 The selected library for the implementation will be JSch (Java Secure Channel) from JCraft. This library is pure Java and includes key features such as
 
@@ -310,14 +307,14 @@ The primary function of the output filter is twofold and should be configurable 
 \item	Allow the removal any data which the user has specified in their profile. (i.e The removal of lines containing the word INFO)
 \item	Allow only specific data to pass through (i.e lines only containing the word ERROR)
 \end{itemize}
-\subsubsection{queuing-system}
+\subsubsection{indexing-system}
 
-A queuing system is required in order to architecturally de-couple ingest of data from its consumption. The UI should be able to read and display events independently of the system receiving the. The queuing system which is most likely to be used will be a simple in memory solution which will spill over to disk when full. In order to preserve messages and queue them to the UI, a persistent ActiveMQ solution may also be used. Access to the queue will be provided via an API.
+An indexing system is required in order to architecturally de-couple ingest of data from its temporary storage. The Dashboard UI should be able to read and display events independently of the system receiving the data (Ocelli). The indexing system which is most likely to be used will be a simple in memory solution which will spill over to disk when full or Elastic Search [29]. Access to the queue will be provided via an API.
 
 
 \subsubsection{profile-manager}
 	
-A profile management system is necessary in order to store the applications which a user wishes to monitor. This will be implemented as part of the MySQL database for the SSH Multi-Client application. A user will be able to store profiles containing information about the following entities
+A profile management system is necessary in order to store the applications which a user wishes to monitor. This will be implemented as part of the MySQL database for the Ocelli Server application. A user will be able to store profiles containing information about the following entities
 
 \begin{itemize}
 \item	Environments (i.e Production, Test)
@@ -326,9 +323,9 @@ A profile management system is necessary in order to store the applications whic
 \end{itemize}
 \subsubsection{ui-dashboard and search}
 
-Currently Kibana [15] is being investigated for use as a dashboard and ElasticSearch [16] for search capabilities of the data. These technologies are current in use by other streaming collection mechanisms such as GrayLog2. 
+Kibana [15] will be used as the dashboard and ElasticSearch [16] for indexing of the data. These technologies are current in use by other streaming collection mechanisms such as GrayLog2. 
 
-\subsection{Data Siphon Server Data Model}
+\subsection{Ocelli Server Data Model}
 
 The Ocelli Server data model (Fig 1.) is designed to support both the Admninistration UI of Ocelli and the server side application. As such, it contains elements which serve both. The model is designed such that you can answer the following questions
 
@@ -385,7 +382,7 @@ Essentially, we wish to determine if a central server could provide the function
 
 \section{Experimental Testbed}
 
-In order to determine the viaibility of ingesting and processing data into a single server, tests will be performed using various instance types in Amazon's EC2 infrastructure.
+In order to determine the viaibility of ingesting and processing data into a single server, tests will be performed using various instance types in Amazon's EC2 infrastructure [30]
 
 \begin{itemize}
 \item Virtualized network consisting of shared tenancy machines with 40 Mb to 1GB Networking
@@ -396,9 +393,9 @@ In order to determine the viaibility of ingesting and processing data into a sin
 
 \subsubsection{Amazon EC2}
 
-The intial test environment consists an Ocelli Server, an Elastic Search server and 98 t2.micro nodes, using Amazon's first generation M1 platform. The M3 generation would have provided better performance at a lower price point, however these nodes were unavailable in the test environment.
+The intial test environment consists an Ocelli Server, an Elastic Search server and 98 t2.micro [31] nodes, using Amazon's second generation T2 platform.
 
-Specifications for the t2.micro are listed below [http://aws.amazon.com/ec2/instance-types/]
+Specifications for the t2.micro are listed below
 
 \begin{flushleft}
     \begin{tabular}{ | l | l |}
@@ -426,9 +423,12 @@ After these steps have been taken Ocelli Server will connect to every node conta
 
 Ocelli will connect to each of the nodes and issue the following command
 \\
-tail -f -c 1000000000 /home/ec2-user/logs/access.log
+\\
+tail -f -c 1000000000 /logs/access.log
+\\
 \\
 This will start a download of the last 1GB of the log file over ssh. 
+\\
 \\
 The average line size in the log is 120 Bytes.
 
@@ -442,7 +442,7 @@ The following are pre-requisites to performing a test run
 \item The User has added an Application to their Profile
 \item All Nodes to be Monitored are registered with Ocelli Server (This will be performed via an SQL Script)
 \item An Artifact exists on all Nodes and is registered with Ocelli Server (This will be performed via an SQL Script)
-\item Each Artifact is a 1.6 GB Log File in /home/ec2-user/logs/access.log
+\item Each Artifact is a 1.6 GB Log File in /logs/access.log
 \item The Elastic Search Cluster is empty and Indexes have been cleared
  \end{itemize}
 
@@ -478,7 +478,7 @@ Next, an Artifact must be selected for streaming to Elastic Search as show below
 For all of the tests the following will hold true
 
 \begin{itemize}
-\item /var/log/access.log will be a single 1.6GB text file
+\item /logs/access.log will be a single 1.6GB text file
 \item Elastic Search will be installed and running on a seperate server to Ocelli Server
 \item Each test will run for 5 minutes with a 5 minute warm up period occurring first
 \end{itemize}
@@ -489,7 +489,7 @@ There is also serverside setup for the simulation in the configuration of the Oc
 tpsCheckInterval checks the number of transactions per second that Ocelli is able to process downstream to the ElasticSearch server, whilst simulationRunTimeMillis stops Ocelli from streaming after a certain amount of time has passed. This allows for timeboxed tests to be performed very easily.
 \\
 \\
-Also, to warm up the JVM, the application is switched to "simulationMode: true" in ocelli.yml and the simulation is set to run for 5 minutes only. In the warm up phase Ocelli is also only connected connected to a single server on which it is streaming a single log from /var/log/access.log.
+Also, to warm up the JVM, the application is switched to "simulationMode: true" in ocelli.yml and the simulation is set to run for 5 minutes only. In the warm up phase Ocelli is also only connected connected to a single server on which it is streaming a single log from /logs/access.log.
 \pagebreak
 \section{Results and Analysis}
 \subsection{Warmup}
@@ -661,15 +661,17 @@ Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.0 Mbps		 \\ \h
 
 At 100 nodes, we are at capacity with the following resources
 
-Ocelli Server Network Bandwidth - 100\% (40 Mb/s)
-Elastic Search Server Network Bandwidth - 80\% (30 Mb/s)
-Elastic Search Server CPU - 100\%
+\begin{itemize}
+\item Ocelli Server Network Bandwidth - 100\% (40 Mb/s)
+\item Elastic Search Server Network Bandwidth - 80\% (30 Mb/s)
+\item Elastic Search Server CPU - 100\%
+\end{itemize}
 
 For the next test we will upgrade the Elastic Search Server so that it has more CPU and more network bandwidth.
 
-\subsection{Test 3 - 100 Servers, Upgraded Elastic Search}
+\subsection{Test 3 - 98 Servers, Upgraded Elastic Search}
 
-For this test, the Elastic Search Server is upgraded to a M3 General Purpose Double Extra Large (m3.2xlarge)
+For this test, the Elastic Search Server is upgraded to a M3 General Purpose Double Extra Large (m3.2xlarge [31]), the specifications are show below
 
 \begin{flushleft}
     \begin{tabular}{ | l | l |}
@@ -727,9 +729,9 @@ Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.0 Mbps		 \\ \h
 
 \subsection{Test 4 - 98 Servers, Upgraded Ocelli Server}
 
-For this test, the Ocelli Server is upgraded to a M3 General Purpose Double Extra Large (m3.2xlarge)
+For this test, the Ocelli Server is also upgraded to a M3 General Purpose Double Extra Large (m3.2xlarge [31])
 
-During this test it is observed that although we have increased our throughput, Elastic Search has yet again become the bottle neck. Ocelli Server peaked at 22976 tps and ingested 6,893,024 transactions to elasticsearch over exactly 300 seconds. The Ocelli server read data at 144 Mb/s and sent to Elastic Search at 150 Mb/s, however Elastic search only reported ingesting at 74 Mb/s, with a combined network throughput of aroun 100 Mb/s as show below.
+During this test it is observed that although we have increased our throughput, Elastic Search has yet again become the bottle neck. Ocelli Server peaked at 22976 tps and ingested 6,893,024 transactions to elasticsearch over exactly 300 seconds. The Ocelli server read data at 144 Mb/s and sent to Elastic Search at 150 Mb/s, however Elastic search only reported ingesting at 74 Mb/s, with a combined network throughput of around 100 Mb/s as show below.
 
 \begin{figure}[h]
     \centering
@@ -763,9 +765,9 @@ Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.0 Mbps		 \\ \h
 
 \subsection{Test 5 - 98 Servers, Dedicated Hardware on 10GB Network for Ocelli Server and Elastic Search }
 
-For this test, dedicated hardware was requested in AWS on c3.8xlarge instances with 10GB networking for the Ocelli and the Elastic Search Server. The results of this test were deemed a failure as we could not obtain a performance improvement which was an order of magnitude greater (> 60\%) than Test 4. Ocelli Server peaked at 27562 tps and ingested 8,268,840 transactions to elasticsearch over exactly 300 seconds. This is an increase of only 19\% even though the hardware and networking have been drastically upgraded. Monitoring showed that networking was drastically underused. Total bandwidth used by ES was 138 Mb/s, only a 30 MB increase over Test 4 even though bandwidth is now 10GB/s (or 1000 MB/s). Ocelli Server Bandwidth stayed at 299 MB/s, only a 4 MB/s increase from non-dedicated hardware.
+For this test, dedicated hardware was requested in AWS on c3.8xlarge [31] instances with 10GB networking for the Ocelli and the Elastic Search Server. The results of this test were deemed a failure as we could not obtain a performance improvement which was an order of magnitude greater (> 60\%) than Test 4. Ocelli Server peaked at 27562 tps and ingested 8,268,840 transactions to elasticsearch over exactly 300 seconds. This is an increase of only 19\% even though the hardware and networking have been drastically upgraded. Monitoring showed that networking was drastically underused. Total bandwidth used by ES was 138 Mb/s, only a 30 MB increase over Test 4 even though bandwidth is now 10GB/s (or 1000 MB/s). Ocelli Server Bandwidth stayed at 299 MB/s, only a 4 MB/s increase from non-dedicated hardware.
 
-At this point, the t1.micro nodes containing the logs are analyzed, and it is determined that their network throughput is actually the bottle neck as data cannot be pulled from them at greater than 500-700Kb/s. 
+At this point, the t1.micro nodes containing the logs are analyzed, and it is determined that their network throughput may be actually the bottle neck as data cannot be pulled from them at greater than 500-700Kb/s. 
 
 \begin{flushleft}
     \begin{tabular}{ | l | l |}
@@ -790,7 +792,7 @@ Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.0 Mbps		 \\ \h
     \end{tabular}
 \end{flushleft}
 
-After upgrading these to m3.medium class, Test 5 was rereun. The results of this test were also deemed a failure as we only achieved a performance increase of 37\%. However, Ocelli had an increased ingest bandwidth of 400 Mb/s suggesting that network bandwidth was indeed the bottleneck. Ocelli Server peaked at 31614 tps and ingested 9,484,338 transactions to elasticsearch over exactly 300 seconds. The difference from the table above was negligible.
+After upgrading these to m3.medium class, Test 5 was rereun. The results of this test were also deemed a failure as we only achieved a performance increase of 37\%. However, Ocelli had an increased ingest bandwidth of 400 Mb/s suggesting that network bandwidth may have been the bottleneck. Ocelli Server peaked at 31614 tps and ingested 9,484,338 transactions to elasticsearch over exactly 300 seconds. The difference from the table above was negligible. The percentage increase is not enough to say that the m3.medium class servers made the difference.
 
 At this point, it seems that it is not possible to increase the throughput of the system any further. Around 31,000 transactions per second is the maximum ingestion rate even when all bottlenecks have been removed. 
 
@@ -798,9 +800,9 @@ The only remaining area of examination is the performance of OpenSSH Server and 
 
 \subsection{Test 6 - 98 Servers, HPN-SSH Server installed on App Servers}
 
-HPN-SSH [x] is a variant of OpenSSH developed at the Pittsburg Super Computing Center. It patches OpenSSH in order to allow for tuning of internal flow control buffers. According to the documentation "These buffers often end up acting as a bottleneck for network throughput of SCP, especially on long and high bandwith network links. Modifying the ssh code to allow the buffers to be defined at run time eliminates this bottleneck".
+HPN-SSH [32] is a variant of OpenSSH developed at the Pittsburg Super Computing Center. It patches OpenSSH in order to allow for tuning of internal flow control buffers. According to the documentation "These buffers often end up acting as a bottleneck for network throughput of SCP, especially on long and high bandwith network links. Modifying the ssh code to allow the buffers to be defined at run time eliminates this bottleneck".
 
-The following configuration is applied to each app server node on /etc/ssh d\_config
+openssh-6.6p1-hpnssh14v5 is installed on all of the app server nodes, and the following configuration is applied to each node at /etc/ssh d\_config
 
 \begin{itemize}
 \item TcpRcvBufPoll yes
@@ -838,7 +840,7 @@ Average and Peak Network Usage on a Monitored Node &	0.7 Mbps / 1.5 Mbps		 \\ \h
 
 \section{Summary and Conclusions}
 
-The data obtained from running these simulations shows that indeed, it is possible to ingest data from a large number of servers into a single machine whilst maintaing performance across all nodes. The bottleneck for these simulations started out with CPU and networking, but once servers were upgraded, it becomes clear that actual bottleneck is the SSH protocol itself. During the final test each node had data extracted at around 0.9 Mb/s to 1.5 Mb/s, an increase from all previous tests, showing that HPN-SSH was able to increase the throughput significantly. 
+The data obtained from running these simulations shows that indeed, it is possible to ingest data from a large number of servers into a single machine whilst maintaing performance across all nodes. The bottleneck for these simulations started out with CPU and networking, but once servers were upgraded, it becomes clear that the actual bottleneck are components within the SSH stack we are using. During the final test each node had data extracted at around 0.9 Mb/s to 1.5 Mb/s, an increase from all previous tests, showing that HPN-SSH was able to increase the throughput significantly. 
 
 The bandwidth for the final test on the Ocelli Server is 10 GB/s, meaning each of the 98 connected nodes has a theoretical maximum throughput of 10.2 MB/s into Ocelli Server. However, each node only achieves less than 10\% of its potential. This is due to the fact that Ocelli can not pull from each server at greater than 1.5 MB/s, indicating that it is in fact the SSH Server and/or SSH library which is causing the problem.
 
@@ -848,13 +850,14 @@ In the final test, a global TPS of 42,369 at 98 nodes (M\textsubscript{nodes}) i
 \dfrac{ (G\textsubscript{tps} - R\textsubscript{tps}) / C\textsubscript{loss}}{ (O\textsubscript{tps} - G\textsubscript{tps}) / M\textsubscript{nodes}} = S\textsubscript{cap}
 \end{align}
 
-In order to improve throughput, we must find a method with which to expand the throughput obtained from each app server node. As we know there are no longer any networking bottlenecks, there are 3 theories as to why performance dropped off, even with improved networking
+In order to improve throughput, we must find a method with which to expand the throughput obtained from each app server node. As we know there are no longer any networking bottlenecks, there are 4 theories as to why performance dropped off, even with improved networking
 
 \begin{itemize}
 \item 
 \item The 'tail' command is unable to deliver data to the OpenSSH server faster than 1.5 MB/s
 \item The OpenSSH server is unable to allow download speeds of greater than 1.5 MB/s
 \item The JSch client is unable to download data at faster than 1.5 MB/s
+\item The Ocelli Server usage of the JSch client is inefficient
 \end{itemize}
 
 A quick test using
@@ -869,41 +872,45 @@ shows that the 1GB is written in 25 seconds, or 40MB/s on a t2.micro instance, s
 ssh -i app.pem ec2-user@server  "tail -f -c 1000000000 /logs/access.log" \textgreater  test2.log
 \\
 \\
-The above comand produces a 1GB file on the Ocelli Server in 48 seconds, or 20 MB/s. It is therefore conclusive that the JSch library itself is the source of the performance issue, and as such further research could be conducted to improve transfer rates within the library for standard SSH connections. It is possible that a standard SCP command from JSch would improve performance, however this would be outside of the scope of this paper, and would only allow for the download of the file at regular intervals, therefore stifling the real time aspect of the research.
-\pagebreak
-\begin{thebibliography}{}  % (do not forget {})\bibitem{bib:one_book}8+ Splunk Alternatives | DevOpsANGLE. [online] Available at: \textless http://devopsangle.com/2012/04/19/8-splunk-alternatives/\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book}Build your own profiling tool. [online] Available at: \textless http://www.ibm.com/developerworks/library/j-jip/\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book}CouchDB for access log aggregation and analysis - User Primary. [online] Available at: \textless http://userprimary.net/posts/2009/06/13/couchdb-for-access-log-aggregation-and-analysis/\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book}CUED SSH2 - how to use it. [online] Available at: \textless http://www-h.eng.cam.ac.uk/help/jpmg/SSH2/adv-use.html\#compress\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book}Enterprise Information Management Software EIM | Technology | SAP. [online] Available at: \textless http://www54.sap.com/solutions/tech/enterprise-information-management.html\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book}Hierarchical In-Network Data Aggregation with Quality Guarantees - Springer. [online] Available at: \textless http://link.springer.com/chapter/10.1007\%2F978-3-540-24741-8\_38?LI=true\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book}Java Concurrency (\&c): Profiling with JVMTI/JVMPI, SIGPROF and AsyncGetCallTrace. [online] Available at: \textless http://jeremymanson.blogspot.com/2007/05/profiling-with-jvmtijvmpi-sigprof-and.html\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book} Java Tip 92: Use the JVM Profiler Interface for accurate timing - JavaWorld. [online] Available at: \textless http://www.javaworld.com/javaworld/javatips/jw-javatip92.html?page=2\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book}JSTOR: The American Economic Review, Vol. 58, No. 4 (Sep., 1968), pp. 773-787. [online] Available at: \textless http://www.jstor.org/discover/10.2307/1815532?uid=3739696\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book}Machine-generated data - Wikipedia, the free encyclopedia. [online] Available at: \textless http://en.wikipedia.org/wiki/Machine-generated\_data\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book} Matt Casters on Data Integration » Real-time streaming data aggregation. [online] Available at:
-\textless http://www.ibridge.be/?p=204\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book}Splunking the JVM (Java Virtual Machine). [online] Available at: \textless http://www.slideshare.net/damiendallimore/splunking-the-jvm-java-virtual-machine\#btnNext\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book} syslog - Splunk is fantastically expensive: What are the alternatives? - Server Fault. [online] Available at: \textless http://serverfault.com/questions/239401/splunk-is-fantastically-expensive-what-are-the-alternatives\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book} valz - Scalable and robust distributed data aggregation, as easy as logging - Google Project Hosting. [online] Available at: \textless http://code.google.com/p/valz/\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book}Wireless sensor network - Wikipedia, the free encyclopedia. [online] Available at: \textless http://en.wikipedia.org/wiki/Wireless\_sensor\_network\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book} Examples of machine-generated data | DBMS 2 : DataBase Management System Services. [online] Available at: \textless http://www.dbms2.com/2010/04/08/machine-generated-data-example/\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book} Examples and definition of machine-generated data | DBMS 2 : DataBase Management System Services. [online] Available at: \textless http://www.dbms2.com/2010/12/30/examples-and-definition-of-machine-generated-data/\textgreater [Accessed 1 Jan. 2013].
-\bibitem{bib:one_book} Page 10 - Chromium Renderserver: Scalable and Open Source Remote Rendering Infrastructure [eScholarship]. [online] Available at: \textless http://escholarship.ucop.edu/uc/item/08t699fr\textgreater [Accessed 2 Jan. 2013].
-\bibitem{bib:one_book} JSch - Java Secure Channel. [online] Available at: \textless http://www.jcraft.com/jsch/\textgreater [Accessed 2 Jan. 2013].
-\bibitem{bib:one_book} The Java Virtual Machine Profiler Interface | Dr Dobb’s. [online] Available at: \textless http://www.drdobbs.com/jvm/the-java-virtual-machine-profiler-interf/184405722\textgreater [Accessed 2 Jan. 2013].
-\bibitem{bib:one_book} The Java Virtual Machine Profiler Interface (JVMPI). [online] Available at: \textless http://docs.oracle.com/javase/1.4.2/docs/guide/jvmpi/jvmpi.html\textgreater [Accessed 2 Jan. 2013].
-\bibitem{bib:one_book} Bloom Filters by Example. [online] Available at: \textless http://billmill.org/bloomfilter-tutorial/\textgreater [Accessed 4 Jan. 2013].
-\bibitem{bib:one_book} View the latest version that the requested documentation is available in. - Splunk Knowledgebase. [online] Available at:
-\textless http://docs.splunk.com/Special:SpecialLatestDoc?t=Documentation/Splunk/latest/Admin/Bloomfilters\textgreater [Accessed 4 Jan. 2013].
-\bibitem{bib:one_book} Splunk Breakthrough Recognized with Grant of U.S. Patent for Organizing and Understanding Massive Machine Data. [online] Available at: \textless http://www.splunk.com/view/SP-CAAAF8J\textgreater [Accessed 4 Jan. 2013].
-\bibitem{bib:one_book} Platform Monitoring and Management Using JMX. [online] Available at: \textless http://docs.oracle.com/javase/1.5.0/docs/guide/management/agent.html\textgreater [Accessed 4 Jan. 2013].
-\bibitem{bib:one_book} JDK 5.0 Java Virtual Machine Tool Interface (JVMTI)-related APIs \& Developer Guides -- from Sun Microsystems. [online] Available at: \textless http://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/\textgreater [Accessed 4 Jan. 2013].
-\bibitem{bib:one_book} Enterprise information management - Wikipedia, the free encyclopedia. [online] Available at: \textless http://en.wikipedia.org/wiki/Enterprise\_information\_management\textgreater [Accessed 4 Jan. 2013].
-\bibitem{bib:one_book} Enterprise Information Management Software EIM | Technology | SAP. [online] Available at: \textless http://www54.sap.com/solutions/tech/enterprise-information-management.html\textgreater [Accessed 4 Jan. 2013].
-\end{thebibliography}
+The above comand produces a 1GB file on the Ocelli Server in 48 seconds, or 20 MB/s. It is therefore conclusive that it is either the JSch library itself, or Ocelli's Server's usage of the library that is the source of the performance issue. As such, further research could be conducted to improve transfer rates within the library for standard SSH connections. It is possible that a standard SCP command from JSch would improve performance, however this would be outside of the scope of this paper, and would only allow for the download of the file at regular intervals, therefore stifling the real time aspect of the research. It is also possible that tuning the I/O read buffer in Ocelli Server could provide some performance boosts although time was not available to test this scenario.
 
-{\itshape Sample Output}
-\bibauthoryear
+\pagebreak
+\begin{thebibliography}{}  % (do not forget {})
+\bibitem{bib:one_book}8+ Splunk Alternatives | DevOpsANGLE. [online] Available at: \textless http://devopsangle.com/2012/04/19/8-splunk-alternatives/\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}Build your own profiling tool. [online] Available at: \textless http://www.ibm.com/developerworks/library/j-jip/\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}CouchDB for access log aggregation and analysis - User Primary. [online] Available at: \textless http://userprimary.net/posts/2009/06/13/couchdb-for-access-log-aggregation-and-analysis/\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}CUED SSH2 - how to use it. [online] Available at: \textless http://www-h.eng.cam.ac.uk/help/jpmg/SSH2/adv-use.html\#compress\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}Enterprise Information Management Software EIM | Technology | SAP. [online] Available at: \textless http://www54.sap.com/solutions/tech/enterprise-information-management.html\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}Hierarchical In-Network Data Aggregation with Quality Guarantees - Springer. [online] Available at: \textless http://link.springer.com/chapter/10.1007\%2F978-3-540-24741-8\_38?LI=true\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}Java Concurrency (\&c): Profiling with JVMTI/JVMPI, SIGPROF and AsyncGetCallTrace. [online] Available at: \textless http://jeremymanson.blogspot.com/2007/05/profiling-with-jvmtijvmpi-sigprof-and.html\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} Java Tip 92: Use the JVM Profiler Interface for accurate timing - JavaWorld. [online] Available at: \textless http://www.javaworld.com/javaworld/javatips/jw-javatip92.html?page=2\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}JSTOR: The American Economic Review, Vol. 58, No. 4 (Sep., 1968), pp. 773-787. [online] Available at: \textless http://www.jstor.org/discover/10.2307/1815532?uid=3739696\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}Machine-generated data - Wikipedia, the free encyclopedia. [online] Available at: \textless http://en.wikipedia.org/wiki/Machine-generated\_data\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} Matt Casters on Data Integration » Real-time streaming data aggregation. [online] Available at:
+\textless http://www.ibridge.be/?p=204\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}Splunking the JVM (Java Virtual Machine). [online] Available at: \textless http://www.slideshare.net/damiendallimore/splunking-the-jvm-java-virtual-machine\#btnNext\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} syslog - Splunk is fantastically expensive: What are the alternatives? - Server Fault. [online] Available at: \textless http://serverfault.com/questions/239401/splunk-is-fantastically-expensive-what-are-the-alternatives\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} valz - Scalable and robust distributed data aggregation, as easy as logging - Google Project Hosting. [online] Available at: \textless http://code.google.com/p/valz/\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}Wireless sensor network - Wikipedia, the free encyclopedia. [online] Available at: \textless http://en.wikipedia.org/wiki/Wireless\_sensor\_network\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} Examples of machine-generated data | DBMS 2 : DataBase Management System Services. [online] Available at: \textless http://www.dbms2.com/2010/04/08/machine-generated-data-example/\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} Examples and definition of machine-generated data | DBMS 2 : DataBase Management System Services. [online] Available at: \textless http://www.dbms2.com/2010/12/30/examples-and-definition-of-machine-generated-data/\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} Page 10 - Chromium Renderserver: Scalable and Open Source Remote Rendering Infrastructure [eScholarship]. [online] Available at: \textless http://escholarship.ucop.edu/uc/item/08t699fr\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} JSch - Java Secure Channel. [online] Available at: \textless http://www.jcraft.com/jsch/\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} The Java Virtual Machine Profiler Interface | Dr Dobb’s. [online] Available at: \textless http://www.drdobbs.com/jvm/the-java-virtual-machine-profiler-interf/184405722\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} The Java Virtual Machine Profiler Interface (JVMPI). [online] Available at: \textless http://docs.oracle.com/javase/1.4.2/docs/guide/jvmpi/jvmpi.html\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} Bloom Filters by Example. [online] Available at: \textless http://billmill.org/bloomfilter-tutorial/\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} View the latest version that the requested documentation is available in. - Splunk Knowledgebase. [online] Available at:
+\textless http://docs.splunk.com/Special:SpecialLatestDoc?t=Documentation/Splunk/latest/Admin/Bloomfilters\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} Splunk Breakthrough Recognized with Grant of U.S. Patent for Organizing and Understanding Massive Machine Data. [online] Available at: \textless http://www.splunk.com/view/SP-CAAAF8J\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} Platform Monitoring and Management Using JMX. [online] Available at: \textless http://docs.oracle.com/javase/1.5.0/docs/guide/management/agent.html\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} JDK 5.0 Java Virtual Machine Tool Interface (JVMTI)-related APIs \& Developer Guides -- from Sun Microsystems. [online] Available at: \textless http://docs.oracle.com/javase/1.5.0/docs/guide/jvmti/\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} Enterprise information management - Wikipedia, the free encyclopedia. [online] Available at: \textless http://en.wikipedia.org/wiki/Enterprise\_information\_management\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book} Enterprise Information Management Software EIM | Technology | SAP. [online] Available at: \textless http://www54.sap.com/solutions/tech/enterprise-information-management.html\textgreater [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}Elasticsearch.org Open Source Distributed Real Time Search \& Analytics | Elasticsearch. [online] Available at: <http://www.elasticsearch.org/> [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}AWS | Amazon Elastic Compute Cloud (EC2) - Scalable Cloud Hosting. [online] Available at: <http://aws.amazon.com/ec2/> [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}AWS | Amazon EC2 | Instance Types. [online] Available at: <http://aws.amazon.com/ec2/instance-types/> [Accessed 1 Sep. 2014].
+\bibitem{bib:one_book}HPN-SSH. [online] Available at: <http://www.psc.edu/index.php/hpn-ssh> [Accessed 1 Sep. 2014].
+
+\end{thebibliography}
 %
 \end{document}
